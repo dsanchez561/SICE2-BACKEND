@@ -1,0 +1,3 @@
+INSERT INTO public.usuario(apellidos, nombre, password, username) VALUES ('Andrade', 'Daniel', '123456','Daniel');
+INSERT INTO public.usuario(apellidos, nombre, password, username) VALUES ('Guerrero', 'Brayan', 'bg2','b.guerrero');
+INSERT INTO public.usuario(apellidos, nombre, password, username) VALUES ('Acuna', 'David', '123456','david.acuna');
