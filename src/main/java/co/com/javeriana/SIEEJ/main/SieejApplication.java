@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("co.com.javeriana.sieej.entidades")
 @EnableJpaRepositories("co.com.javeriana.sieej.repositories")
 @ComponentScan("co.com.javeriana.sieej.seguridad")
+@ComponentScan("co.com.javeriana.sieej.rest")
 public class SieejApplication {
 
 	public static void main(String[] args) {

@@ -42,6 +42,9 @@ public class Usuario {
 
     @Basic
     private String password;
+    
+    @Basic
+    private Boolean nuevo;
 
     public Long getId() {
         return this.id;
@@ -62,8 +65,24 @@ public class Usuario {
     public String getApellidos() {
         return this.apellidos;
     }
+    
+    
 
-    public void setApellidos(String apellidos) {
+    /**
+	 * @return the nuevo
+	 */
+	public Boolean getNuevo() {
+		return nuevo;
+	}
+
+	/**
+	 * @param nuevo the nuevo to set
+	 */
+	public void setNuevo(Boolean nuevo) {
+		this.nuevo = nuevo;
+	}
+
+	public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
 

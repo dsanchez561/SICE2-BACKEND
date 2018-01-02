@@ -17,6 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
+import co.com.javeriana.SIEEJ.entidades.Usuario;
+
 
 @EnableWebSecurity
 @Configuration
@@ -85,13 +87,13 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
 		 * Metodo que permite obtener el usuario guardado en la sesion
 		 * @return usuario en la sesion
 		 */
-	 /*public Usuario currentUser() {
+	 public Usuario currentUser() {
 		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		 if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			 return (Usuario)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		 }
 		 return null;
-	 }*/
+	 }
 	 
 	 /**
 		 * Metodo que permite verificar el permiso del usuario
