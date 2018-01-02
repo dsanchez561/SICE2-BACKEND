@@ -13,8 +13,6 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import co.com.javeriana.SIEEJ.entidades.Usuario;
-
 
 @Component
 @CrossOrigin
@@ -32,15 +30,14 @@ LogoutSuccessHandler {
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException, NullPointerException {
-		Usuario u = (Usuario)authentication.getPrincipal();
 		String targetUrl = determineTargetUrl(request, response);
 		if (response.isCommitted()) {
 			logger.debug("Response has already been committed. Unable to redirect to "
 					+ targetUrl);
 			return;
 		}else {
-			logger.info("El usuario "+u.getUsername()+" cerro sesión");
-			response.sendError(HttpServletResponse.SC_OK, "Se ha cerrado la sesión de "+u.getUsername());
+			logger.info("El usuario "+seguridad.currentUserName()+" cerro sesión");
+			response.sendError(HttpServletResponse.SC_OK, "Se ha cerrado la sesión de "+seguridad.currentUserName());
 		}
 
 		

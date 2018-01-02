@@ -35,21 +35,11 @@ public class RESTAuthenticationProvider implements AuthenticationProvider {
 		Usuario usuario = Usuariorepositorio.findByUsernameAndPassword(name, password);
 		if (usuario != null && password.equals(usuario.getPassword())) {
 			logger.info("Autenticación exitosa!");
-			//authentication.setAuthenticated(true);
 			return new UsernamePasswordAuthenticationToken(usuario, usuario.getPassword(), new ArrayList<>());
 		} else {
 			logger.info("Login fail!");
 			return null;
 		}
-	}
-
-	/**
-	 * Metodo que permite buscar un usuario
-	 * @param String: nombre y contraseña del usuario que se desea buscar en la base de datos
-	 * @return Usuario
-	 */
-	private Usuario findUser(String username,String password) {
-		return Usuariorepositorio.findByUsernameAndPassword(username, password);
 	}
 	
 	@Override

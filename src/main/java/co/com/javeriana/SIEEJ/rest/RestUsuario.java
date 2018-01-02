@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import co.com.javeriana.SIEEJ.entidades.Usuario;
+import co.com.javeriana.SIEEJ.repositories.UsuarioRepository;
 import co.com.javeriana.SIEEJ.seguridad.ConfiguracionSeguridad;
 
 @CrossOrigin(allowCredentials="true")
@@ -25,6 +25,9 @@ public class RestUsuario {
 	
 	@Autowired
 	private ConfiguracionSeguridad seguridad;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
 	/**
 	 * Metodo que permite listar los usuarios
@@ -33,17 +36,34 @@ public class RestUsuario {
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/retornarUsuario",method=RequestMethod.GET, produces="application/json")
-	@JsonIgnore
 	public ResponseEntity<Usuario> retornarUsuario() {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(seguridad.currentUser());
+			return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.findOne(seguridad.currentUser().getId()));
 		}catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
 	
-	
+	/**
+	 * Metodo que permite asociar tipos de proyectos que le interesan al usuario
+	 * 
+	 * @return devuelve la estado del servidor
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/asociarTipoProyecto",method=RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<Usuario> asociarTipoProyecto(@RequestBody Usuario usuario) {
+		try {
+			Usuario usuarioActual = usuarioRepository.findOne(seguridad.currentUser().getId());
+			usuarioActual.setTipoProyecto(usuario.getTipoProyecto());
+			usuarioActual.setNuevo(false);
+			usuarioRepository.save(usuarioActual);
+			return ResponseEntity.status(HttpStatus.OK).body(usuarioActual);
+		}catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 	
 	
 }

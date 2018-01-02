@@ -1,7 +1,5 @@
 package co.com.javeriana.SIEEJ.seguridad;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,16 +71,16 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
 	 * Metodo que permite obtener el nombre del usuario guardado en la sesion
 	 * @return nombre del usuario
 	 */
-	/* public String currentUserName() {
+	public String currentUserName() {
 		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		 if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			 Usuario user = (Usuario)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		     String currentUserName = user.getEmail();
+		     String currentUserName = user.getUsername();
 		     return currentUserName;
 		 }
 		 return null;
 	 }
-	 */
+	
 	 /**
 		 * Metodo que permite obtener el usuario guardado en la sesion
 		 * @return usuario en la sesion
