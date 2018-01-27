@@ -13,14 +13,15 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import co.com.javeriana.SIEEJ.entidades.Usuario;
+import co.com.javeriana.SIEEJ.excepciones.SeguridadException;
+
+
 
 @Component
 @CrossOrigin
 public class RESTLogoutSuccessHandler extends AbstractAuthenticationTargetUrlRequestHandler implements
 LogoutSuccessHandler {
-
-	@Autowired
-	private ConfiguracionSeguridad seguridad;
 	
 	// Just for setting the default target URL
 	public RESTLogoutSuccessHandler() {
@@ -36,8 +37,12 @@ LogoutSuccessHandler {
 					+ targetUrl);
 			return;
 		}else {
-			logger.info("El usuario "+seguridad.currentUserName()+" cerro sesión");
-			response.sendError(HttpServletResponse.SC_OK, "Se ha cerrado la sesión de "+seguridad.currentUserName());
+			if (authentication != null) {
+				final Usuario principal = (Usuario) authentication.getPrincipal();
+				logger.info("El usuario " + principal.getUsername() + " cerro sesión");
+			} else {
+				throw new SeguridadException("No hay sesión activa");
+			}
 		}
 
 		

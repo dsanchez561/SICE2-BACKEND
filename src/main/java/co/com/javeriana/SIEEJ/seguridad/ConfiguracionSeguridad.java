@@ -16,6 +16,8 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.web.cors.CorsConfiguration;
 
 import co.com.javeriana.SIEEJ.entidades.Usuario;
+import co.com.javeriana.SIEEJ.excepciones.SeguridadException;
+
 
 
 @EnableWebSecurity
@@ -68,31 +70,21 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
 	}
 	
 	/**
-	 * Metodo que permite obtener el nombre del usuario guardado en la sesion
-	 * @return nombre del usuario
+	 * Metodo que permite obtener el usuario guardado en la sesion
+	 * 
+	 * @return usuario en la sesion
 	 */
-	public String currentUserName() {
-		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		 if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			 Usuario user = (Usuario)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		     String currentUserName = user.getUsername();
-		     return currentUserName;
-		 }
-		 return null;
-	 }
-	
-	 /**
-		 * Metodo que permite obtener el usuario guardado en la sesion
-		 * @return usuario en la sesion
-		 */
-	 public Usuario currentUser() {
-		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		 if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			 return (Usuario)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		 }
-		 return null;
-	 }
-	 
+	public Usuario getCurrentUser() {
+		try {
+			final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if (!(authentication instanceof AnonymousAuthenticationToken)) {
+				return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			}
+			return null;
+		}catch(RuntimeException e){
+			throw new SeguridadException("Error al acceder al usuario actual");	
+		}
+	}
 	 /**
 		 * Metodo que permite verificar el permiso del usuario
 		 * @param String: permiso que se desea verificar con respecto a los permisos que tiene el usuario en sesion
