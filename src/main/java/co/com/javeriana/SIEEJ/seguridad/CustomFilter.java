@@ -34,7 +34,7 @@ public class CustomFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         Principal userPrincipal = request.getUserPrincipal();
-        logger.info(seguridad.currentUserName()+"::"+userPrincipal);
+        logger.info(seguridad.getCurrentUser().getUsername()+"::"+userPrincipal);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

@@ -45,7 +45,7 @@ public class RestUsuario {
 	@RequestMapping(value="/retornarUsuario",method=RequestMethod.GET, produces="application/json")
 	public ResponseEntity<Usuario> retornarUsuario() {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.findOne(seguridad.currentUser().getId()));
+			return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.findOne(seguridad.getCurrentUser().getId()));
 		}catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
