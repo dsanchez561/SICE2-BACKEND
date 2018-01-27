@@ -10,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -27,10 +25,6 @@ import co.com.javeriana.SIEEJ.enumeracion.TipoProyecto;
 	        @UniqueConstraint(columnNames={"username"})
 	)
 @Entity
-@NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "Select e from Usuario e")
-    ,@NamedQuery(name = "Usuario.findByusername", query = "Select u from Usuario u where u.username=:username")
-    ,@NamedQuery(name = "Usuario.findByPassword", query = "Select u from Usuario u where u.password=:password")})
 public class Usuario {
 
     @Id
