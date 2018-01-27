@@ -21,8 +21,14 @@ import co.com.javeriana.SIEEJ.implementacion.UsuarioImpl;
 import co.com.javeriana.SIEEJ.repositories.UsuarioRepository;
 import co.com.javeriana.SIEEJ.seguridad.ConfiguracionSeguridad;
 
+/**
+ * Clase que expone los servicios rest de usuario
+ * @author Javeriana
+ *
+ */
 @CrossOrigin(allowCredentials="true")
 @RestController
+@RequestMapping("usuario")
 public class RestUsuario {	
 
 	private static final Logger LOG = LoggerFactory.getLogger(RestUsuario.class);
@@ -52,7 +58,12 @@ public class RestUsuario {
 		}
 	}
 	
-	
+	/**
+	 * Método que expone el servicio de asociar etiquetas a un usuario
+	 * @param id del usuario
+	 * @param etiquetas lista de etiquetas
+	 * @return la entidad usuario
+	 */
 	@RequestMapping(value="/asociarEtiquetas/{id}",method=RequestMethod.POST)
 	public ResponseEntity<Usuario> asociarEtiquetas(@PathVariable("id") String id, @RequestBody List<Etiqueta> etiquetas){
 		try {
