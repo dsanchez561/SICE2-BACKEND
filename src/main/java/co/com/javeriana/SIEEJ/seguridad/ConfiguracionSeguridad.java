@@ -103,8 +103,9 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
 		return false;
     }
 		*/
+	
     @Bean
-    public CustomFilter customFilter() {
-        return new CustomFilter();
+    public FiltroSeguridad filtroSeguridad() {
+        return new FiltroSeguridad();
     }
 }

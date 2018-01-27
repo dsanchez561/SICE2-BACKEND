@@ -13,7 +13,7 @@ import org.hibernate.exception.DataException;
  * Clase encargada de procesar las Excepciones generadas por acceso a la Base de
  * Datos.
  * 
- * @author WORLD OFFICE
+ * @author Javeriana
  */
 public final class ProcesarExcepcion {
 

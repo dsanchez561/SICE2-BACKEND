@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.com.javeriana.SIEEJ.entidades.Etiqueta;
 import co.com.javeriana.SIEEJ.entidades.Usuario;
 import co.com.javeriana.SIEEJ.implementacion.UsuarioImpl;
+import co.com.javeriana.SIEEJ.log.Log;
 import co.com.javeriana.SIEEJ.repositories.UsuarioRepository;
 import co.com.javeriana.SIEEJ.seguridad.ConfiguracionSeguridad;
 
@@ -30,8 +31,8 @@ import co.com.javeriana.SIEEJ.seguridad.ConfiguracionSeguridad;
 @RestController
 @RequestMapping("usuario")
 public class RestUsuario {	
-
-	private static final Logger LOG = LoggerFactory.getLogger(RestUsuario.class);
+	@Log
+	private Logger log;
 	
 	@Autowired
 	private ConfiguracionSeguridad seguridad;
@@ -41,22 +42,6 @@ public class RestUsuario {
 	
 	@Autowired
 	private UsuarioImpl usuarioImpl;
-
-	/**
-	 * Metodo que permite listar los usuarios
-	 * 
-	 * @return devuelve el usuario actual en sesión
-	 * @throws IOException
-	 */
-	@RequestMapping(value="/retornarUsuario",method=RequestMethod.GET, produces="application/json")
-	public ResponseEntity<Usuario> retornarUsuario() {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.findOne(seguridad.getCurrentUser().getId()));
-		}catch (Exception e) {
-			LOG.error(e.getMessage(), e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
-	}
 	
 	/**
 	 * Método que expone el servicio de asociar etiquetas a un usuario
