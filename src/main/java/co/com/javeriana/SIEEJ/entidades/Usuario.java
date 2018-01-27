@@ -27,6 +27,7 @@ import co.com.javeriana.SIEEJ.enumeracion.TipoProyecto;
 @Entity
 public class Usuario {
 
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
