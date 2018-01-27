@@ -51,7 +51,7 @@ public class RestUsuario {
 	 * @return devuelve la estado del servidor
 	 * @throws IOException
 	 */
-	@RequestMapping(value="/asociarTipoProyecto",method=RequestMethod.POST, consumes="application/json")
+	/*@RequestMapping(value="/asociarTipoProyecto",method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<Usuario> asociarTipoProyecto(@RequestBody Usuario usuario) {
 		try {
 			Usuario usuarioActual = usuarioRepository.findOne(seguridad.currentUser().getId());
@@ -63,7 +63,7 @@ public class RestUsuario {
 			LOG.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
-	}
+	}*/
 	
 	
 }

@@ -17,7 +17,7 @@ import javax.persistence.ManyToMany;
 public class Evento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToMany(targetEntity = Etiqueta.class)

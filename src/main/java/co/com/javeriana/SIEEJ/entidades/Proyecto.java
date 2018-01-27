@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 
 /**
  * @author Javeriana
- */s
+ */
 @Entity
 public class Proyecto extends Evento {
 

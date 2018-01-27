@@ -1,21 +1,20 @@
 package co.com.javeriana.SIEEJ.entidades;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import co.com.javeriana.SIEEJ.enumeracion.TipoProyecto;
+import co.com.javeriana.SIEEJ.enumeracion.EstadoEnum;
 
 /**
  * @author Javeriana
@@ -27,9 +26,8 @@ import co.com.javeriana.SIEEJ.enumeracion.TipoProyecto;
 @Entity
 public class Usuario {
 
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Basic
@@ -42,28 +40,22 @@ public class Usuario {
     private String username;
 
     @Basic
-    @JsonIgnore
     private String password;
-    
-    @Basic
-    private Boolean nuevo;
 
-    @ElementCollection(targetClass=TipoProyecto.class, fetch=FetchType.EAGER)
-    private List<TipoProyecto> tipoProyecto = new ArrayList<>();
-  
-    /**
-	 * @return the nuevo
-	 */
-	public Boolean getNuevo() {
-		return nuevo;
-	}
+    @Enumerated(EnumType.STRING)
+    private EstadoEnum estadoEnum;
 
-	/**
-	 * @param nuevo the nuevo to set
-	 */
-	public void setNuevo(Boolean nuevo) {
-		this.nuevo = nuevo;
-	}
+    @OneToMany(targetEntity = Horario.class)
+    private List<Horario> horarios;
+
+    @OneToMany(targetEntity = Evento.class)
+    private List<Evento> eventosSuscrito;
+
+    @OneToMany(targetEntity = Evento.class)
+    private List<Evento> eventosCreados;
+
+    @ManyToMany(targetEntity = Etiqueta.class)
+    private List<Etiqueta> preferencias;
 
 	/**
 	 * @return the id
@@ -136,18 +128,72 @@ public class Usuario {
 	}
 
 	/**
-	 * @return the tipoProyecto
+	 * @return the estadoEnum
 	 */
-	public List<TipoProyecto> getTipoProyecto() {
-		return tipoProyecto;
+	public EstadoEnum getEstadoEnum() {
+		return estadoEnum;
 	}
 
 	/**
-	 * @param tipoProyecto the tipoProyecto to set
+	 * @param estadoEnum the estadoEnum to set
 	 */
-	public void setTipoProyecto(List<TipoProyecto> tipoProyecto) {
-		this.tipoProyecto = tipoProyecto;
+	public void setEstadoEnum(EstadoEnum estadoEnum) {
+		this.estadoEnum = estadoEnum;
 	}
 
-	
+	/**
+	 * @return the horarios
+	 */
+	public List<Horario> getHorarios() {
+		return horarios;
+	}
+
+	/**
+	 * @param horarios the horarios to set
+	 */
+	public void setHorarios(List<Horario> horarios) {
+		this.horarios = horarios;
+	}
+
+	/**
+	 * @return the eventosSuscrito
+	 */
+	public List<Evento> getEventosSuscrito() {
+		return eventosSuscrito;
+	}
+
+	/**
+	 * @param eventosSuscrito the eventosSuscrito to set
+	 */
+	public void setEventosSuscrito(List<Evento> eventosSuscrito) {
+		this.eventosSuscrito = eventosSuscrito;
+	}
+
+	/**
+	 * @return the eventosCreados
+	 */
+	public List<Evento> getEventosCreados() {
+		return eventosCreados;
+	}
+
+	/**
+	 * @param eventosCreados the eventosCreados to set
+	 */
+	public void setEventosCreados(List<Evento> eventosCreados) {
+		this.eventosCreados = eventosCreados;
+	}
+
+	/**
+	 * @return the preferencias
+	 */
+	public List<Etiqueta> getPreferencias() {
+		return preferencias;
+	}
+
+	/**
+	 * @param preferencias the preferencias to set
+	 */
+	public void setPreferencias(List<Etiqueta> preferencias) {
+		this.preferencias = preferencias;
+	}
 }
