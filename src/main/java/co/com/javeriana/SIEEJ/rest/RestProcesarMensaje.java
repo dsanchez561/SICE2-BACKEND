@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.com.javeriana.SIEEJ.comandos.Mensaje;
-import co.com.javeriana.SIEEJ.excepciones.SeguridadException;
-import co.com.javeriana.SIEEJ.log.Log;
-import co.com.javeriana.SIEEJ.utils.ProcesadorMensajes;
-
+import co.com.javeriana.SIEEJ.comandos.mensaje.Mensaje;
+import co.com.worldoffice.wo.excepciones.SeguridadException;
+import co.com.worldoffice.wo.log.Log;
+import co.com.worldoffice.wo.seguridad.permisos.Seguridad;
+import co.com.worldoffice.wo.utils.ProcesadorMensajes;
 
 /**
  * Clase encargada de exponer servicio REST asociado a Cola_de_mensajes
@@ -28,6 +29,7 @@ import co.com.javeriana.SIEEJ.utils.ProcesadorMensajes;
  */
 @CrossOrigin
 @RestController
+@ComponentScan("co.com.worldoffice.wo.utils")
 public class RestProcesarMensaje {
 	@Log
 	private Logger log;
@@ -36,6 +38,9 @@ public class RestProcesarMensaje {
 	 */
 	@Autowired
 	private ProcesadorMensajes procesador;
+
+	@Autowired
+	private Seguridad seguridad;
  
 	/**
 	 * Metodo encargado de procesar una cola de mensajes para documentos
@@ -44,17 +49,21 @@ public class RestProcesarMensaje {
 	 *            La cola de mensajes para procesar con formato JSON
 	 * @return Retorna una lista de respuestas de los atributos modificados
 	 */
-	@RequestMapping(value="/colaDeMensaje",method=RequestMethod.POST,consumes="text/plain",produces="application/json")
+	@RequestMapping(value="/mensaje",method=RequestMethod.POST,consumes="text/plain",produces="application/json")
 	public ResponseEntity<Object> procesarMensaje(@RequestBody String mensajeStr){	
 		final List<Mensaje> response = new ArrayList<>();
 		try {
 			final JSONArray colaMensajes = new JSONArray(mensajeStr);
 			for (int i = 0; i < colaMensajes.length(); i++) {
 				final JSONObject mensaje = colaMensajes.getJSONObject(i);
-				log.info(mensaje.toString());
-				
-				final List<Mensaje> obj = procesador.procesarMensaje(mensaje);
-				response.addAll(obj);
+				if(seguridad.getCurrentUser().isSuperAdministrador() || seguridad.verificaPermisoFino(mensaje)) {
+					log.info(mensaje.toString());
+					
+					final List<Mensaje> obj = procesador.procesarMensaje(mensaje);
+					response.addAll(obj);
+				}else {
+					throw new SeguridadException("No tiene permisos finos");
+				}
 			}
 	
 				return ResponseEntity.status(HttpStatus.OK).body(response);

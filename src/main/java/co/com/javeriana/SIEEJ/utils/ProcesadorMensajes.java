@@ -12,9 +12,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionSystemException;
 
-import co.com.javeriana.SIEEJ.comandos.Comando;
-import co.com.javeriana.SIEEJ.comandos.Mensaje;
-import co.com.javeriana.SIEEJ.constantes.CodigosError;
+import co.com.worldoffice.wo.comandos.documento.Comando;
+import co.com.worldoffice.wo.comandos.mensaje.Mensaje;
+import co.com.worldoffice.wo.constants.CodigosError;
 
 /**
  * Clase encargada de procesar un mensaje
