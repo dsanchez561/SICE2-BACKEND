@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * @author WORLD OFFICE
+ * @author Javeriana
  *
  */
 @SuppressWarnings("serial")

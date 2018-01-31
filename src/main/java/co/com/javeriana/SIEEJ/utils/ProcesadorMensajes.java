@@ -24,41 +24,63 @@ import co.com.javeriana.SIEEJ.comandos.Mensaje;
  * @author Javeriana
  */
 @Component
-@ComponentScan("co.com.javeriana.sieej.comandos")
+@ComponentScan("co.com.javeriana.SIEEJ.comandos")
 public class ProcesadorMensajes {
 
 	/**
 	 * Mapa con todas las acciones del sistema
 	 */
 	@Autowired
-	private Map<String,Comando<?>> map;	
-	
+	private Map<String, Comando<?>> map;
+
 	/**
 	 * Metodo encargado de procesar un mensaje ejecutando el comando asociado
 	 * 
 	 * @param mensaje
 	 *            Mensaje que debe ser procesado
 	 * @return Retorna una lista de mensajes de atributos cambiados
-	 * @throws JSONException 
+	 * @throws JSONException
 	 */
-	public List<Mensaje> procesarMensaje(JSONObject mensaje) throws JSONException {
+	public List<Mensaje> procesarMensaje(final JSONObject mensaje) throws JSONException {
 		String accion = null;
+
 		try {
 			accion = mensaje.getString("accion");
 			return map.get(accion).ejecutar(mensaje);
+
 		} catch (DataIntegrityViolationException e) {
-			Long id = mensaje.getLong("id");
-			String atributo = mensaje.getString("atributo");
-			List<Mensaje> listaMensajes = new ArrayList<>();
-			listaMensajes.add(new Mensaje(id, accion, atributo, false, CodigosError.ERROR_004));
-			return listaMensajes;
+			// Excepción generada por el motor de Base de Datos
+			final PostgreSQLErrorCode errorCode = ProcesarExcepcion.procesar(e);
+			
+			return getMensajeError(mensaje, accion, errorCode != null ? errorCode.getCodigo() : CodigosError.ERROR_004);
+
 		} catch (TransactionSystemException e) {
-			Long id = mensaje.getLong("id");
-			String atributo = mensaje.getString("atributo");
-			List<Mensaje> listaMensajes = new ArrayList<>();
-			listaMensajes.add(new Mensaje(id, accion, atributo, false, CodigosError.ERROR_003));
-			return listaMensajes;
+			return getMensajeError(mensaje, accion, CodigosError.ERROR_003);
 		}
+	}
+
+	/**
+	 * Método encargado de generar el mensaje de error para ser retornado a la capa
+	 * de presentación
+	 * 
+	 * @param mensaje
+	 *            objeto mensaje que llega desde la capa de presentación
+	 * @param accion
+	 *            la acción que se ejecuto
+	 * @param errorCode
+	 *            codigo del error ocurrido
+	 * @return el mensaje construido para notificar a la GUI el error ocurrido
+	 * @throws JSONException
+	 */
+	private List<Mensaje> getMensajeError(final JSONObject mensaje, final String accion, final String errorCode)
+			throws JSONException {
+		
+		final Long id = mensaje.getLong("id");
+		final String atributo = mensaje.getString("atributo");
+		
+		final List<Mensaje> listaMensajes = new ArrayList<>();
+		listaMensajes.add(new Mensaje(id, accion, atributo, false, errorCode));
+		return listaMensajes;
 	}
 
 }

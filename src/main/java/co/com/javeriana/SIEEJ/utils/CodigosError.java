@@ -4,7 +4,7 @@
 package co.com.javeriana.SIEEJ.utils;
 
 /**
- * @author WORLD OFFICE
+ * @author Javeriana
  * Define los códigos de error del sistema asociados a FrontEnd
  *
  */

@@ -2,7 +2,7 @@ package co.com.javeriana.SIEEJ.enumeracion;
 
 /**
  * Enumera los tipos de proyecto
- * @author WO web
+ * @author Javeriana
  */
 public enum TipoProyecto {
     TIPO_A,

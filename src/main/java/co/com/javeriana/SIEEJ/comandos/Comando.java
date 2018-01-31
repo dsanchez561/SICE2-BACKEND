@@ -1,6 +1,3 @@
-/**
- * 
- */
 package co.com.javeriana.SIEEJ.comandos;
 
 import java.lang.reflect.Field;
@@ -19,6 +16,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import co.com.javeriana.SIEEJ.enumeracion.TipoDatoEnum;
+import co.com.javeriana.SIEEJ.excepciones.ComandoException;
 
 /**
  * 
@@ -94,7 +92,7 @@ public abstract class Comando<T> {
 			}
 			
 		} catch (ParseException | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | JSONException | NullPointerException e) {
-			
+			throw new ComandoException(e);
 		}
 	}
 	

@@ -9,7 +9,7 @@ package co.com.javeriana.SIEEJ.utils;
  * encontrados en:
  * https://www.postgresql.org/docs/9.2/static/errcodes-appendix.html
  * 
- * @author WORLD OFFICE
+ * @author Javeriana
  */
 public enum PostgreSQLErrorCode {
 	// Class 22 — Data Exception

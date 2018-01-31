@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.com.javeriana.SIEEJ.comandos.Mensaje;
 import co.com.javeriana.SIEEJ.excepciones.SeguridadException;
+import co.com.javeriana.SIEEJ.log.Log;
 import co.com.javeriana.SIEEJ.utils.ProcesadorMensajes;
+
 
 
 
@@ -32,6 +35,10 @@ import co.com.javeriana.SIEEJ.utils.ProcesadorMensajes;
 @RestController
 @ComponentScan("co.com.javeriana.sieej.utils")
 public class RestProcesarMensaje {
+	
+	@Log
+	private Logger log;
+	
 	/**
 	 * El procesador de los mensajes
 	 */
@@ -55,7 +62,7 @@ public class RestProcesarMensaje {
 
 			for (int i = 0; i < colaMensajes.length(); i++) {
 				final JSONObject mensaje = colaMensajes.getJSONObject(i);
-//				log.info(mensaje.toString());
+				log.info(mensaje.toString());
 				
 				final List<Mensaje> obj = procesador.procesarMensaje(mensaje);
 				response.addAll(obj);
@@ -64,10 +71,10 @@ public class RestProcesarMensaje {
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 			
 		} catch (SeguridadException e) {
-			//log.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 		} catch (Exception e) {
-//			log.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 

@@ -14,7 +14,7 @@ import co.com.javeriana.SIEEJ.entidades.Usuario;
  *
  */
 
-@Repository
+@Repository("Usuario")
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	public Usuario findByUsernameAndPassword(String username,String password);
 	public Usuario findUsuarioById(Long idUsuario);
