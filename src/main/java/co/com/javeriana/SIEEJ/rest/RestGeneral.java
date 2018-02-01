@@ -19,7 +19,6 @@ import co.com.javeriana.SIEEJ.seguridad.ConfiguracionSeguridad;
 @CrossOrigin(allowCredentials="true")
 @RestController
 public class RestGeneral {	
-
 	@Log
 	private Logger log;
 	
