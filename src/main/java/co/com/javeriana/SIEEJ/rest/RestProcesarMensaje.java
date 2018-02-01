@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.javeriana.SIEEJ.comandos.mensaje.Mensaje;
-import co.com.worldoffice.wo.excepciones.SeguridadException;
-import co.com.worldoffice.wo.log.Log;
-import co.com.worldoffice.wo.seguridad.permisos.Seguridad;
-import co.com.worldoffice.wo.utils.ProcesadorMensajes;
+import co.com.javeriana.SIEEJ.excepciones.SeguridadException;
+import co.com.javeriana.SIEEJ.log.Log;
+import co.com.javeriana.SIEEJ.utils.ProcesadorMensajes;
 
 /**
  * Clase encargada de exponer servicio REST asociado a Cola_de_mensajes
@@ -29,7 +28,7 @@ import co.com.worldoffice.wo.utils.ProcesadorMensajes;
  */
 @CrossOrigin
 @RestController
-@ComponentScan("co.com.worldoffice.wo.utils")
+@ComponentScan("co.com.javeriana.sieej.utils")
 public class RestProcesarMensaje {
 	@Log
 	private Logger log;
@@ -38,9 +37,6 @@ public class RestProcesarMensaje {
 	 */
 	@Autowired
 	private ProcesadorMensajes procesador;
-
-	@Autowired
-	private Seguridad seguridad;
  
 	/**
 	 * Metodo encargado de procesar una cola de mensajes para documentos
@@ -56,14 +52,9 @@ public class RestProcesarMensaje {
 			final JSONArray colaMensajes = new JSONArray(mensajeStr);
 			for (int i = 0; i < colaMensajes.length(); i++) {
 				final JSONObject mensaje = colaMensajes.getJSONObject(i);
-				if(seguridad.getCurrentUser().isSuperAdministrador() || seguridad.verificaPermisoFino(mensaje)) {
-					log.info(mensaje.toString());
-					
-					final List<Mensaje> obj = procesador.procesarMensaje(mensaje);
-					response.addAll(obj);
-				}else {
-					throw new SeguridadException("No tiene permisos finos");
-				}
+				log.info(mensaje.toString());
+				final List<Mensaje> obj = procesador.procesarMensaje(mensaje);
+				response.addAll(obj);
 			}
 	
 				return ResponseEntity.status(HttpStatus.OK).body(response);

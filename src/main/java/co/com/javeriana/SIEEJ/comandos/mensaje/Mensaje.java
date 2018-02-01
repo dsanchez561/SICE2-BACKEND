@@ -4,7 +4,7 @@
 package co.com.javeriana.SIEEJ.comandos.mensaje;
 
 /**
- * @author WORLD OFFICE
+ * @author Javeriana
  *
  */
 public class Mensaje {
