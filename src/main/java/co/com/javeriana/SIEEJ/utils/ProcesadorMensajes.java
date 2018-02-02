@@ -12,8 +12,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionSystemException;
 
-import co.com.javeriana.SIEEJ.comandos.mensaje.Comando;
-import co.com.javeriana.SIEEJ.comandos.mensaje.Mensaje;
+import co.com.javeriana.SIEEJ.comando.comandos.Comando;
+import co.com.javeriana.SIEEJ.comando.mensajes.Mensaje;
 import co.com.javeriana.SIEEJ.constantes.CodigosError;
 
 /**
@@ -22,7 +22,7 @@ import co.com.javeriana.SIEEJ.constantes.CodigosError;
  * @author Javeriana
  */
 @Component
-@ComponentScan("co.com.javeriana.sieej.comandos")
+@ComponentScan("co.com.javeriana.sieej.comando.comandos")
 public class ProcesadorMensajes {
 
 	/**

@@ -1,4 +1,4 @@
-package co.com.javeriana.SIEEJ.comandos.mensaje;
+package co.com.javeriana.SIEEJ.comando.mensajes;
 
 /**
  * @author Javeriana

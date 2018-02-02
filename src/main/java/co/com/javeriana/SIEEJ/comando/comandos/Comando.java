@@ -1,4 +1,4 @@
-package co.com.javeriana.SIEEJ.comandos.mensaje;
+package co.com.javeriana.SIEEJ.comando.comandos;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
+import co.com.javeriana.SIEEJ.comando.mensajes.Mensaje;
 import co.com.javeriana.SIEEJ.enumeracion.TipoDatoEnum;
 import co.com.javeriana.SIEEJ.excepciones.ComandoException;
 
@@ -58,8 +59,27 @@ public abstract class Comando<T> {
 		try {			
 			Class<?> clase = obj.getClass();
 			String nombAtr = mensaje.getString("atributo");
-			Field atr = clase.getDeclaredField(nombAtr);
-			atr.setAccessible(true);
+			boolean atributoSuperClase = false;
+			Field atr=null;
+			if (clase.getSuperclass()!=null) {
+				for (Field campo: clase.getSuperclass().getDeclaredFields()) {
+					if (campo.getName().equals(nombAtr)) {
+						atr = clase.getSuperclass().getDeclaredField(nombAtr);
+						atributoSuperClase = true;
+						break;
+					}
+				}
+				if (!atributoSuperClase) {
+					atr = clase.getDeclaredField(nombAtr);
+				}
+			}else {
+				atr = clase.getDeclaredField(nombAtr);
+			}
+			if (atr!=null) {
+				atr.setAccessible(true);
+			}else {
+				throw new ComandoException("No se encontro el campo a editar");
+			}
 			
 			TipoDatoEnum tipo = TipoDatoEnum.valueOf(mensaje.getString("tipoDato"));
 			Object valor = mensaje.get(valorAtr);

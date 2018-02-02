@@ -1,7 +1,9 @@
 /**
  * 
  */
-package co.com.javeriana.SIEEJ.comandos.mensaje;
+package co.com.javeriana.SIEEJ.comando.comandos;
+
+import co.com.javeriana.SIEEJ.comando.mensajes.Mensaje;
 
 /**
  * @author Javeriana

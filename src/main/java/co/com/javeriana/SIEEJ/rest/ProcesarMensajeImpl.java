@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
-import co.com.javeriana.SIEEJ.comandos.mensaje.Mensaje;
+import co.com.javeriana.SIEEJ.comando.mensajes.Mensaje;
 import co.com.javeriana.SIEEJ.log.Log;
 import co.com.javeriana.SIEEJ.utils.ProcesadorMensajes;
 

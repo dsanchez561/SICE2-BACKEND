@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.com.javeriana.SIEEJ.comandos.mensaje.Mensaje;
+import co.com.javeriana.SIEEJ.comando.mensajes.Mensaje;
 import co.com.javeriana.SIEEJ.excepciones.SeguridadException;
 import co.com.javeriana.SIEEJ.log.Log;
 import co.com.javeriana.SIEEJ.utils.ProcesadorMensajes;

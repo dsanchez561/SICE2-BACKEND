@@ -24,7 +24,7 @@ import co.com.javeriana.SIEEJ.enumeracion.EstadoEnum;
 	        @UniqueConstraint(columnNames={"username"})
 	)
 @Entity
-public class Usuario {
+public abstract class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
