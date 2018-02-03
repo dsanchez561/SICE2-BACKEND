@@ -4,12 +4,15 @@
 package co.com.javeriana.SIIEJ.entidades;
 
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Javeriana
@@ -24,6 +27,7 @@ public class Etiqueta {
     @Basic
     private String categoria;
 
+    @JsonIgnore
     @ManyToMany(targetEntity = Usuario.class, mappedBy = "preferencias")
     private List<Usuario> usuarios;
 

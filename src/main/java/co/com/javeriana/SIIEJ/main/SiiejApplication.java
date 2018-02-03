@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan("co.com.javeriana.siiej.seguridad")
 @ComponentScan("co.com.javeriana.siiej.rest")
 @ComponentScan("co.com.javeriana.siiej.log")
+@ComponentScan("co.com.javeriana.siiej.implementacion")
 public class SiiejApplication {
 
 	public static void main(String[] args) {
