@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:co.com.javeriana.SIEEJ.main.SieejApplication</config>
+		<config>java:co.com.javeriana.SIIEJ.main.SiiejApplication</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
