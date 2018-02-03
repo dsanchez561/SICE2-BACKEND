@@ -9,12 +9,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * @author Javeriana
  */
 @Entity
-public class Evento {
+@JsonDeserialize(as = Proyecto.class)
+public abstract class Evento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,21 +27,69 @@ public class Evento {
 
     @ManyToMany(targetEntity = Etiqueta.class)
     private List<Etiqueta> etiquetas;
+    
+    @JsonIgnore
+    @ManyToOne(targetEntity = Usuario.class)
+    private Usuario usuarioCreador;
 
-    public Long getId() {
-        return this.id;
-    }
+    @JsonIgnore
+    @ManyToMany(targetEntity = Usuario.class, mappedBy = "eventosSuscritos")
+    private List<Usuario> usuariosSuscritos;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    public List<Etiqueta> getEtiquetas() {
-        return this.etiquetas;
-    }
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setEtiquetas(List<Etiqueta> etiquetas) {
-        this.etiquetas = etiquetas;
-    }
+	/**
+	 * @return the etiquetas
+	 */
+	public List<Etiqueta> getEtiquetas() {
+		return etiquetas;
+	}
 
+	/**
+	 * @param etiquetas the etiquetas to set
+	 */
+	public void setEtiquetas(List<Etiqueta> etiquetas) {
+		this.etiquetas = etiquetas;	
+	}
+
+	/**
+	 * @return the usuarioCreador
+	 */
+	public Usuario getUsuarioCreador() {
+		return usuarioCreador;
+	}
+
+	/**
+	 * @param usuarioCreador the usuarioCreador to set
+	 */
+	public void setUsuarioCreador(Usuario usuarioCreador) {
+		this.usuarioCreador = usuarioCreador;
+	}
+
+	/**
+	 * @return the usuariosSuscritos
+	 */
+	public List<Usuario> getUsuariosSuscritos() {
+		return usuariosSuscritos;
+	}
+
+	/**
+	 * @param usuariosSuscritos the usuariosSuscritos to set
+	 */
+	public void setUsuariosSuscritos(List<Usuario> usuariosSuscritos) {
+		this.usuariosSuscritos = usuariosSuscritos;
+	}
+	
 }

@@ -20,20 +20,33 @@ public class Actividad extends Evento {
     @OneToMany(targetEntity = Horario.class)
     private List<Horario> horarios;
 
-    public String getNombre() {
-        return this.nombre;
-    }
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public List<Horario> getHorarios() {
-        return this.horarios;
-    }
+	/**
+	 * @return the horarios
+	 */
+	public List<Horario> getHorarios() {
+		return horarios;
+	}
 
-    public void setHorarios(List<Horario> horarios) {
-        this.horarios = horarios;
-    }
-
+	/**
+	 * @param horarios the horarios to set
+	 */
+	public void setHorarios(List<Horario> horarios) {
+		this.horarios = horarios;
+	}
+    
+    
 }

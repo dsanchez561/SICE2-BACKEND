@@ -46,6 +46,50 @@ public class RestUsuario {
 	}
 	
 	/**
+	 * Método que expone el servicio de asociar evento creado a un usuario
+	 * @param id del usuario
+	 * @param evento evento creado
+	 * @return la entidad usuario
+	 */
+	@RequestMapping(value="/asociarEventoCreado/{idUsuario}/{idEvento}",method=RequestMethod.POST)
+	public ResponseEntity<Usuario> asociarEvento(@PathVariable("idUsuario") String idUsuario, @PathVariable("idEvento") String idEvento){
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(usuarioImpl.asociarEventoCreado(idUsuario, idEvento));
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	/**
+	 * Método que expone el servicio de asociar evento suscrito a un usuario
+	 * @param id del usuario
+	 * @param Evento evento a suscibir
+	 * @return la entidad usuario
+	 */
+	@RequestMapping(value="/asociarEventoSuscrito/{idUsuario}/{idEvento}",method=RequestMethod.POST)
+	public ResponseEntity<Usuario> asociarEventoSuscrito(@PathVariable("idUsuario") String idUsuario, @PathVariable("idEvento") String idEvento){
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(usuarioImpl.asociarEventoSuscrito(idUsuario, idEvento	));
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	/**
+	 * Método que expone el servicio de listar eventos disponibles por usuario
+	 * @param id del usuario
+	 * @return lista de eventos
+	 */
+//	@RequestMapping(value="/obtenerEventosDisponibles/{id}",method=RequestMethod.POST)
+//	public ResponseEntity<Usuario> obtenerEventosDisponibles(@PathVariable("id") String id){
+//		try {
+//			return ResponseEntity.status(HttpStatus.OK).body(usuarioImpl.obtenerEventosDisponibles(id));
+//		}catch(Exception e) {
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//		}
+//	}
+	
+	/**
 	 * Metodo que permite asociar tipos de proyectos que le interesan al usuario
 	 * 
 	 * @return devuelve la estado del servidor

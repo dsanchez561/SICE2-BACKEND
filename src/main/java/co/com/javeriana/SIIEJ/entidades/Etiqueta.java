@@ -31,6 +31,7 @@ public class Etiqueta {
     @ManyToMany(targetEntity = Usuario.class, mappedBy = "preferencias")
     private List<Usuario> usuarios;
 
+    @JsonIgnore
     @ManyToMany(targetEntity = Evento.class, mappedBy = "etiquetas")
     private List<Evento> eventos;
 

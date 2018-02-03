@@ -48,11 +48,11 @@ public abstract class Usuario {
     @OneToMany(targetEntity = Horario.class)
     private List<Horario> horarios;
 
-    @OneToMany(targetEntity = Evento.class)
-    private List<Evento> eventosSuscrito;
-
-    @OneToMany(targetEntity = Evento.class)
+    @OneToMany(targetEntity = Evento.class, mappedBy = "usuarioCreador")
     private List<Evento> eventosCreados;
+    
+    @ManyToMany(targetEntity = Evento.class)
+    private List<Evento> eventosSuscritos;
 
     @ManyToMany(targetEntity = Etiqueta.class)
     private List<Etiqueta> preferencias;
@@ -156,17 +156,17 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * @return the eventosSuscrito
+	 * @return the eventosSuscritos
 	 */
-	public List<Evento> getEventosSuscrito() {
-		return eventosSuscrito;
+	public List<Evento> getEventosSuscritos() {
+		return eventosSuscritos;
 	}
 
 	/**
-	 * @param eventosSuscrito the eventosSuscrito to set
+	 * @param eventosSuscritos the eventosSuscritos to set
 	 */
-	public void setEventosSuscrito(List<Evento> eventosSuscrito) {
-		this.eventosSuscrito = eventosSuscrito;
+	public void setEventosSuscritos(List<Evento> eventosSuscritos) {
+		this.eventosSuscritos = eventosSuscritos;
 	}
 
 	/**
@@ -196,4 +196,6 @@ public abstract class Usuario {
 	public void setPreferencias(List<Etiqueta> preferencias) {
 		this.preferencias = preferencias;
 	}
+
+    
 }

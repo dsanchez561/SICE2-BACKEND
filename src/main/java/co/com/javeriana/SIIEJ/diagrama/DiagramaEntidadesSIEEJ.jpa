@@ -12,15 +12,15 @@
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
             <jpa:one-to-many own="true" collection-type="java.util.List" connected-entity-id="_1515850393651" v="true" name="horarios" id="_151585049376041"/>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1515851284132" v="true" xvt="" name="eventosSuscrito" id="_151585130862661">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:one-to-many>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1515851284132" v="true" xvt="" name="eventosCreados" id="_151585222500484">
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1515851284132" connected-attribute-id="_151767767026680" v="true" xvt="" name="eventosCreados" id="_151767767026781">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1515849183897" connected-attribute-id="_151584931294916" v="true" xvt="" name="preferencias" id="_151584931294815">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:many-to-many>
+            <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1515851284132" connected-attribute-id="_151767769207083" v="true" xvt="" name="eventosSuscritos" id="_151767769204282">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
@@ -201,7 +201,15 @@
     <jpa:entity compositePrimaryKeyClass="EventoPK" abs="false" class="Evento" v="true" xre="false" m="false" rootElement="_151120847919126" id="_1515851284132">
         <jpa:ath>WORLD OFFICE</jpa:ath>
         <jpa:attributes>
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1511208504197" connected-attribute-id="_151767767026781" v="true" xvt="" name="usuarioCreador" id="_151767767026680">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:many-to-one>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1515849183897" connected-attribute-id="_151585144008864" v="true" xvt="" name="etiquetas" id="_151585144008063">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:many-to-many>
+            <jpa:many-to-many collection-type="java.util.List" connected-entity-id="_1511208504197" connected-attribute-id="_151767769204282" v="true" xvt="" name="usuariosSuscritos" id="_151767769207083">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:many-to-many>
