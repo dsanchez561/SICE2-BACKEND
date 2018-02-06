@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.javeriana.SIIEJ.entidades.Etiqueta;
+import co.com.javeriana.SIIEJ.entidades.Evento;
 import co.com.javeriana.SIIEJ.entidades.Usuario;
+import co.com.javeriana.SIIEJ.implementacion.EtiquetaImpl;
 import co.com.javeriana.SIIEJ.implementacion.UsuarioImpl;
 import co.com.javeriana.SIIEJ.log.Log;
 
@@ -29,6 +31,24 @@ public class RestUsuario {
 	
 	@Autowired
 	private UsuarioImpl usuarioImpl;
+	
+	@Autowired
+	private EtiquetaImpl etiquetaImpl;
+	
+	/**
+	 * Método que expone el servicio de asociar etiquetas a un usuario
+	 * @param id del usuario
+	 * @param etiquetas lista de etiquetas
+	 * @return la entidad usuario
+	 */
+	@RequestMapping(value="/obtenerEtiquetas",method=RequestMethod.GET, produces="application/json")
+	public ResponseEntity<List<Etiqueta>> obtenerEtiquetas(){
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(etiquetaImpl.listar());
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 	
 	/**
 	 * Método que expone el servicio de asociar etiquetas a un usuario
@@ -80,14 +100,14 @@ public class RestUsuario {
 	 * @param id del usuario
 	 * @return lista de eventos
 	 */
-//	@RequestMapping(value="/obtenerEventosDisponibles/{id}",method=RequestMethod.POST)
-//	public ResponseEntity<Usuario> obtenerEventosDisponibles(@PathVariable("id") String id){
-//		try {
-//			return ResponseEntity.status(HttpStatus.OK).body(usuarioImpl.obtenerEventosDisponibles(id));
-//		}catch(Exception e) {
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//		}
-//	}
+	@RequestMapping(value="/obtenerEventosDisponibles/{id}",method=RequestMethod.GET, produces = "application/json")
+	public ResponseEntity<List<Evento>> obtenerEventosDisponibles(@PathVariable("id") String id){
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(usuarioImpl.obtenerEventosDisponibles(id));
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 	
 	/**
 	 * Metodo que permite asociar tipos de proyectos que le interesan al usuario

@@ -80,13 +80,14 @@ public class UsuarioImpl {
 		}
 	}
 
-//	public List<Evento> obtenerEventosDisponibles(String id) {
-//		try {
-//			return usuarioRepository.
-//		}catch(Exception e) {
-//			log.error(e.getMessage(), e);
-//			throw new BaseDatosException("Error al asociar un evento al usuario",e);
-//		}
-//	}
+	public List<Evento> obtenerEventosDisponibles(String id) {
+		try {
+			Usuario usuarioCreador = usuarioRepository.findOne(Long.valueOf(id));
+			return eventoRepository.findByUsuarioCreadorNot(usuarioCreador);
+		}catch(Exception e) {
+			log.error(e.getMessage(), e);
+			throw new BaseDatosException("Error al listar los eventos disponibles para un usuario",e);
+		}
+	}
 	
 }

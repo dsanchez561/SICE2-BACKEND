@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import co.com.javeriana.SIIEJ.entidades.Etiqueta;
 import co.com.javeriana.SIIEJ.entidades.Evento;
+import co.com.javeriana.SIIEJ.entidades.Usuario;
 import co.com.javeriana.SIIEJ.excepciones.BaseDatosException;
 import co.com.javeriana.SIIEJ.log.Log;
 import co.com.javeriana.SIIEJ.repositories.EventoRepository;
@@ -39,6 +40,20 @@ public class EventoImpl {
 			Evento evento = eventoRepository.findOne(Long.valueOf(id));
 			evento.setEtiquetas(etiquetas);
 			return eventoRepository.save(evento);
+		}catch(Exception e) {
+			log.error(e.getMessage(), e);
+			throw new BaseDatosException("Error al asociar etiquetas al evento",e);
+		}
+	}
+
+	/**
+	 * Método que consulta los usuarios suscritos
+	 * @param id del evento
+	 * @return lista de usuarios suscritos
+	 */
+	public List<Usuario> obtenerSuscritos(String id) {
+		try {
+			return eventoRepository.findOne(Long.valueOf(id)).getUsuariosSuscritos();
 		}catch(Exception e) {
 			log.error(e.getMessage(), e);
 			throw new BaseDatosException("Error al asociar etiquetas al evento",e);

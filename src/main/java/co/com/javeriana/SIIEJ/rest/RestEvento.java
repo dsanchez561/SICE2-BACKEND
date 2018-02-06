@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.com.javeriana.SIIEJ.entidades.Etiqueta;
 import co.com.javeriana.SIIEJ.entidades.Evento;
+import co.com.javeriana.SIIEJ.entidades.Usuario;
 import co.com.javeriana.SIIEJ.implementacion.EventoImpl;
 
 /**
@@ -42,6 +43,21 @@ public class RestEvento {
 	public ResponseEntity<Evento> asociarEtiquetas(@PathVariable("id") String id, @RequestBody List<Etiqueta> etiquetas){
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(eventoImpl.asociarEtiquetas(id, etiquetas));
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	/**
+	 * Método que expone el servicio de asociar etiquetas a un evento
+	 * @param id del evento
+	 * @param etiquetas lista de etiquetas
+	 * @return la entidad evento
+	 */
+	@RequestMapping(value="/obtenerSuscritos/{id}",method=RequestMethod.GET, produces="application/json")
+	public ResponseEntity<List<Usuario>> obtenerSuscritos(@PathVariable("id") String id){
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(eventoImpl.obtenerSuscritos(id));
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
