@@ -4,7 +4,10 @@
 package co.com.javeriana.SIEEJ.entidades;
 
 import java.util.List;
+
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 /**
@@ -13,6 +16,13 @@ import javax.persistence.OneToMany;
 @Entity
 public class Universidad extends Usuario {
 
+	@Basic
+    private String url;
+    
+    @Lob
+    @Basic
+    private byte[] imagen;
+    
     @OneToMany(targetEntity = Lugar.class)
     private List<Lugar> lugares;
 
@@ -24,4 +34,19 @@ public class Universidad extends Usuario {
         this.lugares = lugares;
     }
 
+    public String getUrl() {
+        return this.url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public byte[] getImagen() {
+        return this.imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
 }

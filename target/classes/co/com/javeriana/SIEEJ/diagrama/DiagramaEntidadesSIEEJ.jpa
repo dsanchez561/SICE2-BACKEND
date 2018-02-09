@@ -132,6 +132,12 @@
     <jpa:entity compositePrimaryKeyClass="UniversidadPK" abs="false" class="Universidad" superclassId="_1511208504197" v="true" xre="false" m="false" rootElement="_151120847919126" id="_1515850234439">
         <jpa:ath>WORLD OFFICE</jpa:ath>
         <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="url" id="_151820056322169"/>
+            <jpa:basic attribute-type="byte[]" v="true" xvt="" name="imagen" id="_151820057343270">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:lob/>
+            </jpa:basic>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1515851785317" v="true" xvt="" name="lugares" id="_151585184678869">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -139,6 +145,12 @@
         </jpa:attributes>
         <jpa:nq e="false" name="Universidad.findAll">
             <jpa:query>Select e from Universidad e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Universidad.findByUrl">
+            <jpa:query>Select u from Universidad u where u.url=:url</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Universidad.findByImagen">
+            <jpa:query>Select u from Universidad u where u.imagen=:imagen</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="HorarioPK" abs="false" class="Horario" v="true" xre="false" m="false" rootElement="_151120847919126" id="_1515850393651">
@@ -306,22 +318,22 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_151120847919127">
-            <i ref="_1515851785317" x="1090" y="543"/>
-            <i ref="_1515849183897" x="78" y="164"/>
-            <i ref="_1515849912184" x="440" y="734"/>
-            <i ref="_1515852303525" x="1431" y="282"/>
-            <i ref="_1515849754703" x="-1" y="512"/>
-            <i ref="_1515850112360" x="541" y="690"/>
-            <i ref="_1515851924867" x="1271" y="837"/>
-            <i ref="_1515850234439" x="729" y="734"/>
-            <i ref="_1511208504197" x="346" y="4"/>
-            <i ref="_1515851010001" x="1161" y="434"/>
-            <i ref="_1515849847159" x="325" y="797"/>
-            <i ref="_1515851284132" x="1090" y="220"/>
-            <i ref="_1515850393651" x="741" y="-9"/>
-            <i ref="_1515849133643" x="926" y="384"/>
-            <i ref="_1515849802407" x="175" y="711"/>
-            <i ref="_1515850567979" x="1431" y="573"/>
+            <i ref="_1515851785317" x="1088" y="541"/>
+            <i ref="_1515849183897" x="76" y="162"/>
+            <i ref="_1515849912184" x="422" y="732"/>
+            <i ref="_1515852303525" x="1429" y="280"/>
+            <i ref="_1515849754703" x="-3" y="510"/>
+            <i ref="_1515850112360" x="539" y="688"/>
+            <i ref="_1515851924867" x="1269" y="835"/>
+            <i ref="_1515850234439" x="739" y="715"/>
+            <i ref="_1511208504197" x="344" y="2"/>
+            <i ref="_1515851010001" x="1159" y="432"/>
+            <i ref="_1515849847159" x="323" y="795"/>
+            <i ref="_1515851284132" x="1088" y="218"/>
+            <i ref="_1515850393651" x="739" y="-11"/>
+            <i ref="_1515849133643" x="924" y="382"/>
+            <i ref="_1515849802407" x="173" y="709"/>
+            <i ref="_1515850567979" x="1429" y="571"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>
