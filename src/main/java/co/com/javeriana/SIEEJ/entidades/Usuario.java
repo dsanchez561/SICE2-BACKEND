@@ -1,5 +1,6 @@
 package co.com.javeriana.SIEEJ.entidades;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -14,17 +15,23 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import co.com.javeriana.SIEEJ.enumeracion.EstadoEnum;
 
 /**
  * @author Javeriana
  */
+@SuppressWarnings("serial")
 @Table(
 	    uniqueConstraints=
 	        @UniqueConstraint(columnNames={"username"})
 	)
 @Entity
-public class Usuario {
+public class Usuario implements UserDetails{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -195,5 +202,35 @@ public class Usuario {
 	 */
 	public void setPreferencias(List<Etiqueta> preferencias) {
 		this.preferencias = preferencias;
+	}
+
+	@JsonIgnore
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isEnabled() {
+		return false;
 	}
 }
