@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
@@ -14,11 +17,21 @@ import javax.persistence.OneToMany;
  * @author Javeriana
  */
 @Entity
-public class Universidad extends Usuario {
+public class Universidad {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+	
 	@Basic
     private String url;
-    
+	
+	@Basic
+    private Boolean activo;
+	
+	@Basic
+    private String nombreUniversidad;
+	
     @Lob
     @Basic
     private byte[] imagen;
@@ -26,7 +39,31 @@ public class Universidad extends Usuario {
     @OneToMany(targetEntity = Lugar.class)
     private List<Lugar> lugares;
 
-    public List<Lugar> getLugares() {
+    public String getNombreUniversidad() {
+		return nombreUniversidad;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setNombreUniversidad(String nombreUniversidad) {
+		this.nombreUniversidad = nombreUniversidad;
+	}
+
+	public List<Lugar> getLugares() {
         return this.lugares;
     }
 
