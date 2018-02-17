@@ -1,4 +1,4 @@
-package co.com.javeriana.SIEEJ.rest.general.colaMensajes;
+package co.com.javeriana.SIEEJ.rest.colaMensajes;
 
 import java.util.ArrayList;
 import java.util.List;
