@@ -1,4 +1,4 @@
-package co.com.javeriana.SIEEJ.rest;
+package co.com.javeriana.SIEEJ.rest.general;
 
 import java.io.IOException;
 import java.util.List;
