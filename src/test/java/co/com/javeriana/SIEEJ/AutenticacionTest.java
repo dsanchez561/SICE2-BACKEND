@@ -27,7 +27,7 @@ import co.com.javeriana.SIEEJ.main.SieejApplication;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = SieejApplication.class)
 @AutoConfigureMockMvc
-public class AutenticacionTests {
+public class AutenticacionTest {
 	@Autowired
 	private WebApplicationContext context;
 	

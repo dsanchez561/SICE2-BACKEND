@@ -1,4 +1,9 @@
+----------------------------------INSERTS USUARIO----------------------------------
+
 INSERT INTO public.usuario(	dtype, apellidos, estado_enum, nombre, password, username)VALUES ('Estudiante','Sánchez','NUEVO','Daniel','123456','daniel');
+
+----------------------------------INSERTS UNIVERSIDAD----------------------------------
+
 INSERT INTO public.universidad(nombre_universidad, url, activo)VALUES ('Pontificia Universidad Javeriana', 'http://www.javeriana.edu.co/home',true);
 INSERT INTO public.universidad(nombre_universidad, url, activo)VALUES ('Universidad Los Andes', 'https://uniandes.edu.co/',true);
 INSERT INTO public.universidad(nombre_universidad, url, activo)VALUES ('Universidad El Bosque', 'http://www.uelbosque.edu.co/',true);
