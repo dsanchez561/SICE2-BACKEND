@@ -16,7 +16,7 @@ import co.com.javeriana.SIEEJ.seguridad.SeguridadInfo;
 
 /**
  * Clase encargada de la creación de cualquier entidad del sistema
- * @author WORLD OFFICE
+ * @author Javeriana
  *
  * @param <T>
  */

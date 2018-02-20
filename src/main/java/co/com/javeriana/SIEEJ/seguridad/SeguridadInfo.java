@@ -9,7 +9,7 @@ import org.reflections.Reflections;
  * Clase Singleton que contiene información de las entidades del sistema que han
  * sido marcadas con la anotación de Seguridad.
  * 
- * @author WORLD OFFICE
+ * @author Javeriana
  */
 public class SeguridadInfo {
 
