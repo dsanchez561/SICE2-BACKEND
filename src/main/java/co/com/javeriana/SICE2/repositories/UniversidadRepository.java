@@ -16,7 +16,7 @@ import co.com.javeriana.SICE2.entidades.Universidad;
  *
  */
 
-@Repository
+@Repository(value="Universidad")
 public interface UniversidadRepository extends JpaRepository<Universidad, Long> {
 	public List<Universidad> findByactivo(Boolean activo);
 }
