@@ -27,6 +27,7 @@ import co.com.javeriana.SICE2.repositories.UniversidadRepository;
  */
 @Component("editarUniversidad")
 public class EditarUniversidad extends Comando<Universidad> {
+	
 	@Autowired
 	private UniversidadRepository universidadRepository;
 	
