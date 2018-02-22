@@ -12,7 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import co.com.javeriana.SICE2.entidades.Usuario;
+import co.com.javeriana.SICE2.entidades.UsuarioJaveriana;
 import co.com.javeriana.SICE2.repositories.UsuarioRepository;
 
 
@@ -32,7 +32,7 @@ public class RESTAuthenticationProvider implements AuthenticationProvider {
 		String name = authentication.getName().trim();
 		String password = authentication.getCredentials().toString();
 		logger.info("Name = " + name + " ,Password = " + password);
-		Usuario usuario = Usuariorepositorio.findByUsernameAndPassword(name, password);
+		UsuarioJaveriana usuario = Usuariorepositorio.findByUsernameAndPassword(name, password);
 		if (usuario != null && password.equals(usuario.getPassword())) {
 			logger.info("Autenticación exitosa!");
 			return new UsernamePasswordAuthenticationToken(usuario, usuario.getPassword(), new ArrayList<>());

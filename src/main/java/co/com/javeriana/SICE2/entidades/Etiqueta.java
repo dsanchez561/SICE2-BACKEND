@@ -18,14 +18,14 @@ import javax.persistence.ManyToMany;
 public class Etiqueta {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Basic
     private String categoria;
 
-    @ManyToMany(targetEntity = Usuario.class, mappedBy = "preferencias")
-    private List<Usuario> usuarios;
+    @ManyToMany(targetEntity = UsuarioJaveriana.class, mappedBy = "preferencias")
+    private List<UsuarioJaveriana> usuarioJaverianas;
 
     @ManyToMany(targetEntity = Evento.class, mappedBy = "etiquetas")
     private List<Evento> eventos;
@@ -46,12 +46,12 @@ public class Etiqueta {
         this.categoria = categoria;
     }
 
-    public List<Usuario> getUsuarios() {
-        return this.usuarios;
+    public List<UsuarioJaveriana> getUsuarioJaverianas() {
+        return this.usuarioJaverianas;
     }
 
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuarioJaverianas(List<UsuarioJaveriana> usuarioJaverianas) {
+        this.usuarioJaverianas = usuarioJaverianas;
     }
 
     public List<Evento> getEventos() {

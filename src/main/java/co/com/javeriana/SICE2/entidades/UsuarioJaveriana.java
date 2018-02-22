@@ -31,7 +31,7 @@ import co.com.javeriana.SICE2.enumeracion.EstadoEnum;
 	        @UniqueConstraint(columnNames={"username"})
 	)
 @Entity
-public class Usuario implements UserDetails{
+public class UsuarioJaveriana implements UserDetails{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

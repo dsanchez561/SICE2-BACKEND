@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.com.javeriana.SICE2.entidades.Usuario;
+import co.com.javeriana.SICE2.entidades.UsuarioJaveriana;
 
 
 /**
@@ -19,7 +19,7 @@ import co.com.javeriana.SICE2.entidades.Usuario;
  * Clase encargada de asociar un documento a un tercero
  */
 @Component("asociarTerceroDocumento")
-public class AsociarTerceroDocumento extends Comando<Usuario> {
+public class AsociarTerceroDocumento extends Comando<UsuarioJaveriana> {
 
 	
 	/*

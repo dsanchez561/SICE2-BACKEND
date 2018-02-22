@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.com.javeriana.SICE2.entidades.Usuario;
+import co.com.javeriana.SICE2.entidades.UsuarioJaveriana;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.repositories.UsuarioRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
@@ -35,7 +35,7 @@ public class RestGeneral {
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/retornarUsuario",method=RequestMethod.GET, produces="application/json")
-	public ResponseEntity<Usuario> retornarUsuario() {
+	public ResponseEntity<UsuarioJaveriana> retornarUsuario() {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.findOne(seguridad.getCurrentUser().getId()));
 		}catch (Exception e) {

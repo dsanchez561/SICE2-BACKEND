@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import co.com.javeriana.SICE2.entidades.Usuario;
+import co.com.javeriana.SICE2.entidades.UsuarioJaveriana;
 import co.com.javeriana.SICE2.excepciones.SeguridadException;
 
 
@@ -37,7 +37,7 @@ LogoutSuccessHandler {
 			return;
 		}else {
 			if (authentication != null) {
-				final Usuario principal = (Usuario) authentication.getPrincipal();
+				final UsuarioJaveriana principal = (UsuarioJaveriana) authentication.getPrincipal();
 				logger.info("El usuario " + principal.getUsername() + " cerro sesión");
 			} else {
 				throw new SeguridadException("No hay sesión activa");

@@ -9,6 +9,6 @@ import javax.persistence.Entity;
  * @author Javeriana
  */
 @Entity
-public class Egresado extends Usuario {
+public class Egresado extends UsuarioJaveriana {
 
 }

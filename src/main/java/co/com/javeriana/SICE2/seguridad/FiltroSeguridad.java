@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import co.com.javeriana.SICE2.entidades.Usuario;
+import co.com.javeriana.SICE2.entidades.UsuarioJaveriana;
 
 @CrossOrigin
 @Component
@@ -43,11 +43,11 @@ public class FiltroSeguridad implements Filter {
 	 */
 	private void parametrosLogger(ServletRequest servletRequest) {
 		final HttpServletRequest request = (HttpServletRequest) servletRequest;
-		final Usuario currentUser = seguridad.getCurrentUser();
+		final UsuarioJaveriana currentUser = seguridad.getCurrentUser();
 		
         MDC.put("IP Cliente", request.getRemoteAddr());
         MDC.put("Servidor", servletRequest.getServerName());
-		MDC.put("Usuario", currentUser != null ? currentUser.getUsername() : "");
+		MDC.put("UsuarioJaveriana", currentUser != null ? currentUser.getUsername() : "");
 	}
 	
     @Override

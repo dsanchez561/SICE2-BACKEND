@@ -3,142 +3,37 @@
  */
 package co.com.javeriana.SICE2.entidades;
 
-import java.util.List;
-
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
 
 /**
- * @author Javeriana
+ * @author WORLD OFFICE
  */
 @Entity
-public class Universidad {
+public class Universidad extends Dominio {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	
-	@Basic
+    @Basic
     private String url;
-	
-	@Basic
-    private Boolean activo;
-	
-	@Basic
-    private String nombreUniversidad;
 
-	@Basic
-    private String nombreArchivo;
-	
     @Lob
     @Basic
     private byte[] imagen;
-    
-    @OneToMany(targetEntity = Lugar.class)
-    private List<Lugar> lugares;
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
+    public String getUrl() {
+        return this.url;
+    }
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	/**
-	 * @return the url
-	 */
-	public String getUrl() {
-		return url;
-	}
+    public byte[] getImagen() {
+        return this.imagen;
+    }
 
-	/**
-	 * @param url the url to set
-	 */
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
 
-	/**
-	 * @return the activo
-	 */
-	public Boolean getActivo() {
-		return activo;
-	}
-
-	/**
-	 * @param activo the activo to set
-	 */
-	public void setActivo(Boolean activo) {
-		this.activo = activo;
-	}
-
-	/**
-	 * @return the nombreUniversidad
-	 */
-	public String getNombreUniversidad() {
-		return nombreUniversidad;
-	}
-
-	/**
-	 * @param nombreUniversidad the nombreUniversidad to set
-	 */
-	public void setNombreUniversidad(String nombreUniversidad) {
-		this.nombreUniversidad = nombreUniversidad;
-	}
-
-	/**
-	 * @return the nombreArchivo
-	 */
-	public String getNombreArchivo() {
-		return nombreArchivo;
-	}
-
-	/**
-	 * @param nombreArchivo the nombreArchivo to set
-	 */
-	public void setNombreArchivo(String nombreArchivo) {
-		this.nombreArchivo = nombreArchivo;
-	}
-
-	/**
-	 * @return the imagen
-	 */
-	public byte[] getImagen() {
-		return imagen;
-	}
-
-	/**
-	 * @param imagen the imagen to set
-	 */
-	public void setImagen(byte[] imagen) {
-		this.imagen = imagen;
-	}
-
-	/**
-	 * @return the lugares
-	 */
-	public List<Lugar> getLugares() {
-		return lugares;
-	}
-
-	/**
-	 * @param lugares the lugares to set
-	 */
-	public void setLugares(List<Lugar> lugares) {
-		this.lugares = lugares;
-	}
-
-  
 }

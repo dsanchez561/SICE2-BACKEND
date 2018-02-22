@@ -3,25 +3,27 @@
  */
 package co.com.javeriana.SICE2.entidades;
 
-import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 /**
  * @author Javeriana
  */
 @Entity
-public class Evento {
+public class Servicios {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToMany(targetEntity = Etiqueta.class)
-    private List<Etiqueta> etiquetas;
+    @Basic
+    private String nombre;
+
+    @Basic
+    private String url;
 
     public Long getId() {
         return this.id;
@@ -31,12 +33,20 @@ public class Evento {
         this.id = id;
     }
 
-    public List<Etiqueta> getEtiquetas() {
-        return this.etiquetas;
+    public String getNombre() {
+        return this.nombre;
     }
 
-    public void setEtiquetas(List<Etiqueta> etiquetas) {
-        this.etiquetas = etiquetas;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
 }

@@ -15,7 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
-import co.com.javeriana.SICE2.entidades.Usuario;
+import co.com.javeriana.SICE2.entidades.UsuarioJaveriana;
 import co.com.javeriana.SICE2.excepciones.SeguridadException;
 
 
@@ -74,11 +74,11 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
 	 * 
 	 * @return usuario en la sesion
 	 */
-	public Usuario getCurrentUser() {
+	public UsuarioJaveriana getCurrentUser() {
 		try {
 			final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			if (!(authentication instanceof AnonymousAuthenticationToken)) {
-				return (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				return (UsuarioJaveriana) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			}
 			return null;
 		}catch(RuntimeException e){

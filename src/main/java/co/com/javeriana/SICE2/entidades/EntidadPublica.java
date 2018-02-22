@@ -9,6 +9,6 @@ import javax.persistence.Entity;
  * @author Javeriana
  */
 @Entity
-public class Profesor extends UsuarioJaveriana {
+public abstract class EntidadPublica extends Dominio {
 
 }

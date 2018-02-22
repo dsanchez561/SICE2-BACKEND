@@ -3,25 +3,12 @@
  */
 package co.com.javeriana.SICE2.entidades;
 
-import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 
 /**
  * @author Javeriana
  */
 @Entity
-public class Empresa extends Usuario {
-
-    @OneToMany(targetEntity = Lugar.class)
-    private List<Lugar> lugares;
-
-    public List<Lugar> getLugares() {
-        return this.lugares;
-    }
-
-    public void setLugares(List<Lugar> lugares) {
-        this.lugares = lugares;
-    }
+public class Empresa extends Dominio {
 
 }

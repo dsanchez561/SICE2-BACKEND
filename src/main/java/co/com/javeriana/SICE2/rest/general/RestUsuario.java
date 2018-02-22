@@ -29,9 +29,9 @@ public class RestUsuario {
 	 * @throws IOException
 	 */
 	/*@RequestMapping(value="/asociarTipoProyecto",method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<Usuario> asociarTipoProyecto(@RequestBody Usuario usuario) {
+	public ResponseEntity<UsuarioJaveriana> asociarTipoProyecto(@RequestBody UsuarioJaveriana usuario) {
 		try {
-			Usuario usuarioActual = usuarioRepository.findOne(seguridad.currentUser().getId());
+			UsuarioJaveriana usuarioActual = usuarioRepository.findOne(seguridad.currentUser().getId());
 			usuarioActual.setTipoProyecto(usuario.getTipoProyecto());
 			usuarioActual.setNuevo(false);
 			usuarioRepository.save(usuarioActual);
