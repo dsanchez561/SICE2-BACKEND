@@ -11,7 +11,7 @@ package co.com.javeriana.SICE2.excepciones;
  * @author WORLD OFFICE
  */
 @SuppressWarnings("serial")
-public class BaseDatosException extends SIEEJException{
+public class BaseDatosException extends SICE2Exception{
 
 	public BaseDatosException(String message) {
 		super(message);

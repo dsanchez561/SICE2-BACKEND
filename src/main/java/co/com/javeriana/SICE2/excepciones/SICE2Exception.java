@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @SuppressWarnings("serial")
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-public abstract class SIEEJException extends RuntimeException{
+public abstract class SICE2Exception extends RuntimeException{
 	
-	public SIEEJException(String message, Throwable cause) {
+	public SICE2Exception(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public SIEEJException(String message) {
+	public SICE2Exception(String message) {
 		super(message);
 	}
 
-	public SIEEJException(Throwable cause) {
+	public SICE2Exception(Throwable cause) {
 		super(cause);
 	}
 }

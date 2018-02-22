@@ -9,7 +9,7 @@ package co.com.javeriana.SICE2.excepciones;
  * @author Javeriana
  */
 @SuppressWarnings("serial")
-public class ComandoException extends SIEEJException {
+public class ComandoException extends SICE2Exception {
 
 	public ComandoException(String message) {
 		super(message);

@@ -4,6 +4,8 @@
 package co.com.javeriana.SICE2.entidades;
 
 import java.util.List;
+
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,11 +16,17 @@ import javax.persistence.OneToMany;
  * @author Javeriana
  */
 @Entity
-public class Dominio {
+public abstract class Dominio {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Basic
+    private String nombre;
+    
+	@Basic
+	private Boolean activo;
 
     @OneToMany(targetEntity = Lugar.class)
     private List<Lugar> lugares;
@@ -50,4 +58,32 @@ public class Dominio {
         this.servicios = servicios;
     }
 
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * @return the activo
+	 */
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	/**
+	 * @param activo the activo to set
+	 */
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+	
 }

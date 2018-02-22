@@ -19,7 +19,7 @@ import javax.persistence.OneToOne;
 public class Lugar {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Basic

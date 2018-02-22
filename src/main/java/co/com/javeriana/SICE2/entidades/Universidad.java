@@ -19,6 +19,10 @@ public class Universidad extends Dominio {
     @Lob
     @Basic
     private byte[] imagen;
+    
+	@Basic
+    private String nombreArchivo;
+	
 
     public String getUrl() {
         return this.url;
@@ -36,4 +40,17 @@ public class Universidad extends Dominio {
         this.imagen = imagen;
     }
 
+	/**
+	 * @return the nombreArchivo
+	 */
+	public String getNombreArchivo() {
+		return nombreArchivo;
+	}
+
+	/**
+	 * @param nombreArchivo the nombreArchivo to set
+	 */
+	public void setNombreArchivo(String nombreArchivo) {
+		this.nombreArchivo = nombreArchivo;
+	}
 }

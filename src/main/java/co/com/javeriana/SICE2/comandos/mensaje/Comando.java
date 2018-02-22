@@ -17,6 +17,7 @@ import com.google.common.collect.Multimap;
 
 import co.com.javeriana.SICE2.enumeracion.TipoDatoEnum;
 import co.com.javeriana.SICE2.excepciones.ComandoException;
+import co.com.javeriana.SICE2.excepciones.SICE2Exception;
 
 /**
  * 
@@ -58,8 +59,26 @@ public abstract class Comando<T> {
 		try {			
 			Class<?> clase = obj.getClass();
 			String nombAtr = mensaje.getString("atributo");
-			Field atr = clase.getDeclaredField(nombAtr);
-			atr.setAccessible(true);
+			Field atr = null;
+			if (null != clase.getSuperclass()) {
+				Boolean atrSuperClase = false;
+				for (Field field : clase.getSuperclass().getDeclaredFields()) {
+					field.setAccessible(true);
+					if(field.getName().equals(nombAtr)){
+						atr = field;
+						atrSuperClase = true;
+						break;
+					}
+				}
+				if (!atrSuperClase) {
+					atr = clase.getDeclaredField(nombAtr);
+				}
+			}
+			if (atr!=null) {
+				atr.setAccessible(true);
+			}else {
+				throw new ComandoException("Error en el atributo de la clase");
+			}
 			
 			TipoDatoEnum tipo = TipoDatoEnum.valueOf(mensaje.getString("tipoDato"));
 			Object valor = mensaje.get(valorAtr);

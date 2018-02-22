@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @SuppressWarnings("serial")
 @ResponseStatus(HttpStatus.UNAUTHORIZED)
-public class SeguridadException extends SIEEJException {
+public class SeguridadException extends SICE2Exception {
 
 	public SeguridadException(String message, Throwable cause) {
 		super(message, cause);

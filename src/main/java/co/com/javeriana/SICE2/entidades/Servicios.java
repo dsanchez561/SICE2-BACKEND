@@ -16,7 +16,7 @@ import javax.persistence.Id;
 public class Servicios {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Basic
