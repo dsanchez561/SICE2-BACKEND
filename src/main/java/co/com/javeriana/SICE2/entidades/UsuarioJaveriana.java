@@ -56,7 +56,7 @@ public class UsuarioJaveriana implements UserDetails{
     private List<Horario> horarios;
 
     @OneToMany(targetEntity = Evento.class)
-    private List<Evento> eventosSuscrito;
+    private List<Evento> eventosSuscritos;
 
     @OneToMany(targetEntity = Evento.class)
     private List<Evento> eventosCreados;
@@ -163,17 +163,17 @@ public class UsuarioJaveriana implements UserDetails{
 	}
 
 	/**
-	 * @return the eventosSuscrito
+	 * @return the eventosSuscritos
 	 */
-	public List<Evento> getEventosSuscrito() {
-		return eventosSuscrito;
+	public List<Evento> getEventosSuscritos() {
+		return eventosSuscritos;
 	}
 
 	/**
-	 * @param eventosSuscrito the eventosSuscrito to set
+	 * @param eventosSuscritos the eventosSuscritos to set
 	 */
-	public void setEventosSuscrito(List<Evento> eventosSuscrito) {
-		this.eventosSuscrito = eventosSuscrito;
+	public void setEventosSuscritos(List<Evento> eventosSuscritos) {
+		this.eventosSuscritos = eventosSuscritos;
 	}
 
 	/**

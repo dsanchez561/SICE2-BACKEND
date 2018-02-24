@@ -17,7 +17,6 @@ import com.google.common.collect.Multimap;
 
 import co.com.javeriana.SICE2.enumeracion.TipoDatoEnum;
 import co.com.javeriana.SICE2.excepciones.ComandoException;
-import co.com.javeriana.SICE2.excepciones.SICE2Exception;
 
 /**
  * 

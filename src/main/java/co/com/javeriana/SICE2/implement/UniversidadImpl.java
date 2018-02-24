@@ -17,8 +17,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import co.com.javeriana.SICE2.comandos.mensaje.Mensaje;
+import co.com.javeriana.SICE2.entidades.Dominio;
+import co.com.javeriana.SICE2.entidades.Servicio;
 import co.com.javeriana.SICE2.entidades.Universidad;
 import co.com.javeriana.SICE2.log.Log;
+import co.com.javeriana.SICE2.repositories.DominioRepository;
+import co.com.javeriana.SICE2.repositories.ServicioRepository;
 import co.com.javeriana.SICE2.repositories.UniversidadRepository;
 import co.com.javeriana.SICE2.utils.Util;
 
@@ -34,6 +38,12 @@ public class UniversidadImpl {
 	
 	@Autowired
 	private UniversidadRepository universidadRepository;
+	
+	@Autowired
+	private DominioRepository dominioRepository;
+
+	@Autowired
+	private ServicioRepository servicioRepository;
 	
 	public List<Universidad> listarUniversidades() {
 		try {
@@ -90,6 +100,12 @@ public class UniversidadImpl {
         ImageIO.write(imageOnDisk, "png", baos);
         baos.flush();
 	    return baos.toByteArray();
+	}
+
+	public String obtenerURL(Long id, String nombre) {
+		Dominio dominio = dominioRepository.findOne(Long.valueOf(id));
+		Servicio pagina = servicioRepository.findByDominioAndNombre(dominio, nombre);
+		return pagina.getUrl();
 	}
 
 }

@@ -31,32 +31,22 @@ public abstract class Dominio {
     @OneToMany(targetEntity = Lugar.class)
     private List<Lugar> lugares;
 
-    @OneToMany(targetEntity = Servicios.class)
-    private List<Servicios> servicios;
+    @OneToMany(targetEntity = Servicio.class, mappedBy="dominio")
+    private List<Servicio> servicios;
 
-    public Long getId() {
-        return this.id;
-    }
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Lugar> getLugares() {
-        return this.lugares;
-    }
-
-    public void setLugares(List<Lugar> lugares) {
-        this.lugares = lugares;
-    }
-
-    public List<Servicios> getServicios() {
-        return this.servicios;
-    }
-
-    public void setServicios(List<Servicios> servicios) {
-        this.servicios = servicios;
-    }
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the nombre
@@ -85,5 +75,33 @@ public abstract class Dominio {
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
 	}
-	
+
+	/**
+	 * @return the lugares
+	 */
+	public List<Lugar> getLugares() {
+		return lugares;
+	}
+
+	/**
+	 * @param lugares the lugares to set
+	 */
+	public void setLugares(List<Lugar> lugares) {
+		this.lugares = lugares;
+	}
+
+	/**
+	 * @return the servicios
+	 */
+	public List<Servicio> getServicios() {
+		return servicios;
+	}
+
+	/**
+	 * @param servicios the servicios to set
+	 */
+	public void setServicios(List<Servicio> servicios) {
+		this.servicios = servicios;
+	}
+
 }

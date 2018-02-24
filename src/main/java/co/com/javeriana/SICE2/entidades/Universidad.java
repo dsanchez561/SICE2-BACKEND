@@ -3,9 +3,12 @@
  */
 package co.com.javeriana.SICE2.entidades;
 
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 
 /**
  * @author WORLD OFFICE
@@ -22,23 +25,34 @@ public class Universidad extends Dominio {
     
 	@Basic
     private String nombreArchivo;
-	
 
-    public String getUrl() {
-        return this.url;
-    }
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public byte[] getImagen() {
-        return this.imagen;
-    }
+	/**
+	 * @return the imagen
+	 */
+	public byte[] getImagen() {
+		return imagen;
+	}
 
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
-    }
+	/**
+	 * @param imagen the imagen to set
+	 */
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}
 
 	/**
 	 * @return the nombreArchivo
@@ -53,4 +67,6 @@ public class Universidad extends Dominio {
 	public void setNombreArchivo(String nombreArchivo) {
 		this.nombreArchivo = nombreArchivo;
 	}
+	
+    
 }

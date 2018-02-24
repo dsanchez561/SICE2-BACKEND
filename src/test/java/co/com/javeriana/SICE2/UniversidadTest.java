@@ -76,5 +76,12 @@ public class UniversidadTest {
 		assertEquals(false, universidadRepository.findOne(4L).getActivo());
 	}
 	
+	@Test
+	@WithUserDetails("daniel") 
+	public void consultarURLExito() throws Exception {
+		MvcResult result=mvc.perform(get("/universidad/obtenerURL/1/SalasReservadas")).andExpect(status().isOk()).andReturn();
+		String json = result.getResponse().getContentAsString();
+		assertEquals("http://www.javeriana.edu.co/dir-tecnologias-de-informacion/salas-reservadas", json);
+	}
 
 }

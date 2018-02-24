@@ -86,5 +86,20 @@ public class RestUniversidad {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
+	
+	/**
+	 * Método que expone el servicio de obetener las imágenes
+	 * @param id de universidad
+	 * @return nada
+	 */
+	@RequestMapping(value="/obtenerURL/{id}/{pagina}", method=RequestMethod.GET)
+	public ResponseEntity<String> obtenerURL(@PathVariable("id") Long id, @PathVariable("pagina") String pagina){
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(universidadImpl.obtenerURL(id, pagina));
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 
 }
