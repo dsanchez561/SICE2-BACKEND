@@ -30,7 +30,7 @@ public class Servicio {
     private String url;
     
     @JsonIgnore
-    @ManyToOne(targetEntity = Universidad.class)
+    @ManyToOne(targetEntity = Dominio.class)
     private Dominio dominio;
 
 	/**

@@ -7,16 +7,21 @@ import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+
+import co.com.javeriana.SICE2.enumeracion.TipoDominio;
 
 /**
  * @author Javeriana
  */
 @Entity
-public abstract class Dominio {
+public class Dominio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,12 +32,101 @@ public abstract class Dominio {
     
 	@Basic
 	private Boolean activo;
+	
+	@Basic
+	private Boolean nacional;
 
+    @Basic
+    private String url;
+    
+    @Basic
+    @Enumerated(value = EnumType.STRING)
+    private TipoDominio tipo;
+
+    @Lob
+    @Basic
+    private byte[] imagen;
+    
+	@Basic
+    private String nombreArchivo;
+	
     @OneToMany(targetEntity = Lugar.class)
     private List<Lugar> lugares;
 
     @OneToMany(targetEntity = Servicio.class, mappedBy="dominio")
     private List<Servicio> servicios;
+
+    
+	/**
+	 * @return the nacional
+	 */
+	public Boolean getNacional() {
+		return nacional;
+	}
+
+	/**
+	 * @param nacional the nacional to set
+	 */
+	public void setNacional(Boolean nacional) {
+		this.nacional = nacional;
+	}
+
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * @return the tipo
+	 */
+	public TipoDominio getTipo() {
+		return tipo;
+	}
+
+	/**
+	 * @param tipo the tipo to set
+	 */
+	public void setTipo(TipoDominio tipo) {
+		this.tipo = tipo;
+	}
+
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	/**
+	 * @return the imagen
+	 */
+	public byte[] getImagen() {
+		return imagen;
+	}
+
+	/**
+	 * @param imagen the imagen to set
+	 */
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}
+
+	/**
+	 * @return the nombreArchivo
+	 */
+	public String getNombreArchivo() {
+		return nombreArchivo;
+	}
+
+	/**
+	 * @param nombreArchivo the nombreArchivo to set
+	 */
+	public void setNombreArchivo(String nombreArchivo) {
+		this.nombreArchivo = nombreArchivo;
+	}
+	
 
 	/**
 	 * @return the id

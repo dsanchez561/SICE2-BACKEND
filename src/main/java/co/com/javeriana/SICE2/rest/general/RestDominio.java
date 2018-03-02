@@ -16,27 +16,58 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import co.com.javeriana.SICE2.comandos.mensaje.Mensaje;
-import co.com.javeriana.SICE2.entidades.Universidad;
-import co.com.javeriana.SICE2.implement.UniversidadImpl;
+import co.com.javeriana.SICE2.entidades.Dominio;
+import co.com.javeriana.SICE2.implement.DominioImpl;
 import co.com.javeriana.SICE2.log.Log;
 
 @RestController
-@CrossOrigin(allowCredentials = "true")
-@RequestMapping("universidad")
-public class RestUniversidad {
+public class RestDominio {
 	@Log
 	private Logger log;
 
 	@Autowired
-	private UniversidadImpl universidadImpl;
+	private DominioImpl dominioImpl;
 	
 	/**
-	 * Metodo que permite listar todas las universidades
+	 * Metodo que permite listar todos los dominios nacionales dado el tipo (Universidad, Entidad Publica, Empresa...etc)
+	 * 
+	 * @return devuelve la lista de dominios
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/listarDominiosNacionales", method = RequestMethod.POST)
+	public ResponseEntity<List<Dominio>> listarDominioNacionales(@RequestBody String tipo) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(dominioImpl.listarDominiosNacionales(tipo));
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+
+	/**
+	 * Metodo que permite listar todos los dominios nacionales dado el tipo (Universidad, Entidad Publica, Empresa...etc)
+	 * 
+	 * @return devuelve la lista de dominios
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/listarDominiosInternacionales", method = RequestMethod.POST)
+	public ResponseEntity<List<Dominio>> listarDominiosInternacionales(@RequestBody String tipo) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(dominioImpl.listarDominiosInternacionales(tipo));
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	/**
+	 * Metodo que permite 
 	 * 
 	 * @return devuelve la lista de universidades
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/listarUniversidades", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/listarUniversidades", method = RequestMethod.GET)
 	public ResponseEntity<List<Universidad>> listarUniversidades() {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(universidadImpl.listarUniversidades());
@@ -44,8 +75,7 @@ public class RestUniversidad {
 			log.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
-	}
-
+	}*/
 	/**
 	 * Método que expone el servicio de subir una imagen
 	 * 
@@ -58,9 +88,9 @@ public class RestUniversidad {
 	@RequestMapping(value = "/imagen/upload/{id}", method = RequestMethod.POST)
 	public ResponseEntity<Object> uploadImage(@RequestBody MultipartFile file, @PathVariable("id") String id) {
 		try {
-			Mensaje mensaje = universidadImpl.validarImagen(file);
+			Mensaje mensaje = dominioImpl.validarImagen(file);
 			if (mensaje == null) {
-				universidadImpl.uploadImage(file, Long.valueOf(id));
+				//dominioImpl.uploadImage(file, Long.valueOf(id));
 				return ResponseEntity.status(HttpStatus.OK).body(null);
 			} else {
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensaje);
@@ -79,7 +109,7 @@ public class RestUniversidad {
 	@RequestMapping(value="/imagenes/download/{id}", method=RequestMethod.POST)
 	public ResponseEntity<Object> downloadImage(@PathVariable("id") String id){
 		try {
-			universidadImpl.downloadImage(id);
+			//dominioImpl.downloadImage(id);
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -95,7 +125,7 @@ public class RestUniversidad {
 	@RequestMapping(value="/obtenerURL/{id}/{pagina}", method=RequestMethod.GET)
 	public ResponseEntity<String> obtenerURL(@PathVariable("id") Long id, @PathVariable("pagina") String pagina){
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(universidadImpl.obtenerURL(id, pagina));
+			return ResponseEntity.status(HttpStatus.OK).body(dominioImpl.obtenerURL(id, pagina));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

@@ -17,19 +17,19 @@ import org.springframework.transaction.annotation.Transactional;
 import co.com.javeriana.SICE2.comandos.mensaje.Comando;
 import co.com.javeriana.SICE2.comandos.mensaje.Mensaje;
 import co.com.javeriana.SICE2.constantes.CodigosError;
-import co.com.javeriana.SICE2.entidades.Universidad;
+import co.com.javeriana.SICE2.entidades.Dominio;
 import co.com.javeriana.SICE2.log.Log;
-import co.com.javeriana.SICE2.repositories.UniversidadRepository;
+import co.com.javeriana.SICE2.repositories.DominioRepository;
 
 /**
  * @author Javeriana
  *
  */
-@Component("editarUniversidad")
-public class EditarUniversidad extends Comando<Universidad> {
+@Component("editarDominio")
+public class EditarDominio extends Comando<Dominio> {
 	
 	@Autowired
-	private UniversidadRepository universidadRepository;
+	private DominioRepository dominioRepository;
 	
 	@Log
 	private Logger log;
@@ -43,12 +43,12 @@ public class EditarUniversidad extends Comando<Universidad> {
 		try {
 			id = mensaje.getLong("id");
 			atributo = mensaje.getString("atributo");
-			Universidad obj = universidadRepository.findOne(id);
+			Dominio obj = dominioRepository.findOne(id);
 			modificarAtributo(obj, mensaje);
-			universidadRepository.save(obj);
+			dominioRepository.save(obj);
 		}catch (JSONException e) {
 			log.error(e.getMessage(), e);
-			mensajesRespuesta.add(new Mensaje(id, "editarUniversidad" , atributo , false , CodigosError.ERROR_001));
+			mensajesRespuesta.add(new Mensaje(id, "editarDominio" , atributo , false , CodigosError.ERROR_001));
 		}
 		return mensajesRespuesta;		
 	}

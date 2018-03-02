@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import co.com.javeriana.SICE2.main.Sice2Application;
-import co.com.javeriana.SICE2.repositories.UniversidadRepository;
+import co.com.javeriana.SICE2.repositories.DominioRepository;
 
 /**
  * @author Javeriana
@@ -40,7 +40,7 @@ public class UniversidadTest {
 	private WebApplicationContext context;
 	
 	@Autowired
-	private UniversidadRepository universidadRepository;
+	private DominioRepository dominioRepository;
 	
 	private MockMvc mvc;
 	
@@ -54,10 +54,10 @@ public class UniversidadTest {
 	@Test
 	@WithUserDetails("daniel") 
 	public void listarUniversidadesExito() throws Exception {
-		MvcResult result=mvc.perform(get("/universidad/listarUniversidades")).andExpect(status().isOk()).andReturn();
+		MvcResult result=mvc.perform(get("/listarDominio")).andExpect(status().isOk()).andReturn();
 		String json = result.getResponse().getContentAsString();
 		JSONArray mensaje = new JSONArray(json);
-		assertEquals(universidadRepository.count(), mensaje.length());
+		assertEquals(dominioRepository.count(), mensaje.length());
 	}
 	
 	@Test
@@ -73,13 +73,13 @@ public class UniversidadTest {
 				"	}\r\n" + 
 				"]";
 		mvc.perform(post("/mensaje").content(mensaje).contentType("text/plain")).andExpect(status().isOk());
-		assertEquals(false, universidadRepository.findOne(4L).getActivo());
+		assertEquals(false, dominioRepository.findOne(4L).getActivo());
 	}
 	
 	@Test
 	@WithUserDetails("daniel") 
 	public void consultarURLExito() throws Exception {
-		MvcResult result=mvc.perform(get("/universidad/obtenerURL/1/SalasReservadas")).andExpect(status().isOk()).andReturn();
+		MvcResult result=mvc.perform(get("/obtenerURL/1/SalasReservadas")).andExpect(status().isOk()).andReturn();
 		String json = result.getResponse().getContentAsString();
 		assertEquals("http://www.javeriana.edu.co/dir-tecnologias-de-informacion/salas-reservadas", json);
 	}

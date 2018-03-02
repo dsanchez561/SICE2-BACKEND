@@ -19,11 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import co.com.javeriana.SICE2.comandos.mensaje.Mensaje;
 import co.com.javeriana.SICE2.entidades.Dominio;
 import co.com.javeriana.SICE2.entidades.Servicio;
-import co.com.javeriana.SICE2.entidades.Universidad;
+import co.com.javeriana.SICE2.enumeracion.TipoDominio;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.repositories.DominioRepository;
 import co.com.javeriana.SICE2.repositories.ServicioRepository;
-import co.com.javeriana.SICE2.repositories.UniversidadRepository;
 import co.com.javeriana.SICE2.utils.Util;
 
 /**
@@ -31,13 +30,12 @@ import co.com.javeriana.SICE2.utils.Util;
  *
  */
 @Component
-public class UniversidadImpl {
+public class DominioImpl {
 	
 	@Log
 	private Logger log;
 	
-	@Autowired
-	private UniversidadRepository universidadRepository;
+
 	
 	@Autowired
 	private DominioRepository dominioRepository;
@@ -45,9 +43,18 @@ public class UniversidadImpl {
 	@Autowired
 	private ServicioRepository servicioRepository;
 	
-	public List<Universidad> listarUniversidades() {
+	public List<Dominio> listarDominiosNacionales(String tipo) {
 		try {
-			return universidadRepository.findAll();
+			return dominioRepository.findByActivoAndTipoAndNacional(true, TipoDominio.valueOf(tipo),true);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return null;
+		}
+	}
+	
+	public List<Dominio> listarDominiosInternacionales(String tipo) {
+		try {
+			return dominioRepository.findByActivoAndTipoAndNacional(true, TipoDominio.valueOf(tipo),false);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return null;
@@ -71,7 +78,7 @@ public class UniversidadImpl {
 	 * @param id del inventario
 	 * @throws IOException
 	 */
-	public void uploadImage(MultipartFile file, Long id) throws IOException {
+	/*public void uploadImage(MultipartFile file, Long id) throws IOException {
 		Universidad universidad = universidadRepository.findOne(id);
 		universidad.setImagen(file.getBytes());
 		universidadRepository.save(universidad);
@@ -85,7 +92,7 @@ public class UniversidadImpl {
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}
-	}
+	}*/
 	
 	/**
 	 * Método que crea una imagen por defecto
