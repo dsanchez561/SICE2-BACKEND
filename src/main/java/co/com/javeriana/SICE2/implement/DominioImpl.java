@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import co.com.javeriana.SICE2.comandos.mensaje.Mensaje;
 import co.com.javeriana.SICE2.entidades.Dominio;
 import co.com.javeriana.SICE2.entidades.Servicio;
-import co.com.javeriana.SICE2.enumeracion.TipoDominio;
+import co.com.javeriana.SICE2.enumeracion.TipoDominioEnum;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.repositories.DominioRepository;
 import co.com.javeriana.SICE2.repositories.ServicioRepository;
@@ -45,7 +45,7 @@ public class DominioImpl {
 	
 	public List<Dominio> listarDominiosNacionales(String tipo) {
 		try {
-			return dominioRepository.findByActivoAndTipoAndNacional(true, TipoDominio.valueOf(tipo),true);
+			return dominioRepository.findByActivoAndTipoAndNacional(true, TipoDominioEnum.valueOf(tipo),true);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return null;
@@ -54,7 +54,7 @@ public class DominioImpl {
 	
 	public List<Dominio> listarDominiosInternacionales(String tipo) {
 		try {
-			return dominioRepository.findByActivoAndTipoAndNacional(true, TipoDominio.valueOf(tipo),false);
+			return dominioRepository.findByActivoAndTipoAndNacional(true, TipoDominioEnum.valueOf(tipo),false);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return null;

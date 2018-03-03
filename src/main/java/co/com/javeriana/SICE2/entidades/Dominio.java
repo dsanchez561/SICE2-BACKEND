@@ -15,7 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
-import co.com.javeriana.SICE2.enumeracion.TipoDominio;
+import co.com.javeriana.SICE2.enumeracion.TipoDominioEnum;
 
 /**
  * @author Javeriana
@@ -41,7 +41,7 @@ public class Dominio {
     
     @Basic
     @Enumerated(value = EnumType.STRING)
-    private TipoDominio tipo;
+    private TipoDominioEnum tipo;
 
     @Lob
     @Basic
@@ -81,14 +81,14 @@ public class Dominio {
 	/**
 	 * @return the tipo
 	 */
-	public TipoDominio getTipo() {
+	public TipoDominioEnum getTipo() {
 		return tipo;
 	}
 
 	/**
 	 * @param tipo the tipo to set
 	 */
-	public void setTipo(TipoDominio tipo) {
+	public void setTipo(TipoDominioEnum tipo) {
 		this.tipo = tipo;
 	}
 

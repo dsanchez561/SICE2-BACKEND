@@ -131,13 +131,6 @@
             <jpa:query>Select e from Estudiante e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="EmpresaPK" abs="false" class="Empresa" superclassId="_1518805732193" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515849847159">
-        <jpa:ath>WORLD OFFICE</jpa:ath>
-        <jpa:attributes/>
-        <jpa:nq e="false" name="Empresa.findAll">
-            <jpa:query>Select e from Empresa e</jpa:query>
-        </jpa:nq>
-    </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ProfesorPK" abs="false" class="Profesor" superclassId="_1511208504197" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515849912184">
         <jpa:ath>WORLD OFFICE</jpa:ath>
         <jpa:attributes/>
@@ -150,46 +143,6 @@
         <jpa:attributes/>
         <jpa:nq e="false" name="AdminJaveriana.findAll">
             <jpa:query>Select e from AdminJaveriana e</jpa:query>
-        </jpa:nq>
-    </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="UniversidadPK" abs="false" class="Universidad" superclassId="_1518805732193" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515850234439">
-        <jpa:ath>WORLD OFFICE</jpa:ath>
-        <jpa:attributes>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="url" id="_151820056322169">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-            <jpa:basic attribute-type="byte[]" v="true" xvt="" name="imagen" id="_151820057343270">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-                <jpa:lob/>
-            </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="nombreArchivo" id="_1518883061844210">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1515851785317" v="true" xvt="" name="lugares" id="_151585184678869">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:one-to-many>
-        </jpa:attributes>
-        <jpa:nq e="false" name="Universidad.findAll">
-            <jpa:query>Select e from Universidad e</jpa:query>
-        </jpa:nq>
-        <jpa:nq e="false" name="Universidad.findByUrl">
-            <jpa:query>Select u from Universidad u where u.url=:url</jpa:query>
-        </jpa:nq>
-        <jpa:nq e="false" name="Universidad.findByImagen">
-            <jpa:query>Select u from Universidad u where u.imagen=:imagen</jpa:query>
-        </jpa:nq>
-        <jpa:nq e="false" name="Universidad.findByNombreArchivo">
-            <jpa:query>Select u from Universidad u where u.nombreArchivo=:nombreArchivo</jpa:query>
-        </jpa:nq>
-        <jpa:nq e="false" name="Universidad.findByActivo">
-            <jpa:query>Select u from Universidad u where u.activo=:activo</jpa:query>
-        </jpa:nq>
-        <jpa:nq e="false" name="Universidad.findByNombreUniversidad">
-            <jpa:query>Select u from Universidad u where u.nombreUniversidad=:nombreUniversidad</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="HorarioPK" abs="false" class="Horario" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515850393651">
@@ -356,6 +309,9 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="url" id="_152008265319281"/>
+            <jpa:basic attribute-type="String" v="true" name="imagen" id="_152008265772782"/>
+            <jpa:basic attribute-type="String" v="true" name="nombreArchivo" id="_152008266428383"/>
             <jpa:one-to-many collection-type="java.util.List" connected-entity-id="_1519477591215" connected-attribute-id="_151949111473683" v="true" name="servicios" id="_151949111473784"/>
             <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1515851785317" connected-attribute-id="_151949114384185" v="true" xvt="" name="lugares" id="_151949114384186">
                 <jpa:xwm nil="false" req="false"/>
@@ -375,6 +331,15 @@
         </jpa:nq>
         <jpa:nq e="false" name="Dominio.findByActivo">
             <jpa:query>Select d from Dominio d where d.activo=:activo</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Dominio.findByUrl">
+            <jpa:query>Select d from Dominio d where d.url=:url</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Dominio.findByImagen">
+            <jpa:query>Select d from Dominio d where d.imagen=:imagen</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Dominio.findByNombreArchivo">
+            <jpa:query>Select d from Dominio d where d.nombreArchivo=:nombreArchivo</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ServicioPK" abs="false" class="Servicio" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1519477591215">
@@ -403,13 +368,6 @@
         </jpa:nq>
         <jpa:nq e="false" name="Servicio.findByUrl">
             <jpa:query>Select p from Servicio p where p.url=:url</jpa:query>
-        </jpa:nq>
-    </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="EntidadPublicaPK" abs="false" class="EntidadPublica" superclassId="_1518805732193" v="true" xre="false" m="false" rootElement="_151120847919126" id="_1519491189635">
-        <jpa:ath>brayanguerrero</jpa:ath>
-        <jpa:attributes/>
-        <jpa:nq e="false" name="EntidadPublica.findAll">
-            <jpa:query>Select e from EntidadPublica e</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="AdministradorPK" abs="false" class="Administrador" superclassId="_1511208504197" v="true" xre="false" m="false" rootElement="_151120847919126" id="_1519491453425">
@@ -481,6 +439,18 @@
             </jpa:basic>
         </jpa:attributes>
     </jpa:embeddable>
+    <jpa:embeddable abs="false" class="TipoDominioEnum" v="true" xre="false" m="false" rootElement="_151120847919126" id="_1520082781845">
+        <jpa:ath>WORLD OFFICE</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" name="UNIVERSIDAD" id="_152008284264585"/>
+            <jpa:basic attribute-type="String" v="true" name="GOIBIERNO" id="_152008284870986"/>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="INSTITUCIONES_DE_INVESTIGACION" id="_152008285337387">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="ONGS" id="_152008287040588"/>
+        </jpa:attributes>
+    </jpa:embeddable>
     <jpa:snp loc="BEFORE_PACKAGE" e="true">/**
  * This file was generated by the Jeddict
  */</jpa:snp>
@@ -497,26 +467,24 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_151120847919127">
-            <i ref="_1515851785317" x="1146" y="753"/>
-            <i ref="_1515849183897" x="74" y="160"/>
-            <i ref="_1515849912184" x="344" y="727"/>
-            <i ref="_1515852303525" x="1534" y="253"/>
-            <i ref="_1515849754703" x="-5" y="508"/>
-            <i ref="_1515850112360" x="447" y="788"/>
-            <i ref="_1515851924867" x="1448" y="854"/>
-            <i ref="_1519477591215" x="1314" y="233"/>
-            <i ref="_1515850234439" x="1331" y="481"/>
-            <i ref="_1519491453425" x="554" y="439"/>
-            <i ref="_1511208504197" x="342" y="0"/>
-            <i ref="_1515851010001" x="1248" y="124"/>
-            <i ref="_1518805732193" x="1114" y="346"/>
-            <i ref="_1515849847159" x="570" y="692"/>
-            <i ref="_1515851284132" x="923" y="0"/>
-            <i ref="_1519491189635" x="795" y="718"/>
-            <i ref="_1515850393651" x="697" y="281"/>
-            <i ref="_1515849133643" x="923" y="299"/>
-            <i ref="_1515849802407" x="171" y="707"/>
-            <i ref="_1515850567979" x="1534" y="546"/>
+            <i ref="_1515851785317" x="1080" y="681"/>
+            <i ref="_1515849183897" x="72" y="158"/>
+            <i ref="_1515849912184" x="342" y="725"/>
+            <i ref="_1515852303525" x="1619" y="251"/>
+            <i ref="_1515849754703" x="-7" y="506"/>
+            <i ref="_1515850112360" x="445" y="786"/>
+            <i ref="_1515851924867" x="1356" y="681"/>
+            <i ref="_1519477591215" x="1364" y="224"/>
+            <i ref="_1519491453425" x="552" y="437"/>
+            <i ref="_1511208504197" x="340" y="-2"/>
+            <i ref="_1515851010001" x="1246" y="122"/>
+            <i ref="_1518805732193" x="1112" y="344"/>
+            <i ref="_1515851284132" x="921" y="-2"/>
+            <i ref="_1520082781845" x="1556" y="55"/>
+            <i ref="_1515850393651" x="695" y="279"/>
+            <i ref="_1515849133643" x="921" y="297"/>
+            <i ref="_1515849802407" x="169" y="705"/>
+            <i ref="_1515850567979" x="1586" y="494"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>
