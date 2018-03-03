@@ -40,6 +40,9 @@ public class Dominio {
     private String url;
     
     @Basic
+    private Long idUsuarioCreador;
+    
+    @Basic
     @Enumerated(value = EnumType.STRING)
     private TipoDominioEnum tipo;
 
@@ -57,6 +60,20 @@ public class Dominio {
     private List<Servicio> servicios;
 
     
+	/**
+	 * @return the idUsuarioCreador
+	 */
+	public Long getIdUsuarioCreador() {
+		return idUsuarioCreador;
+	}
+
+	/**
+	 * @param idUsuarioCreador the idUsuarioCreador to set
+	 */
+	public void setIdUsuarioCreador(Long idUsuarioCreador) {
+		this.idUsuarioCreador = idUsuarioCreador;
+	}
+
 	/**
 	 * @return the nacional
 	 */

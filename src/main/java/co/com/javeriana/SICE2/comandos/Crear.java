@@ -1,4 +1,4 @@
-package co.com.javeriana.SICE2.comandos.mensaje;
+package co.com.javeriana.SICE2.comandos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
+import co.com.javeriana.SICE2.comandos.mensaje.Comando;
+import co.com.javeriana.SICE2.comandos.mensaje.Mensaje;
 import co.com.javeriana.SICE2.excepciones.ComandoException;
 import co.com.javeriana.SICE2.seguridad.SeguridadInfo;
 

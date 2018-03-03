@@ -62,21 +62,6 @@ public class RestDominio {
 	}
 	
 	/**
-	 * Metodo que permite 
-	 * 
-	 * @return devuelve la lista de universidades
-	 * @throws IOException
-	 */
-	/*@RequestMapping(value = "/listarUniversidades", method = RequestMethod.GET)
-	public ResponseEntity<List<Universidad>> listarUniversidades() {
-		try {
-			return ResponseEntity.status(HttpStatus.OK).body(universidadImpl.listarUniversidades());
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
-	}*/
-	/**
 	 * Método que expone el servicio de subir una imagen
 	 * 
 	 * @param file
@@ -90,7 +75,7 @@ public class RestDominio {
 		try {
 			Mensaje mensaje = dominioImpl.validarImagen(file);
 			if (mensaje == null) {
-				//dominioImpl.uploadImage(file, Long.valueOf(id));
+				dominioImpl.uploadImage(file, Long.valueOf(id));
 				return ResponseEntity.status(HttpStatus.OK).body(null);
 			} else {
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensaje);
@@ -109,7 +94,7 @@ public class RestDominio {
 	@RequestMapping(value="/imagenes/download/{id}", method=RequestMethod.POST)
 	public ResponseEntity<Object> downloadImage(@PathVariable("id") String id){
 		try {
-			//dominioImpl.downloadImage(id);
+			dominioImpl.downloadImage(id);
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

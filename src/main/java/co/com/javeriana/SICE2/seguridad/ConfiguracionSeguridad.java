@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
+import co.com.javeriana.SICE2.entidades.Administrador;
 import co.com.javeriana.SICE2.entidades.UsuarioJaveriana;
 import co.com.javeriana.SICE2.excepciones.SeguridadException;
 
@@ -86,23 +87,13 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
 		}
 	}
 	 /**
-		 * Metodo que permite verificar el permiso del usuario
-		 * @param String: permiso que se desea verificar con respecto a los permisos que tiene el usuario en sesion
-		 * @return booleano verdadero si tiene permiso, de lo contrario es false
-		 */
-   /* public boolean verificaPermiso(String permiso) {
-    	List<URD> urds= urdRepository.findByUsuario(this.currentUser());
-		for (int i=0;i<urds.size();i++) {
-			List<Permiso> permisos = urds.get(i).getRol().getPermisos();
-			for (int j=0;j<permisos.size();j++) {
-				if(urds.get(i).getRol().getPermisos().get(j).getCadena().equals(permiso)) {	
-					return true;
-				}
-			}
-		}
-		return false;
+	 * Metodo que permite verificar si el usuario es administrador
+	 * @return booleano verdadero si es admnistrador, de lo contrario es false
+	 */
+   public boolean isAdministrador() {
+    	return this.getCurrentUser() instanceof Administrador;
     }
-		*/
+		
 	
     @Bean
     public FiltroSeguridad filtroSeguridad() {

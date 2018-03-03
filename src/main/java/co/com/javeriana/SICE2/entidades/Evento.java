@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  * @author Javeriana
@@ -19,24 +21,70 @@ public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @OneToOne(targetEntity = UsuarioJaveriana.class)
+    private UsuarioJaveriana creador;
+
+    @OneToMany(targetEntity = UsuarioJaveriana.class)
+    private List<UsuarioJaveriana> inscritos;
 
     @ManyToMany(targetEntity = Etiqueta.class)
     private List<Etiqueta> etiquetas;
 
-    public Long getId() {
-        return this.id;
-    }
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public List<Etiqueta> getEtiquetas() {
-        return this.etiquetas;
-    }
+	/**
+	 * @return the creador
+	 */
+	public UsuarioJaveriana getCreador() {
+		return creador;
+	}
 
-    public void setEtiquetas(List<Etiqueta> etiquetas) {
-        this.etiquetas = etiquetas;
-    }
+	/**
+	 * @param creador the creador to set
+	 */
+	public void setCreador(UsuarioJaveriana creador) {
+		this.creador = creador;
+	}
+
+	/**
+	 * @return the inscritos
+	 */
+	public List<UsuarioJaveriana> getInscritos() {
+		return inscritos;
+	}
+
+	/**
+	 * @param inscritos the inscritos to set
+	 */
+	public void setInscritos(List<UsuarioJaveriana> inscritos) {
+		this.inscritos = inscritos;
+	}
+
+	/**
+	 * @return the etiquetas
+	 */
+	public List<Etiqueta> getEtiquetas() {
+		return etiquetas;
+	}
+
+	/**
+	 * @param etiquetas the etiquetas to set
+	 */
+	public void setEtiquetas(List<Etiqueta> etiquetas) {
+		this.etiquetas = etiquetas;
+	}
 
 }

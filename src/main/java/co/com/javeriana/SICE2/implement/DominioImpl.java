@@ -35,8 +35,6 @@ public class DominioImpl {
 	@Log
 	private Logger log;
 	
-
-	
 	@Autowired
 	private DominioRepository dominioRepository;
 
@@ -78,21 +76,21 @@ public class DominioImpl {
 	 * @param id del inventario
 	 * @throws IOException
 	 */
-	/*public void uploadImage(MultipartFile file, Long id) throws IOException {
-		Universidad universidad = universidadRepository.findOne(id);
-		universidad.setImagen(file.getBytes());
-		universidadRepository.save(universidad);
+	public void uploadImage(MultipartFile file, Long id) throws IOException {
+		Dominio dominio = dominioRepository.findOne(id);
+		dominio.setImagen(file.getBytes());
+		dominioRepository.save(dominio);
 	}
 
 	public void downloadImage(String id) {
 		try {
-			Universidad universidad = universidadRepository.findOne(Long.valueOf(id));
-			universidad.setImagen(getImagenUniversidad("imagenes/"+universidad.getNombreArchivo()));
-			universidadRepository.save(universidad);
+			Dominio dominio = dominioRepository.findOne(Long.valueOf(id));
+			dominio.setImagen(getImagenUniversidad("imagenes/"+dominio.getNombreArchivo()));
+			dominioRepository.save(dominio);
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}
-	}*/
+	}
 	
 	/**
 	 * Método que crea una imagen por defecto
