@@ -108,6 +108,7 @@ public class Dominio {
 	public void setTipo(TipoDominioEnum tipo) {
 		this.tipo = tipo;
 	}
+	
 
 	/**
 	 * @param url the url to set
