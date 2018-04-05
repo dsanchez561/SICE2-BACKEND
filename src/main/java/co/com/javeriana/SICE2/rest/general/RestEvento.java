@@ -123,4 +123,5 @@ public class RestEvento {
 			throw new SeguridadException(SINPERMISOS);
 		}
 	}
+	
 }
