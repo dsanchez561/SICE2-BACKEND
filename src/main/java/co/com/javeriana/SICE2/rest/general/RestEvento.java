@@ -50,18 +50,18 @@ public class RestEvento {
 	 */
 	@Transactional
 	@RequestMapping(value="/inscribirse/{id}",method=RequestMethod.GET)
-	public ResponseEntity<String> asociarTipoProyecto(@PathVariable("id") Long idEvento) {
+	public ResponseEntity<Boolean> asociarTipoProyecto(@PathVariable("id") Long idEvento) {
 		try {
 			Evento evento = eventoRepository.findOne(idEvento);
 			UsuarioJaveriana usuario = usuarioRepository.findOne(seguridad.getCurrentUser().getId());
 			if (!evento.getInscritos().contains(usuario)){
 				evento.getInscritos().add(usuario);
 				usuario.getEventosSuscritos().add(evento);
-				return ResponseEntity.status(HttpStatus.OK).body("El usuario se inscribio correctamente");
+				return ResponseEntity.status(HttpStatus.OK).body(true);
 			}else{
 				evento.getInscritos().remove(usuario);
 				usuario.getEventosSuscritos().remove(evento);
-				return ResponseEntity.status(HttpStatus.OK).body("El usuario se desuscribio correctamente");
+				return ResponseEntity.status(HttpStatus.OK).body(false);
 			}
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
