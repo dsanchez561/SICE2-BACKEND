@@ -76,10 +76,8 @@ public class DominioImpl {
 	 * @param id del inventario
 	 * @throws IOException
 	 */
-	public void uploadImage(MultipartFile file, Long id) throws IOException {
-		Dominio dominio = dominioRepository.findOne(id);
-		dominio.setImagen(file.getBytes());
-		dominioRepository.save(dominio);
+	public byte[] uploadImage(Long id) throws IOException {
+		return dominioRepository.findOne(id).getImagen();
 	}
 
 	public void downloadImage() {

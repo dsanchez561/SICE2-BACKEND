@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import co.com.javeriana.SICE2.entidades.UsuarioJaveriana;
+import co.com.javeriana.SICE2.implement.DominioImpl;
 import co.com.javeriana.SICE2.repositories.UsuarioRepository;
 
 
@@ -20,8 +21,12 @@ import co.com.javeriana.SICE2.repositories.UsuarioRepository;
 @Component
 public class RESTAuthenticationProvider implements AuthenticationProvider {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private UsuarioRepository Usuariorepositorio;
+	
+	@Autowired
+	private DominioImpl dominioImpl;
 
 	/**
 	 * Metodo que verifica los datos de ingreso del usuario que esta intentando ingresar al sistema
@@ -34,6 +39,7 @@ public class RESTAuthenticationProvider implements AuthenticationProvider {
 		logger.info("Name = " + name + " ,Password = " + password);
 		UsuarioJaveriana usuario = Usuariorepositorio.findByUsernameAndPassword(name, password);
 		if (usuario != null && password.equals(usuario.getPassword())) {
+			dominioImpl.downloadImage();
 			logger.info("Autenticación exitosa!");
 			return new UsernamePasswordAuthenticationToken(usuario, usuario.getPassword(), new ArrayList<>());
 		} else {

@@ -7,15 +7,12 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import co.com.javeriana.SICE2.comandos.mensaje.Mensaje;
 import co.com.javeriana.SICE2.entidades.Dominio;
 import co.com.javeriana.SICE2.implement.DominioImpl;
 import co.com.javeriana.SICE2.log.Log;
@@ -70,16 +67,10 @@ public class RestDominio {
 	 *            de universidad
 	 * @return nada
 	 */
-	@RequestMapping(value = "/imagen/upload/{id}", method = RequestMethod.POST)
-	public ResponseEntity<Object> uploadImage(@RequestBody MultipartFile file, @PathVariable("id") String id) {
+	@RequestMapping(value = "/imagen/upload/{id}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> uploadImage(@PathVariable("id") String id) {
 		try {
-			Mensaje mensaje = dominioImpl.validarImagen(file);
-			if (mensaje == null) {
-				dominioImpl.uploadImage(file, Long.valueOf(id));
-				return ResponseEntity.status(HttpStatus.OK).body(null);
-			} else {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensaje);
-			}
+			return ResponseEntity.status(HttpStatus.OK).body(dominioImpl.uploadImage(Long.valueOf(id)));
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
