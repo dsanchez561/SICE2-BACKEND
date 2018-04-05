@@ -82,11 +82,12 @@ public class DominioImpl {
 		dominioRepository.save(dominio);
 	}
 
-	public void downloadImage(String id) {
+	public void downloadImage() {
 		try {
-			Dominio dominio = dominioRepository.findOne(Long.valueOf(id));
-			dominio.setImagen(getImagenUniversidad("imagenes/"+dominio.getNombreArchivo()));
-			dominioRepository.save(dominio);
+			for(Dominio dominio:dominioRepository.findAll()) {
+				dominio.setImagen(getImagenUniversidad("imagenes/"+dominio.getNombreArchivo()));
+				dominioRepository.save(dominio);
+			}
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}

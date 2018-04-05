@@ -91,10 +91,10 @@ public class RestDominio {
 	 * @param id de universidad
 	 * @return nada
 	 */
-	@RequestMapping(value="/imagenes/download/{id}", method=RequestMethod.POST)
-	public ResponseEntity<Object> downloadImage(@PathVariable("id") String id){
+	@RequestMapping(value="/imagenes/download", method=RequestMethod.POST)
+	public ResponseEntity<Object> downloadImage(){
 		try {
-			dominioImpl.downloadImage(id);
+			dominioImpl.downloadImage();
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
