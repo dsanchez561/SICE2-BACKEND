@@ -15,7 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
-import co.com.javeriana.SICE2.entidades.Administrador;
 import co.com.javeriana.SICE2.entidades.UsuarioJaveriana;
 import co.com.javeriana.SICE2.excepciones.SeguridadException;
 
@@ -91,7 +90,7 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
 	 * @return booleano verdadero si es admnistrador, de lo contrario es false
 	 */
    public boolean isAdministrador() {
-    	return this.getCurrentUser() instanceof Administrador;
+    	return this.getCurrentUser().getAdministrador();
     }
 		
 	

@@ -4,9 +4,11 @@
 package co.com.javeriana.SICE2.entidades;
 
 import java.util.List;
-import javax.persistence.Basic;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Javeriana
@@ -14,19 +16,24 @@ import javax.persistence.OneToMany;
 @Entity
 public class Actividad extends Evento {
 
-    @Basic
-    private String nombre;
+	/**
+	 * TODO:: A futuro se implementará el nombre
+	 */
+    /*@Basic
+    @JsonIgnore
+    private String nombre;*/
 
     @OneToMany(targetEntity = Horario.class)
+    @JsonIgnore
     private List<Horario> horarios;
 
-    public String getNombre() {
+   /* public String getNombre() {
         return this.nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
+    }*/
 
     public List<Horario> getHorarios() {
         return this.horarios;

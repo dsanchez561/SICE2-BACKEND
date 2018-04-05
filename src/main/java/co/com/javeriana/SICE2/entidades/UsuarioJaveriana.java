@@ -7,6 +7,7 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,19 +49,26 @@ public class UsuarioJaveriana implements UserDetails{
 
     @Basic
     private String password;
+    
+    @Basic
+    private Boolean administrador;
 
     @Enumerated(EnumType.STRING)
     private EstadoEnum estadoEnum;
 
+    @JsonIgnore
     @OneToMany(targetEntity = Horario.class)
     private List<Horario> horarios;
 
-    @OneToMany(targetEntity = Evento.class)
+    @JsonIgnore
+    @ManyToMany(mappedBy = "inscritos",fetch = FetchType.EAGER)
     private List<Evento> eventosSuscritos;
 
-    @OneToMany(targetEntity = Evento.class)
+    @JsonIgnore
+    @OneToMany(mappedBy = "creador",fetch = FetchType.EAGER)
     private List<Evento> eventosCreados;
 
+    @JsonIgnore
     @ManyToMany(targetEntity = Etiqueta.class)
     private List<Etiqueta> preferencias;
 
@@ -76,6 +84,20 @@ public class UsuarioJaveriana implements UserDetails{
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the administrador
+	 */
+	public Boolean getAdministrador() {
+		return administrador;
+	}
+
+	/**
+	 * @param administrador the administrador to set
+	 */
+	public void setAdministrador(Boolean administrador) {
+		this.administrador = administrador;
 	}
 
 	/**

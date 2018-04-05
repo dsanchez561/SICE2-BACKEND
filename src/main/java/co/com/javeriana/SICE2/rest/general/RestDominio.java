@@ -14,16 +14,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.javeriana.SICE2.entidades.Dominio;
+import co.com.javeriana.SICE2.excepciones.SeguridadException;
 import co.com.javeriana.SICE2.implement.DominioImpl;
 import co.com.javeriana.SICE2.log.Log;
+import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
 
 @RestController
 public class RestDominio {
 	@Log
 	private Logger log;
-
+	
 	@Autowired
 	private DominioImpl dominioImpl;
+	
+	@Autowired
+	private ConfiguracionSeguridad seguridad;
+	
+	private static String SINPERMISOS = "No tiene permisos para acceder a esta funcionalidad";
 	
 	/**
 	 * Metodo que permite listar todos los dominios nacionales dado el tipo (Universidad, Entidad Publica, Empresa...etc)
@@ -70,7 +77,11 @@ public class RestDominio {
 	@RequestMapping(value = "/imagen/upload/{id}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> uploadImage(@PathVariable("id") String id) {
 		try {
-			return ResponseEntity.status(HttpStatus.OK).body(dominioImpl.uploadImage(Long.valueOf(id)));
+			if (seguridad.isAdministrador()){
+				return ResponseEntity.status(HttpStatus.OK).body(dominioImpl.uploadImage(Long.valueOf(id)));
+			}else{
+				throw new SeguridadException(SINPERMISOS);
+			}
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -80,7 +91,6 @@ public class RestDominio {
 	/**
 	 * Método que expone el servicio de obetener las imágenes
 	 * @param id de universidad
-	 * @return nada
 	 */
 	@RequestMapping(value="/imagenes/download", method=RequestMethod.POST)
 	public ResponseEntity<Object> downloadImage(){

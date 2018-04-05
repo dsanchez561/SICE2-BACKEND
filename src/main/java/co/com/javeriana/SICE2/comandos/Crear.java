@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.com.javeriana.SICE2.comandos.mensaje.Comando;
 import co.com.javeriana.SICE2.comandos.mensaje.Mensaje;
@@ -34,6 +36,7 @@ public class Crear<T> extends Comando<T> {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public List<Mensaje> ejecutar(JSONObject mensaje)  {
 		List<Mensaje> mensajes= new ArrayList<>();

@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import co.com.javeriana.SICE2.enumeracion.TipoDominioEnum;
 import co.com.javeriana.SICE2.main.Sice2Application;
 import co.com.javeriana.SICE2.repositories.DominioRepository;
 
@@ -34,7 +35,7 @@ import co.com.javeriana.SICE2.repositories.DominioRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = Sice2Application.class)
 @AutoConfigureMockMvc
-public class UniversidadTest {
+public class DominioTest {
 	
 	@Autowired
 	private WebApplicationContext context;
@@ -53,27 +54,26 @@ public class UniversidadTest {
 	
 	@Test
 	@WithUserDetails("daniel") 
-	public void listarUniversidadesExito() throws Exception {
-		MvcResult result=mvc.perform(get("/listarDominio")).andExpect(status().isOk()).andReturn();
+	public void listarDominiosNacionalesExito() throws Exception {
+		MvcResult result=mvc.perform(post("/listarDominiosNacionales").contentType("application/json").content("UNIVERSIDAD")).andExpect(status().isOk()).andReturn();
 		String json = result.getResponse().getContentAsString();
 		JSONArray mensaje = new JSONArray(json);
-		assertEquals(dominioRepository.count(), mensaje.length());
+		assertEquals(dominioRepository.findByActivoAndTipoAndNacional(true, TipoDominioEnum.UNIVERSIDAD, true).size(), mensaje.length());
 	}
 	
 	@Test
 	@WithUserDetails("daniel") 
-	public void editarUniversidadExito() throws Exception {
-		String mensaje = "[\r\n" + 
-				"	{	\"accion\":\"editarUniversidad\",\r\n" + 
-				"		\"valor\":false,\r\n" + 
-				"		\"id\":4,\r\n" + 
-				"		\"atributo\":\"activo\",\r\n" + 
-				"		\"tipoDato\":\"BOOLEAN\",\r\n" + 
-				"		\"prioridad\":false\r\n" + 
-				"	}\r\n" + 
-				"]";
+	public void editarUniversidadSinPermisos() throws Exception {
+		String mensaje = " [{\"id\":1,\"accion\":\"editarDominio\",\"atributo\":\"nombre\",\"valor\":\"hola\",\"prioridad\":false,\"tipoDato\":\"STRING\"}]";
+		mvc.perform(post("/mensaje").content(mensaje).contentType("text/plain")).andExpect(status().isUnauthorized());
+	}
+	
+	@Test
+	@WithUserDetails("efrain") 
+	public void editarUniversidadConPermisos() throws Exception {
+		String mensaje = " [{\"id\":1,\"accion\":\"editarDominio\",\"atributo\":\"nombre\",\"valor\":\"hola\",\"prioridad\":false,\"tipoDato\":\"STRING\"}]";
 		mvc.perform(post("/mensaje").content(mensaje).contentType("text/plain")).andExpect(status().isOk());
-		assertEquals(false, dominioRepository.findOne(4L).getActivo());
+		assertEquals("hola", dominioRepository.findOne(1L).getNombre());
 	}
 	
 	@Test
