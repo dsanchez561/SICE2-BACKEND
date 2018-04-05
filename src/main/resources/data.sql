@@ -60,12 +60,12 @@ INSERT INTO public.evento( dtype, descripcion, fin, inicio, requisitos, titulo, 
 INSERT INTO public.evento( dtype, descripcion, fin, inicio, requisitos, titulo, creador_id) VALUES ('Actividad', 'Evento de prueba, ¡anímate a participar!','20/05/2018', '20/05/2018', 'Esta actividad no tiene ningún requisito', 'Emprendetón Vol. 2', 2);
 			
 ----------------------------------INSERTS EVENTOS_INSCRITOS ----------------------------------
-INSERT INTO public.evento_inscritos(evento_id, inscritos_id) VALUES (1, 1);
-INSERT INTO public.evento_inscritos(evento_id, inscritos_id) VALUES (1, 3);
-INSERT INTO public.evento_inscritos(evento_id, inscritos_id) VALUES (1, 4);
-INSERT INTO public.evento_inscritos(evento_id, inscritos_id) VALUES (2, 5);
-INSERT INTO public.evento_inscritos(evento_id, inscritos_id) VALUES (2, 6);
-INSERT INTO public.evento_inscritos(evento_id, inscritos_id) VALUES (2, 7);
+INSERT INTO public.evento_inscritos(eventos_suscritos_id, inscritos_id) VALUES (1, 1);
+INSERT INTO public.evento_inscritos(eventos_suscritos_id, inscritos_id) VALUES (1, 3);
+INSERT INTO public.evento_inscritos(eventos_suscritos_id, inscritos_id) VALUES (1, 4);
+INSERT INTO public.evento_inscritos(eventos_suscritos_id, inscritos_id) VALUES (2, 5);
+INSERT INTO public.evento_inscritos(eventos_suscritos_id, inscritos_id) VALUES (2, 6);
+INSERT INTO public.evento_inscritos(eventos_suscritos_id, inscritos_id) VALUES (2, 7);
 
 ----------------------------------INSERTS SERVICIOS----------------------------------
 INSERT INTO public.servicio(nombre, url, dominio_id) VALUES ('ConsultaCursos', 'https://rhg.javeriana.edu.co/psc/HR9GUEST/EMPLOYEE/HR9GUEST/c/ESTABLISH_COURSES.UJ_CATALOGO_CONSUL.GBL', 1);

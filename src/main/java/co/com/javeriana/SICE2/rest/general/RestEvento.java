@@ -3,6 +3,8 @@ package co.com.javeriana.SICE2.rest.general;
 import java.io.IOException;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +48,7 @@ public class RestEvento {
 	 * @return devuelve el estado del servidor
 	 * @throws IOException
 	 */
+	@Transactional
 	@RequestMapping(value="/inscribirse/{id}",method=RequestMethod.GET)
 	public ResponseEntity<String> asociarTipoProyecto(@PathVariable("id") Long idEvento) {
 		try {

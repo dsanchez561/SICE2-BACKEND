@@ -56,13 +56,16 @@ public class UsuarioJaveriana implements UserDetails{
     @Enumerated(EnumType.STRING)
     private EstadoEnum estadoEnum;
 
+    @JsonIgnore
     @OneToMany(targetEntity = Horario.class)
     private List<Horario> horarios;
 
-    @OneToMany(targetEntity = Evento.class)
+    @JsonIgnore
+    @ManyToMany(mappedBy = "inscritos",fetch = FetchType.EAGER)
     private List<Evento> eventosSuscritos;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "creador",fetch = FetchType.EAGER)
     private List<Evento> eventosCreados;
 
     @JsonIgnore

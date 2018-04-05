@@ -8,12 +8,12 @@ import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -43,11 +43,11 @@ public class Evento {
     private String requisitos;
     
     @JsonIgnore
-    @OneToOne(targetEntity = UsuarioJaveriana.class)
+    @ManyToOne(targetEntity = UsuarioJaveriana.class)
     private UsuarioJaveriana creador;
 
     @JsonIgnore
-    @OneToMany(targetEntity = UsuarioJaveriana.class)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<UsuarioJaveriana> inscritos;
     
     @JsonIgnore
