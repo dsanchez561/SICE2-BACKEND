@@ -7,6 +7,7 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -61,9 +62,10 @@ public class UsuarioJaveriana implements UserDetails{
     @OneToMany(targetEntity = Evento.class)
     private List<Evento> eventosSuscritos;
 
-    @OneToMany(targetEntity = Evento.class)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Evento> eventosCreados;
 
+    @JsonIgnore
     @ManyToMany(targetEntity = Etiqueta.class)
     private List<Etiqueta> preferencias;
 

@@ -57,7 +57,7 @@ public class EditarEvento extends Comando<Evento> {
 			}
 		}catch (JSONException e) {
 			log.error(e.getMessage(), e);
-			mensajesRespuesta.add(new Mensaje(id, "editarDominio" , atributo , false , CodigosError.ERROR_001));
+			mensajesRespuesta.add(new Mensaje(id, "editarEvento" , atributo , false , CodigosError.ERROR_001));
 		}
 		return mensajesRespuesta;		
 	}

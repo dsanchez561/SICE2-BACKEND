@@ -42,9 +42,6 @@ public class Evento {
     @Basic
     private String requisitos;
     
-    @Basic
-    private String color;
-    
     @JsonIgnore
     @OneToOne(targetEntity = UsuarioJaveriana.class)
     private UsuarioJaveriana creador;
@@ -181,19 +178,5 @@ public class Evento {
 	 */
 	public void setRequisitos(String requisitos) {
 		this.requisitos = requisitos;
-	}
-
-	/**
-	 * @return the color
-	 */
-	public String getColor() {
-		return color;
-	}
-
-	/**
-	 * @param color the color to set
-	 */
-	public void setColor(String color) {
-		this.color = color;
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,7 +43,7 @@ public class RestEvento {
 	/**
 	 * Metodo que permite inscribir a un usuario a un evento
 	 * 
-	 * @return devuelve la estado del servidor
+	 * @return devuelve el estado del servidor
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/inscribirse/{id}",method=RequestMethod.GET)
@@ -50,12 +51,14 @@ public class RestEvento {
 		try {
 			Evento evento = eventoRepository.findOne(idEvento);
 			UsuarioJaveriana usuario = usuarioRepository.findOne(seguridad.getCurrentUser().getId());
-			if (evento.getInscritos().contains(usuario)){
+			if (!evento.getInscritos().contains(usuario)){
 				evento.getInscritos().add(usuario);
 				usuario.getEventosSuscritos().add(evento);
-				return ResponseEntity.status(HttpStatus.OK).body("Usuario inscrito correctamente");
+				return ResponseEntity.status(HttpStatus.OK).body("El usuario se inscribio correctamente");
 			}else{
-				return ResponseEntity.status(HttpStatus.OK).body("Error el usuario ya se encuentra inscrito en el evento");
+				evento.getInscritos().remove(usuario);
+				usuario.getEventosSuscritos().remove(evento);
+				return ResponseEntity.status(HttpStatus.OK).body("El usuario se desuscribio correctamente");
 			}
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -66,7 +69,7 @@ public class RestEvento {
 	/**
 	 * Metodo que permite asociar tipos de proyectos que le interesan al usuario
 	 * 
-	 * @return devuelve la estado del servidor
+	 * @return devuelve el estado del servidor
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/listarInscritos/{id}",method=RequestMethod.GET)
@@ -87,7 +90,7 @@ public class RestEvento {
 	/**
 	 * Metodo que permite listar todos los eventos registrados en el sistema
 	 * 
-	 * @return devuelve la estado del servidor
+	 * @return devuelve el estado del servidor
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/listarTodosEventos",method=RequestMethod.GET)
@@ -100,5 +103,24 @@ public class RestEvento {
 		}
 	}
 	
-	
+	/**
+	 * Metodo que permite crear un evento
+	 * 
+	 * @return devuelve el estado del servidor
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/crearEvento",method=RequestMethod.POST)
+	public ResponseEntity<Evento> listarTodosEventos(@RequestBody Evento evento) {
+		if (seguridad.isAdministrador()){
+			try {
+				evento.setCreador(seguridad.getCurrentUser());
+				return ResponseEntity.status(HttpStatus.OK).body(eventoRepository.save(evento));
+			}catch (Exception e) {
+				log.error(e.getMessage(), e);
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+			}
+		}else{
+			throw new SeguridadException(SINPERMISOS);
+		}
+	}
 }
