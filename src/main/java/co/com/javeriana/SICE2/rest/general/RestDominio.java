@@ -95,7 +95,6 @@ public class RestDominio {
 	@RequestMapping(value="/imagenes/download", method=RequestMethod.POST)
 	public ResponseEntity<Object> downloadImage(){
 		try {
-			dominioImpl.downloadImage();
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

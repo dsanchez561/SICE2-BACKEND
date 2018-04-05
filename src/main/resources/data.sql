@@ -43,11 +43,6 @@ INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VAL
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',true,'Universidad Antonio Nariño', 'http://investigacion.uan.edu.co/noticias?option=com_content&view=article&id=94:curso-de-emprendimiento&catid=26:noticias&Itemid=101',false, 'Uan.png');
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',true,'Universidad La Sabana', 'https://www.unisabana.edu.co/empresaysociedad/vision-otri/seis/emprendedores-con-sello-sabana/',false, 'UniSabana.png');
 
-
-
-
-
-
 ----------------------------------INSERTS GOBIERNO NACIONAL----------------------------------
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('GOBIERNO',true,'Recon', 'https://www.reconcolombia.org/',true, 'UniversidadDistrital.png');
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('GOBIERNO',true,'Ministerio de Tecnologías y las Comunicaciones de Colombia', 'http://www.mintic.gov.co/portal/604/w3-propertyvalue-1057.html',true, 'UniversidadDistrital.png');
