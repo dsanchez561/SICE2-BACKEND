@@ -3,7 +3,10 @@
  */
 package co.com.javeriana.SICE2.entidades;
 
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author Javeriana
@@ -22,12 +27,33 @@ public class Evento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @Basic
+    private Date inicio;
+    
+    @Basic
+    private Date fin;
+    
+    @Basic
+    private String titulo;
+    
+    @Basic
+    private String descripcion;
+    
+    @Basic
+    private String requisitos;
+    
+    @Basic
+    private String color;
+    
+    @JsonIgnore
     @OneToOne(targetEntity = UsuarioJaveriana.class)
     private UsuarioJaveriana creador;
 
+    @JsonIgnore
     @OneToMany(targetEntity = UsuarioJaveriana.class)
     private List<UsuarioJaveriana> inscritos;
-
+    
+    @JsonIgnore
     @ManyToMany(targetEntity = Etiqueta.class)
     private List<Etiqueta> etiquetas;
 
@@ -87,4 +113,87 @@ public class Evento {
 		this.etiquetas = etiquetas;
 	}
 
+	/**
+	 * @return the inicio
+	 */
+	public Date getInicio() {
+		return inicio;
+	}
+
+	/**
+	 * @param inicio the inicio to set
+	 */
+	public void setInicio(Date inicio) {
+		this.inicio = inicio;
+	}
+
+	/**
+	 * @return the fin
+	 */
+	public Date getFin() {
+		return fin;
+	}
+
+	/**
+	 * @param fin the fin to set
+	 */
+	public void setFin(Date fin) {
+		this.fin = fin;
+	}
+
+	/**
+	 * @return the titulo
+	 */
+	public String getTitulo() {
+		return titulo;
+	}
+
+	/**
+	 * @param titulo the titulo to set
+	 */
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	/**
+	 * @return the descripcion
+	 */
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	/**
+	 * @param descripcion the descripcion to set
+	 */
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	/**
+	 * @return the requisitos
+	 */
+	public String getRequisitos() {
+		return requisitos;
+	}
+
+	/**
+	 * @param requisitos the requisitos to set
+	 */
+	public void setRequisitos(String requisitos) {
+		this.requisitos = requisitos;
+	}
+
+	/**
+	 * @return the color
+	 */
+	public String getColor() {
+		return color;
+	}
+
+	/**
+	 * @param color the color to set
+	 */
+	public void setColor(String color) {
+		this.color = color;
+	}
 }

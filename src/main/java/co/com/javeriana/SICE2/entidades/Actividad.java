@@ -8,6 +8,8 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Javeriana
  */
@@ -15,9 +17,11 @@ import javax.persistence.OneToMany;
 public class Actividad extends Evento {
 
     @Basic
+    @JsonIgnore
     private String nombre;
 
     @OneToMany(targetEntity = Horario.class)
+    @JsonIgnore
     private List<Horario> horarios;
 
     public String getNombre() {

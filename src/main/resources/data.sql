@@ -1,6 +1,13 @@
 ----------------------------------INSERTS USUARIO----------------------------------
-INSERT INTO public.usuario_javeriana(	dtype, apellidos, estado_enum, nombre, password, username)VALUES ('Estudiante','Sánchez','NUEVO','Daniel','123456','daniel');
-INSERT INTO public.usuario_javeriana(	dtype, apellidos, estado_enum, nombre, password, username)VALUES ('Administrador','Ortiz','NUEVO','Efrain','123456','efrain');
+INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador)VALUES ('Estudiante','Sánchez Andrade','NUEVO','Daniel Santiago','123456','daniel',false);
+INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador)VALUES ('Administrador','Ortiz Pabón','NUEVO','Efrain','123456','efrain',true);
+INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador)VALUES ('Estudiante','Acuña Garzón','NUEVO','David Alberto','123456','david',false);
+INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador)VALUES ('Estudiante','Guerrero Danderino','NUEVO','Brayan','123456','brayan',false);
+INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador)VALUES ('Estudiante','Gaitan Bautista','NUEVO','Pablo','123456','pGaitan',false);
+INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador)VALUES ('Estudiante','Velasco Zambrano','NUEVO','David','123456','dVelazco',false);
+INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador)VALUES ('Estudiante','Mendoza Rincón','NUEVO','Maria Jose','123456','mMendoza',false);
+INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador)VALUES ('Estudiante','Moreno','NUEVO','Camilo Andres','123456','cMoreno',false);
+INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador)VALUES ('Estudiante','Suarez','NUEVO','Hernan Joaquin','123456','jSuarez',false);
 
 ----------------------------------INSERTS UNIVERSIDAD NACIONALES----------------------------------
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',true,'Pontificia Universidad Javeriana', 'http://www.javeriana.edu.co/home',true, 'UniversidadJaveriana.png');
@@ -39,6 +46,26 @@ INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VAL
 
 ----------------------------------INSERTS ACELERADORAS INTERNACIONAL----------------------------------
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('RED_ACELERADORAS',false,'REDEMPRENDIA', 'https://www.redemprendia.org/es/content/red-de-aceleradoras-de-empresas-del-tecnologico-de-monterrey',true, 'UniversidadDistrital.png');
+INSERT INTO public.evento( dtype, descripcion, fin, inicio, requisitos, titulo, creador_id) VALUES ('Actividad', 'Evento de prueba, ¡anímate a participar!','28/04/2018', '25/04/2018', 'Esta actividad no tiene ningún requisito', 'Cambiatón', 2);
+
+----------------------------------INSERTS EVENTOS ----------------------------------
+INSERT INTO public.evento( dtype, descripcion, fin, inicio, requisitos, titulo, creador_id) VALUES ('Actividad', 'Evento que pone a prueba tus habilidades de programador, ¡anímate a participar!','04/04/2018', '04/04/2018', 'Esta actividad no tiene ningún requisito', 'Maratón de Programación', 2);
+INSERT INTO public.evento( dtype, descripcion, fin, inicio, requisitos, titulo, creador_id) VALUES ('Actividad', 'Evento que pone a prueba tus habilidades de trabajo en equipo y de programación, ¡anímate a participar!','10/04/2018', '08/04/2018', 'Esta actividad no tiene ningún requisito', 'HACKATON 2018', 2);
+INSERT INTO public.evento( dtype, descripcion, fin, inicio, requisitos, titulo, creador_id) VALUES ('Actividad', 'Evento de prueba, ¡anímate a participar!','11/04/2018', '08/04/2018', 'Esta actividad no tiene ningún requisito', 'Charla motivacional de emprendedores 2018', 2);
+INSERT INTO public.evento( dtype, descripcion, fin, inicio, requisitos, titulo, creador_id) VALUES ('Actividad', 'Evento de prueba, ¡anímate a participar!','14/04/2018', '14/04/2018', 'Esta actividad no tiene ningún requisito', 'Conferencia Emprende Más', 2);
+INSERT INTO public.evento( dtype, descripcion, fin, inicio, requisitos, titulo, creador_id) VALUES ('Actividad', 'Evento de prueba, ¡anímate a participar!','17/04/2018', '15/04/2018', 'Esta actividad no tiene ningún requisito', 'Google Conference', 2);
+INSERT INTO public.evento( dtype, descripcion, fin, inicio, requisitos, titulo, creador_id) VALUES ('Actividad', 'Evento de prueba, ¡anímate a participar!','22/04/2018', '20/04/2018', 'Esta actividad no tiene ningún requisito', 'Microsoft en la Javeriana', 2);
+INSERT INTO public.evento( dtype, descripcion, fin, inicio, requisitos, titulo, creador_id) VALUES ('Actividad', 'Evento de prueba, ¡anímate a participar!','28/04/2018', '28/04/2018', 'Esta actividad no tiene ningún requisito', 'Inovatón', 2);
+INSERT INTO public.evento( dtype, descripcion, fin, inicio, requisitos, titulo, creador_id) VALUES ('Actividad', 'Evento de prueba, ¡anímate a participar!','01/05/2018', '01/05/2018', 'Esta actividad no tiene ningún requisito', 'Emprendetón', 2);
+INSERT INTO public.evento( dtype, descripcion, fin, inicio, requisitos, titulo, creador_id) VALUES ('Actividad', 'Evento de prueba, ¡anímate a participar!','20/05/2018', '20/05/2018', 'Esta actividad no tiene ningún requisito', 'Emprendetón Vol. 2', 2);
+			
+----------------------------------INSERTS EVENTOS_INSCRITOS ----------------------------------
+INSERT INTO public.evento_inscritos(evento_id, inscritos_id) VALUES (1, 1);
+INSERT INTO public.evento_inscritos(evento_id, inscritos_id) VALUES (1, 3);
+INSERT INTO public.evento_inscritos(evento_id, inscritos_id) VALUES (1, 4);
+INSERT INTO public.evento_inscritos(evento_id, inscritos_id) VALUES (2, 5);
+INSERT INTO public.evento_inscritos(evento_id, inscritos_id) VALUES (2, 6);
+INSERT INTO public.evento_inscritos(evento_id, inscritos_id) VALUES (2, 7);
 
 ----------------------------------INSERTS SERVICIOS----------------------------------
 INSERT INTO public.servicio(nombre, url, dominio_id) VALUES ('ConsultaCursos', 'https://rhg.javeriana.edu.co/psc/HR9GUEST/EMPLOYEE/HR9GUEST/c/ESTABLISH_COURSES.UJ_CATALOGO_CONSUL.GBL', 1);

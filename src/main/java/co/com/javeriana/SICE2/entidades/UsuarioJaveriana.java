@@ -48,6 +48,9 @@ public class UsuarioJaveriana implements UserDetails{
 
     @Basic
     private String password;
+    
+    @Basic
+    private Boolean administrador;
 
     @Enumerated(EnumType.STRING)
     private EstadoEnum estadoEnum;
@@ -76,6 +79,20 @@ public class UsuarioJaveriana implements UserDetails{
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the administrador
+	 */
+	public Boolean getAdministrador() {
+		return administrador;
+	}
+
+	/**
+	 * @param administrador the administrador to set
+	 */
+	public void setAdministrador(Boolean administrador) {
+		this.administrador = administrador;
 	}
 
 	/**

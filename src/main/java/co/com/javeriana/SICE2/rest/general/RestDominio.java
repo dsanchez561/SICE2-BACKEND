@@ -16,16 +16,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import co.com.javeriana.SICE2.comandos.mensaje.Mensaje;
 import co.com.javeriana.SICE2.entidades.Dominio;
+import co.com.javeriana.SICE2.excepciones.SeguridadException;
 import co.com.javeriana.SICE2.implement.DominioImpl;
 import co.com.javeriana.SICE2.log.Log;
+import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
 
 @RestController
 public class RestDominio {
 	@Log
 	private Logger log;
-
+	
 	@Autowired
 	private DominioImpl dominioImpl;
+	
+	@Autowired
+	private ConfiguracionSeguridad seguridad;
+	
+	private static String SINPERMISOS = "No tiene permisos para acceder a esta funcionalidad";
 	
 	/**
 	 * Metodo que permite listar todos los dominios nacionales dado el tipo (Universidad, Entidad Publica, Empresa...etc)
@@ -71,33 +78,40 @@ public class RestDominio {
 	 */
 	@RequestMapping(value = "/imagen/upload/{id}", method = RequestMethod.POST)
 	public ResponseEntity<Object> uploadImage(@RequestBody MultipartFile file, @PathVariable("id") String id) {
-		try {
-			Mensaje mensaje = dominioImpl.validarImagen(file);
-			if (mensaje == null) {
-				dominioImpl.uploadImage(file, Long.valueOf(id));
-				return ResponseEntity.status(HttpStatus.OK).body(null);
-			} else {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensaje);
+		if (seguridad.isAdministrador()){
+			try {
+				Mensaje mensaje = dominioImpl.validarImagen(file);
+				if (mensaje == null) {
+					dominioImpl.uploadImage(file, Long.valueOf(id));
+					return ResponseEntity.status(HttpStatus.OK).body(null);
+				} else {
+					return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensaje);
+				}
+			}catch (Exception e) {
+				log.error(e.getMessage(), e);
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 			}
-		}catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}else{
+			throw new SeguridadException(SINPERMISOS);
 		}
 	}
 	
 	/**
 	 * Método que expone el servicio de obetener las imágenes
 	 * @param id de universidad
-	 * @return nada
 	 */
 	@RequestMapping(value="/imagenes/download/{id}", method=RequestMethod.POST)
 	public ResponseEntity<Object> downloadImage(@PathVariable("id") String id){
-		try {
-			dominioImpl.downloadImage(id);
-			return ResponseEntity.status(HttpStatus.OK).body(null);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		if (seguridad.isAdministrador()){
+			try {
+				dominioImpl.downloadImage(id);
+				return ResponseEntity.status(HttpStatus.OK).body(null);
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+			}
+		}else{
+			throw new SeguridadException(SINPERMISOS);
 		}
 	}
 	
