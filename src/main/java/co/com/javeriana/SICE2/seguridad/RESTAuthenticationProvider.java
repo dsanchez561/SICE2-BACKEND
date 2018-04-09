@@ -39,7 +39,6 @@ public class RESTAuthenticationProvider implements AuthenticationProvider {
 		logger.info("Name = " + name + " ,Password = " + password);
 		UsuarioJaveriana usuario = Usuariorepositorio.findByUsernameAndPassword(name, password);
 		if (usuario != null && password.equals(usuario.getPassword())) {
-			dominioImpl.downloadImage();
 			logger.info("Autenticación exitosa!");
 			return new UsernamePasswordAuthenticationToken(usuario, usuario.getPassword(), new ArrayList<>());
 		} else {

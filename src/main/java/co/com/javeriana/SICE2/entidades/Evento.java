@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -49,6 +50,9 @@ public class Evento {
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UsuarioJaveriana> inscritos;
+    
+    @OneToMany(targetEntity = AtrPersonalizado.class)
+    private List<AtrPersonalizado> atrPersonalizados;
     
     @JsonIgnore
     @ManyToMany(targetEntity = Etiqueta.class)
@@ -178,5 +182,19 @@ public class Evento {
 	 */
 	public void setRequisitos(String requisitos) {
 		this.requisitos = requisitos;
+	}
+
+	/**
+	 * @return the atrPersonalizados
+	 */
+	public List<AtrPersonalizado> getAtrPersonalizados() {
+		return atrPersonalizados;
+	}
+
+	/**
+	 * @param atrPersonalizados the atrPersonalizados to set
+	 */
+	public void setAtrPersonalizados(List<AtrPersonalizado> atrPersonalizados) {
+		this.atrPersonalizados = atrPersonalizados;
 	}
 }

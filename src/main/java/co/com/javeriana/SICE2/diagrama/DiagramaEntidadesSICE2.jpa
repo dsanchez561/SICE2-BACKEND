@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="co.com.javeriana.SICE2" v="4.4" rws="_151120847919127" Pws="_151120847919127" cws="_151120847919127" sm="false" xs="false" id="_151120847919126" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
+<jpa:entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" pkg="co.com.javeriana.SIEEJ" v="4.4" rws="_151120847919127" Pws="_151120847919127" cws="_151120847919127" sm="false" xs="false" id="_151120847919126" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd">
     <jpa:entity compositePrimaryKeyClass="UsuarioJaverianaPK" abs="false" class="UsuarioJaveriana" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1511208504197">
         <jpa:ath>WORLD OFFICE</jpa:ath>
         <jpa:attributes>
@@ -27,7 +27,7 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1515851284132" v="true" xvt="" name="eventosSuscritos" id="_151585130862661">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1515851284132" v="true" xvt="" name="eventosSuscrito" id="_151585130862661">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
@@ -131,6 +131,13 @@
             <jpa:query>Select e from Estudiante e</jpa:query>
         </jpa:nq>
     </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="EmpresaPK" abs="false" class="Empresa" superclassId="_1518805732193" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515849847159">
+        <jpa:ath>WORLD OFFICE</jpa:ath>
+        <jpa:attributes/>
+        <jpa:nq e="false" name="Empresa.findAll">
+            <jpa:query>Select e from Empresa e</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="ProfesorPK" abs="false" class="Profesor" superclassId="_1511208504197" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515849912184">
         <jpa:ath>WORLD OFFICE</jpa:ath>
         <jpa:attributes/>
@@ -138,11 +145,30 @@
             <jpa:query>Select e from Profesor e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="AdminJaverianaPK" abs="false" class="AdminJaveriana" superclassId="_1511208504197" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515850112360">
+    <jpa:entity compositePrimaryKeyClass="AdministradorPK" abs="false" class="Administrador" superclassId="_1511208504197" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515850112360">
         <jpa:ath>WORLD OFFICE</jpa:ath>
         <jpa:attributes/>
-        <jpa:nq e="false" name="AdminJaveriana.findAll">
-            <jpa:query>Select e from AdminJaveriana e</jpa:query>
+        <jpa:nq e="false" name="Administrador.findAll">
+            <jpa:query>Select e from Administrador e</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="UniversidadPK" abs="false" class="Universidad" superclassId="_1518805732193" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515850234439">
+        <jpa:ath>WORLD OFFICE</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="byte[]" v="true" xvt="" name="imagen" id="_151820057343270">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:lob/>
+            </jpa:basic>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Universidad.findAll">
+            <jpa:query>Select e from Universidad e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Universidad.findByUrl">
+            <jpa:query>Select u from Universidad u where u.url=:url</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Universidad.findByImagen">
+            <jpa:query>Select u from Universidad u where u.imagen=:imagen</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="HorarioPK" abs="false" class="Horario" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515850393651">
@@ -207,14 +233,12 @@
     <jpa:entity compositePrimaryKeyClass="EventoPK" abs="false" class="Evento" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515851284132">
         <jpa:ath>WORLD OFFICE</jpa:ath>
         <jpa:attributes>
-            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1511208504197" v="true" xvt="" name="inscritos" id="_152008347308937">
+            <jpa:basic attribute-type="String" v="true" name="descripcion" id="_152276190706080"/>
+            <jpa:basic attribute-type="String" v="true" name="requisitos" id="_152276191280681"/>
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1523304236337" v="true" xvt="" name="atrPersonalizados" id="_152330425529441">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
-            <jpa:one-to-one own="true" orp="false" optional="true" primaryKey="false" connected-entity-id="_1511208504197" v="true" xvt="" name="creador" id="_152008345216936">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:one-to-one>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1515849183897" connected-attribute-id="_151585144008864" v="true" xvt="" name="etiquetas" id="_151585144008063">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -227,6 +251,12 @@
         </jpa:attributes>
         <jpa:nq e="false" name="Evento.findAll">
             <jpa:query>Select e from Evento e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Evento.findByDescripcion">
+            <jpa:query>Select e from Evento e where e.descripcion=:descripcion</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Evento.findByRequisitos">
+            <jpa:query>Select e from Evento e where e.requisitos=:requisitos</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="LugarPK" abs="false" class="Lugar" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515851785317">
@@ -244,10 +274,6 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1518805732193" connected-attribute-id="_151949114384186" v="true" xvt="" name="dominio" id="_151949114384185">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:many-to-one>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1515850393651" v="true" xvt="" name="horarios" id="_151585186372370">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -315,32 +341,13 @@
     <jpa:entity compositePrimaryKeyClass="DominioPK" abs="false" class="Dominio" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1518805732193">
         <jpa:ath>WORLD OFFICE</jpa:ath>
         <jpa:attributes>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="nombre" id="_151949110414282">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-            <jpa:basic attribute-type="Boolean" v="true" xvt="" name="activo" id="_151949116040187">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="url" id="_152008265319281">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="imagen" id="_152008265772782">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="nombreArchivo" id="_152008266428383">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" name="idUsuarioCreador" id="_152008372323238"/>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1519477591215" connected-attribute-id="_151949111473683" v="true" xvt="" name="servicios" id="_151949111473784">
+            <jpa:basic attribute-type="String" v="true" name="nombre" id="_151933771748839"/>
+            <jpa:basic attribute-type="String" v="true" name="url" id="_152008255898139"/>
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1515851785317" v="true" xvt="" name="lugares" id="_151924199482036">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
-            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1515851785317" connected-attribute-id="_151949114384185" v="true" xvt="" name="lugares" id="_151949114384186">
+            <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1519242133183" v="true" xvt="" name="servicios" id="_151924214969343">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
@@ -356,58 +363,64 @@
         <jpa:nq e="false" name="Dominio.findByNombre">
             <jpa:query>Select d from Dominio d where d.nombre=:nombre</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="Dominio.findByActivo">
-            <jpa:query>Select d from Dominio d where d.activo=:activo</jpa:query>
-        </jpa:nq>
         <jpa:nq e="false" name="Dominio.findByUrl">
             <jpa:query>Select d from Dominio d where d.url=:url</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="Dominio.findByImagen">
-            <jpa:query>Select d from Dominio d where d.imagen=:imagen</jpa:query>
-        </jpa:nq>
-        <jpa:nq e="false" name="Dominio.findByNombreArchivo">
-            <jpa:query>Select d from Dominio d where d.nombreArchivo=:nombreArchivo</jpa:query>
-        </jpa:nq>
-        <jpa:nq e="false" name="Dominio.findByIdUsuarioCreador">
-            <jpa:query>Select d from Dominio d where d.idUsuarioCreador=:idUsuarioCreador</jpa:query>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="EntidadPublicaPK" abs="true" class="EntidadPublica" superclassId="_1518805732193" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1519242053063">
+        <jpa:ath>WORLD OFFICE</jpa:ath>
+        <jpa:attributes/>
+        <jpa:nq e="false" name="EntidadPublica.findAll">
+            <jpa:query>Select e from EntidadPublica e</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="ServicioPK" abs="false" class="Servicio" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1519477591215">
-        <jpa:ath>brayanguerrero</jpa:ath>
+    <jpa:entity compositePrimaryKeyClass="ServiciosPK" abs="false" class="Servicios" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1519242133183">
+        <jpa:ath>WORLD OFFICE</jpa:ath>
         <jpa:attributes>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="nombre" id="_151947764900741">
+            <jpa:basic attribute-type="String" v="true" xvt="" name="nombre" id="_151924213923241">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="url" id="_151947765285542">
+            <jpa:basic attribute-type="String" v="true" xvt="" name="url" id="_151924214328142">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1518805732193" connected-attribute-id="_151949111473784" v="true" xvt="" name="dominio" id="_151949111473683">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:many-to-one>
-            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_151947759134636">
+            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_151924213323339">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
                 <jpa:generated-value strategy="AUTO"/>
             </jpa:id>
         </jpa:attributes>
-        <jpa:nq e="false" name="Servicio.findAll">
-            <jpa:query>Select e from Servicio e</jpa:query>
+        <jpa:nq e="false" name="Servicios.findAll">
+            <jpa:query>Select e from Servicios e</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="Servicio.findByNombre">
-            <jpa:query>Select p from Servicio p where p.nombre=:nombre</jpa:query>
+        <jpa:nq e="false" name="Servicios.findByNombre">
+            <jpa:query>Select s from Servicios s where s.nombre=:nombre</jpa:query>
         </jpa:nq>
-        <jpa:nq e="false" name="Servicio.findByUrl">
-            <jpa:query>Select p from Servicio p where p.url=:url</jpa:query>
+        <jpa:nq e="false" name="Servicios.findByUrl">
+            <jpa:query>Select s from Servicios s where s.url=:url</jpa:query>
         </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="AdministradorPK" abs="false" class="Administrador" superclassId="_1511208504197" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1519491453425">
-        <jpa:ath>brayanguerrero</jpa:ath>
-        <jpa:attributes/>
-        <jpa:nq e="false" name="Administrador.findAll">
-            <jpa:query>Select e from Administrador e</jpa:query>
+    <jpa:entity compositePrimaryKeyClass="AtrPersonalizadoPK" abs="false" class="AtrPersonalizado" v="true" xre="false" m="false" rootElement="_151120847919126" id="_1523304236337">
+        <jpa:ath>WORLD OFFICE</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="nombre" id="_152330426377442">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" name="dato" id="_152330427131843"/>
+            <jpa:id attribute-type="Long" v="true" name="id" id="_152330423652339">
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="AtrPersonalizado.findAll">
+            <jpa:query>Select e from AtrPersonalizado e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="AtrPersonalizado.findByNombre">
+            <jpa:query>Select a from AtrPersonalizado a where a.nombre=:nombre</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="AtrPersonalizado.findByDato">
+            <jpa:query>Select a from AtrPersonalizado a where a.dato=:dato</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:embeddable abs="false" class="DiasSemanaEnum" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515850567979">
@@ -472,27 +485,6 @@
             </jpa:basic>
         </jpa:attributes>
     </jpa:embeddable>
-    <jpa:embeddable abs="false" class="TipoDominioEnum" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1520082781845">
-        <jpa:ath>WORLD OFFICE</jpa:ath>
-        <jpa:attributes>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="UNIVERSIDAD" id="_152008284264585">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="GOIBIERNO" id="_152008284870986">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="INSTITUCIONES_DE_INVESTIGACION" id="_152008285337387">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" xvt="" name="ONGS" id="_152008287040588">
-                <jpa:xwm nil="false" req="false"/>
-                <jpa:xm nil="false" req="false"/>
-            </jpa:basic>
-        </jpa:attributes>
-    </jpa:embeddable>
     <jpa:snp loc="BEFORE_PACKAGE" e="true">/**
  * This file was generated by the Jeddict
  */</jpa:snp>
@@ -509,24 +501,26 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_151120847919127">
-            <i ref="_1515851785317" x="811" y="547"/>
-            <i ref="_1515849183897" x="70" y="156"/>
-            <i ref="_1515849912184" x="340" y="723"/>
-            <i ref="_1515852303525" x="1617" y="249"/>
-            <i ref="_1515849754703" x="-9" y="504"/>
-            <i ref="_1515850112360" x="443" y="784"/>
-            <i ref="_1515851924867" x="1354" y="679"/>
-            <i ref="_1519477591215" x="1362" y="222"/>
-            <i ref="_1519491453425" x="550" y="435"/>
-            <i ref="_1511208504197" x="340" y="-6"/>
-            <i ref="_1515851010001" x="1244" y="120"/>
-            <i ref="_1518805732193" x="1110" y="342"/>
-            <i ref="_1515851284132" x="982" y="-293"/>
-            <i ref="_1520082781845" x="1554" y="53"/>
-            <i ref="_1515850393651" x="796" y="53"/>
-            <i ref="_1515849133643" x="993" y="13"/>
-            <i ref="_1515849802407" x="167" y="703"/>
-            <i ref="_1515850567979" x="1584" y="492"/>
+            <i ref="_1519242053063" x="1172" y="937"/>
+            <i ref="_1515851785317" x="1180" y="359"/>
+            <i ref="_1519242133183" x="770" y="574"/>
+            <i ref="_1515849183897" x="64" y="150"/>
+            <i ref="_1515849912184" x="334" y="717"/>
+            <i ref="_1515852303525" x="1524" y="243"/>
+            <i ref="_1515849754703" x="93" y="616"/>
+            <i ref="_1515850112360" x="526" y="691"/>
+            <i ref="_1515851924867" x="1308" y="661"/>
+            <i ref="_1515850234439" x="1004" y="937"/>
+            <i ref="_1511208504197" x="332" y="-10"/>
+            <i ref="_1515851010001" x="1141" y="242"/>
+            <i ref="_1518805732193" x="1025" y="626"/>
+            <i ref="_1515849847159" x="832" y="911"/>
+            <i ref="_1523304236337" x="1308" y="-10"/>
+            <i ref="_1515851284132" x="913" y="-10"/>
+            <i ref="_1515850393651" x="687" y="271"/>
+            <i ref="_1515849133643" x="913" y="289"/>
+            <i ref="_1515849802407" x="19" y="383"/>
+            <i ref="_1515850567979" x="1524" y="536"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>
