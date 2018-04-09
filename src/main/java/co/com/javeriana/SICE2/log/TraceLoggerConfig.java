@@ -25,7 +25,7 @@ public class TraceLoggerConfig {
 	/**
 	 * Expresión que define los metodos que serán logueados. 
 	 */
-	private static final String TRACE_ANNOTATION = "execution(public * co.com.javeriana.SIEEJ..*.*(..)) && !execution(public * co.com.javeriana.SIEEJ.log..*.*(..)) && !execution(public * co.com.javeriana.SIEEJ.repositories..*.*(..))";
+	private static final String TRACE_ANNOTATION = "execution(public * co.com.javeriana.SICE2..*.*(..)) && !execution(public * co.com.javeriana.SICE2.log..*.*(..)) && !execution(public * co.com.javeriana.SICE2.repositories..*.*(..))";
 
 	/**
 	 * Configura el Interceptor
