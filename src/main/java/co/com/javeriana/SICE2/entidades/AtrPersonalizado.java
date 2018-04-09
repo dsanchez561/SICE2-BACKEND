@@ -10,12 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * @author WORLD OFFICE
+ * @author Javeriana
  */
 @Entity
 public class AtrPersonalizado {
-
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
