@@ -126,6 +126,11 @@
 				<groupId>com.google.appengine</groupId>
 				<artifactId>appengine-maven-plugin</artifactId>
 				<version>${appengine.target.version}</version>
+
+				<configuration>
+					<enableJarClasses>false</enableJarClasses>
+				</configuration>
+
 			</plugin>
 		</plugins>
 	</build>
