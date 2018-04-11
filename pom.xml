@@ -122,6 +122,22 @@
 					<stage.enableJarSplitting>true</stage.enableJarSplitting>
 					<deploy.stopPreviousVersion>true</deploy.stopPreviousVersion>
 					<cloudSdkPath>/usr/foo/path/to/cloudsdk</cloudSdkPath>
+					<goals>
+                        <goal>appengine:update</goal>
+                        <goal>appengine:update_cron</goal>
+                        <goal>appengine:update_dos</goal>
+                        <goal>appengine:update_indexes</goal>
+                        <goal>appengine:update_queues</goal>
+                        <goal>appengine:vacuum_indexes</goal>
+                        <goal>appengine:set_default_version</goal>
+                        <goal>appengine:rollback</goal>
+                        <goal>appengine:backends_update</goal>
+                        <goal>appengine:backends_configure</goal>
+                        <goal>appengine:backends_stop</goal>
+                        <goal>appengine:backends_start</goal>
+                        <goal>appengine:backends_rollback</goal>
+                        <goal>appengine:backends_delete</goal>
+                    </goals>
 				</configuration>
 			</plugin>
 		</plugins>
