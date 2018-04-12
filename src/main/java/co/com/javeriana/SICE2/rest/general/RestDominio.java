@@ -53,7 +53,7 @@ public class RestDominio {
 	
 
 	/**
-	 * Metodo que permite listar todos los dominios nacionales dado el tipo (Universidad, Entidad Publica, Empresa...etc)
+	 * Metodo que permite listar todos los dominios internacionales dado el tipo (Universidad, Entidad Publica, Empresa...etc)
 	 * 
 	 * @return devuelve la lista de dominios
 	 * @throws IOException
@@ -62,6 +62,22 @@ public class RestDominio {
 	public ResponseEntity<List<Dominio>> listarDominiosInternacionales(@RequestBody String tipo) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(dominioImpl.listarDominiosInternacionales(tipo));
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	/**
+	 * Metodo que permite listar todos los dominios ausjales dado el tipo (Universidad, Entidad Publica, Empresa...etc)
+	 * 
+	 * @return devuelve la lista de dominios
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/listarDominiosAusjal", method = RequestMethod.POST)
+	public ResponseEntity<List<Dominio>> listarDominiosAusjal(@RequestBody String tipo) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(dominioImpl.listarDominiosAusjales(tipo));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

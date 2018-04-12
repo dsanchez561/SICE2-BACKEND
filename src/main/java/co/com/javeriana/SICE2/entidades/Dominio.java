@@ -12,8 +12,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import co.com.javeriana.SICE2.enumeracion.TipoDominioEnum;
 
@@ -46,16 +47,18 @@ public class Dominio {
     @Enumerated(value = EnumType.STRING)
     private TipoDominioEnum tipo;
 
-    @Lob
     @Basic
+    @JsonIgnore
     private byte[] imagen;
     
 	@Basic
     private String nombreArchivo;
 	
+	@JsonIgnore
     @OneToMany(targetEntity = Lugar.class)
     private List<Lugar> lugares;
 
+	@JsonIgnore
     @OneToMany(targetEntity = Servicio.class, mappedBy="dominio")
     private List<Servicio> servicios;
 

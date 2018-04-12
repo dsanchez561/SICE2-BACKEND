@@ -5,7 +5,8 @@ package co.com.javeriana.SICE2.enumeracion;
  * @author Javeriana
  */
 public enum TipoDominioEnum {
-    UNIVERSIDAD,
+    UNIVERSIDADNACIONAL,
+    UNIVERSIDADINTERNACIONAL,
     AUSJAL,
     GOBIERNO,
     INSTITUCIONES_DE_INVESTIGACION,
