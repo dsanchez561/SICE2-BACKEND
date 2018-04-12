@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import co.com.javeriana.SICE2.implement.DominioImpl;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
 
+@CrossOrigin
 @RestController
 public class RestDominio {
 	
