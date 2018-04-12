@@ -21,6 +21,7 @@ import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
 
 @RestController
 public class RestDominio {
+	
 	@Log
 	private Logger log;
 	
