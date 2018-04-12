@@ -1,7 +1,7 @@
 /**
  * 
  */
-package co.com.javeriana.SICE2;
+/*package co.com.javeriana.SICE2;
 
 import static org.junit.Assert.assertEquals;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -27,11 +27,11 @@ import org.springframework.web.context.WebApplicationContext;
 import co.com.javeriana.SICE2.enumeracion.TipoDominioEnum;
 import co.com.javeriana.SICE2.main.Sice2Application;
 import co.com.javeriana.SICE2.repositories.DominioRepository;
-
+*/
 /**
  * @author Javeriana
  *
- */
+ *//*
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = Sice2Application.class)
 @AutoConfigureMockMvc
@@ -84,4 +84,4 @@ public class DominioTest {
 		assertEquals("http://www.javeriana.edu.co/dir-tecnologias-de-informacion/salas-reservadas", json);
 	}
 
-}
+}*/

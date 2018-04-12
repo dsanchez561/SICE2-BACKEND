@@ -23,6 +23,7 @@ import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.repositories.UsuarioRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
+import co.com.javeriana.SICE2.utils.ProcesadorSMTP;
 
 
 @CrossOrigin(allowCredentials="true")
@@ -40,6 +41,9 @@ public class RestEvento {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Autowired
+	private ProcesadorSMTP correo;
+	
 	private static String SINPERMISOS = "No tiene permisos para acceder a esta funcionalidad";
 	
 	/**
@@ -55,6 +59,7 @@ public class RestEvento {
 			Evento evento = eventoRepository.findOne(idEvento);
 			UsuarioJaveriana usuario = usuarioRepository.findOne(seguridad.getCurrentUser().getId());
 			if (!evento.getInscritos().contains(usuario)){
+				correo.emailEventos("Se ha suscrito correctamente a "+evento.getTitulo(),seguridad.getCurrentUser().getEmail(),evento);
 				evento.getInscritos().add(usuario);
 				usuario.getEventosSuscritos().add(evento);
 				return ResponseEntity.status(HttpStatus.OK).body(true);

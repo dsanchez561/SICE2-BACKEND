@@ -46,6 +46,9 @@ public class UsuarioJaveriana implements UserDetails{
 
     @Basic
     private String username;
+    
+    @Basic
+    private String email;
 
     @Basic
     private String password;
@@ -91,6 +94,20 @@ public class UsuarioJaveriana implements UserDetails{
 	 */
 	public Boolean getAdministrador() {
 		return administrador;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	/**
