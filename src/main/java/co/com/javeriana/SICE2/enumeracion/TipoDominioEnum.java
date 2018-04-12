@@ -6,6 +6,7 @@ package co.com.javeriana.SICE2.enumeracion;
  */
 public enum TipoDominioEnum {
     UNIVERSIDAD,
+    AUSJAL,
     GOBIERNO,
     INSTITUCIONES_DE_INVESTIGACION,
     ONG,
