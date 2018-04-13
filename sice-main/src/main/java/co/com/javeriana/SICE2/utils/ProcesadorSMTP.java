@@ -5,9 +5,6 @@ package co.com.javeriana.SICE2.utils;
 
 import java.util.Properties;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -31,8 +28,7 @@ import co.com.javeriana.SICE2.model.general.Evento;
 @Component
 public class ProcesadorSMTP {
 
-
-	public void emailEventos(String asunto,String destinatario,Evento evento) {
+	public void emailEventos(String asunto, String destinatario, Evento evento) {
 		final String username = "SICE2Javeriana@gmail.com";
 		final String password = "SICE2DavidDaniel";
 
@@ -54,49 +50,25 @@ public class ProcesadorSMTP {
 			message.setFrom(new InternetAddress("fromSomeone@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
 			message.setSubject(asunto);
-			message.setText("Querido usuario,"
-					+ "\n\nEste mensaje es con el objetivo de notificarle la suscripción del siguiente evento"
-					+ "\n\nNombre del evento      : " + evento.getTitulo()
-					+ "\nDescripción del evento : " + evento.getDescripcion()
-					+ "\nFecha del evento       : " + evento.getInicio()
-					+ "\nRequisitos del evento  : " + evento.getRequisitos()
-					+ "\n\n\n No responder a este mensaje, para mayor información contactar al administrador de SICE2");
 
 			MimeMultipart multipart = new MimeMultipart("related");
-			String text = "Hola";
-			MimeBodyPart textPart = new MimeBodyPart();
-			textPart.setText(text, "utf-8");
-			 // first part (the html)
-	         BodyPart messageBodyPart = new MimeBodyPart();
-	         String htmlText = "<H3>Querido Usuario</H3>"
-	        		 + "<p>\n\nEste mensaje es con el objetivo de notificarle la suscripción del siguiente evento"
-						+ "\n\nNombre del evento      : " + evento.getTitulo()
-						+ "\nDescripción del evento : " + evento.getDescripcion()
-						+ "\nFecha del evento       : " + evento.getInicio()
-						+ "\nRequisitos del evento  : " + evento.getRequisitos()
-						+ "</p><p><b>\n\n\n No responder a este mensaje, para mayor información contactar al administrador de SICE2</b></p>"
-	         		+ "<img src=\"cid:image\">";
-	         messageBodyPart.setContent(htmlText, "text/html");
-	         // add it
-	         multipart.addBodyPart(messageBodyPart);
+			BodyPart messageBodyPart = new MimeBodyPart();
+			String htmlText = "<H3>Querido Usuario</H3>"
+					+ "<p>Este mensaje es con el objetivo de notificarle la suscripción del siguiente evento" + "</p>"
+					+ "<p> - Nombre del evento      : " + evento.getTitulo() + "</p>"
+					+ "<p> - Descripción del evento : " + evento.getDescripcion() + "</p>"
+					+ "<p> - Fecha del evento       : " + evento.getInicio() + "</p>"
+					+ "<p> - Requisitos del evento  : " + evento.getRequisitos() + "</p>"
+					+ "<div><p><b>No responder a este mensaje, para mayor información contactar al administrador de SICE2</b> </p>"
+					+ "<img src=\"https://uvirtual.javeriana.edu.co/branding/_1_1/login-2.0/imgs/logo.png\" width=\"300\" height=\"130\"></div>";
+			messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
+			multipart.addBodyPart(messageBodyPart);
 
-	         // second part (the image)
-	         messageBodyPart = new MimeBodyPart();
-	         DataSource fds = new FileDataSource(
-	            "C:/Users/danielsanchez/Pictures/LogoTemporal_2.png");
+			message.setContent(multipart);
 
-	         messageBodyPart.setDataHandler(new DataHandler(fds));
-	         messageBodyPart.setHeader("Content-ID", "<image>");
-
-	         // add image to the multipart
-	         multipart.addBodyPart(messageBodyPart);
-
-	         // put everything together
-	         message.setContent(multipart);
-			
 			Transport.send(message);
 			System.out.println("Correo Enviado correctamente");
-		}catch (MessagingException e) {
+		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
 	}
