@@ -3,22 +3,33 @@
  */
 package co.com.javeriana.SICE2.implement;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import co.com.javeriana.SICE2.entidades.Evento;
 import co.com.javeriana.SICE2.entidades.UsuarioJaveriana;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
+import jxl.Cell;
+import jxl.CellView;
 import jxl.Workbook;
+import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
+import jxl.format.UnderlineStyle;
+import jxl.format.VerticalAlignment;
 import jxl.write.Label;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableImage;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
-import jxl.write.biff.RowsExceededException;
 
 
 /**
@@ -32,63 +43,108 @@ public class UsuarioImpl {
 	private EventoRepository eventoRepository;
 
 	public Object exportarExcelSuscritos(Long id) throws Exception {
-//		if(dataList != null && !dataList.isEmpty()){
-//            HSSFWorkbook workBook = new HSSFWorkbook();
-//            HSSFSheet sheet = workBook.createSheet();
-//            HSSFRow headingRow = sheet.createRow(0);
-//            headingRow.createCell((short)0).setCellValue("ID");
-//            headingRow.createCell((short)1).setCellValue("ROLL_NO");
-//            headingRow.createCell((short)2).setCellValue("NAME");
-//            headingRow.createCell((short)3).setCellValue("GENDER");
-//            short rowNo = 1;
-//            for (Object[] objects : dataList) {
-//                HSSFRow row = sheet.createRow(rowNo);
-//                row.createCell((short)0).setCellValue(objects[0].toString());
-//                row.createCell((short)1).setCellValue(objects[1].toString());
-//                row.createCell((short)2).setCellValue(objects[2].toString());
-//                row.createCell((short)3).setCellValue(objects[3].toString());
-//                rowNo++;
-//            }
-//             
-//            String file = "D:/Student_detais.xls";
-//            try{
-//                FileOutputStream fos = new FileOutputStream(file);
-//                workBook.write(fos);
-//                fos.flush();
-//            }catch(FileNotFoundException e){
-//                e.printStackTrace();
-//                System.out.println("Invalid directory or file not found");
-//            }catch(IOException e){
-//                e.printStackTrace();
-//                System.out.println("Error occurred while writting excel file to directory");
-//            }
-//        }
-		Evento e = eventoRepository.findOne(id);
-		File f = new File("C:\\Users\\Inscritos"+e.getTitulo()+".xls");
+		
+		final ClassPathResource resource = new ClassPathResource("imagenes/PUJBogota.png");
+	    BufferedImage imageOnDisk = ImageIO.read(resource.getFile());
+	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(imageOnDisk, "png", baos);
+        baos.flush();
+        
+        Evento e = eventoRepository.findOne(id);
+	    
+
+		File f = new File("C:\\Users\\asus\\inscritos "+e.getTitulo()+".xls");
 		WritableWorkbook myExcel = Workbook.createWorkbook(f);
-		WritableSheet mySheet = myExcel.createSheet("mySheet", 0);
-		int i=0;
-		int j=0;
-		for(Field field:UsuarioJaveriana.class.getFields()) {
-			Label l = new Label(0, i, field.toString());
-			mySheet.addCell(l);
+		WritableSheet mySheet = myExcel.createSheet("Usuarios Inscritos", 0);
+		mySheet.addImage(new WritableImage(0,0,5,
+			   11,baos.toByteArray()));
+		int i=3;
+        
+		WritableFont wfontitle = new WritableFont(WritableFont.createFont("Arial Black"), 20, WritableFont.BOLD, false,
+	            UnderlineStyle.NO_UNDERLINE, jxl.format.Colour.BLACK);
+		WritableCellFormat wcfFCtitle = new WritableCellFormat(wfontitle);
+		wcfFCtitle.setAlignment(Alignment.CENTRE);
+		wcfFCtitle.setVerticalAlignment(VerticalAlignment.CENTRE);// 对齐方式
+		
+		WritableFont wfont;
+		wfont = new WritableFont(WritableFont.createFont("Arial Black"), 10, WritableFont.BOLD, false,
+	            UnderlineStyle.NO_UNDERLINE, jxl.format.Colour.BLACK);
+		WritableCellFormat wcfFC = new WritableCellFormat(wfont);
+		wcfFC.setBorder(Border.ALL, BorderLineStyle.THIN);
+        wcfFC.setAlignment(Alignment.CENTRE);
+        wcfFC.setVerticalAlignment(VerticalAlignment.CENTRE);// 对齐方式
+        
+        WritableCellFormat wcfFCdata = new WritableCellFormat();
+        wcfFCdata.setBorder(Border.ALL, BorderLineStyle.THIN);
+        
+        Label l = new Label(8, i, e.getTitulo(), wcfFCtitle);
+		mySheet.addCell(l);
+		
+		i++;
+		
+		l = new Label(6, i, UsuarioJaveriana.class.getDeclaredFields()[0].getName(), wcfFC);
+		mySheet.addCell(l);
+		l = new Label(7, i, UsuarioJaveriana.class.getDeclaredFields()[1].getName(), wcfFC);
+		mySheet.addCell(l);
+		l = new Label(8, i, UsuarioJaveriana.class.getDeclaredFields()[2].getName(), wcfFC);
+		mySheet.addCell(l);
+		l = new Label(9, i, UsuarioJaveriana.class.getDeclaredFields()[3].getName(), wcfFC);
+		mySheet.addCell(l);
+		l = new Label(10, i, UsuarioJaveriana.class.getDeclaredFields()[4].getName(), wcfFC);
+		mySheet.addCell(l);
+		
+		i++;
+		for(UsuarioJaveriana u:e.getInscritos()) {
+			Label l1 = new Label(6, i, u.getId()+"", wcfFCdata);
+			mySheet.addCell(l1);
+			Label l2 = new Label(7, i, (u.getNombre()==null) ? "" : u.getNombre(), wcfFCdata);
+			mySheet.addCell(l2);
+			Label l3 = new Label(8, i, (u.getApellidos()==null) ? "" : u.getApellidos(), wcfFCdata);
+			mySheet.addCell(l3);
+			Label l4 = new Label(9, i, (u.getUsername()==null) ? "" : u.getUsername(), wcfFCdata);
+			mySheet.addCell(l4);
+			Label l5 = new Label(10, i, (u.getEmail()==null) ? "" : u.getEmail(), wcfFCdata);
+			mySheet.addCell(l5);
 			i++;
 		}
-//		Evento e = eventoRepository.findOne(id);
-//		i=0;
-//		for(UsuarioJaveriana u:e.getInscritos()) {
-//			Label l1 = new Label(i, 1, u.getId()+"");
-//			Label l2 = new Label(i, 2, u.getNombre()+"");
-//			Label l3 = new Label(i, 3, u.getApellidos()+"");
-//			Label l4 = new Label(i, 4, u.getUsername()+"");
-//			Label l5 = new Label(i, 5, u.getEmail()+"");
-//			i++;
-//		}
+		sheetAutoFitColumns(mySheet);
+		
 		myExcel.write();
 		myExcel.close();
 		return null;
 	}
 	
+	private void sheetAutoFitColumns(WritableSheet sheet) {
+	    for (int i = 0; i < sheet.getColumns(); i++) {
+	        Cell[] cells = sheet.getColumn(i);
+	        int longestStrLen = -1;
+
+	        if (cells.length == 0)
+	            continue;
+
+	        /* Find the widest cell in the column. */
+	        for (int j = 0; j < cells.length; j++) {
+	            if ( cells[j].getContents().length() > longestStrLen ) {
+	                String str = cells[j].getContents();
+	                if (str == null || str.isEmpty())
+	                    continue;
+	                longestStrLen = str.trim().length();
+	            }
+	        }
+
+	        /* If not found, skip the column. */
+	        if (longestStrLen == -1) 
+	            continue;
+	        longestStrLen += 2;
+	        /* If wider than the max width, crop width */
+	        if (longestStrLen > 255)
+	            longestStrLen = 255;
+
+	        CellView cv = sheet.getColumnView(i);
+	        cv.setSize(longestStrLen * 256 + 100); /* Every character is 256 units wide, so scale it. */
+	        sheet.setColumnView(i, cv);
+	    }
+	}
 	
 
 }

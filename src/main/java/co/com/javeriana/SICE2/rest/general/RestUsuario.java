@@ -59,7 +59,7 @@ public class RestUsuario {
 	 * @return devuelve la estado del servidor
 	 * @throws IOException
 	 */
-	@RequestMapping(value="/exportarExcelSuscritos/{id}",method=RequestMethod.GET, consumes="application/json")
+	@RequestMapping(value="/exportarExcelSuscritos/{id}",method=RequestMethod.POST)
 	public ResponseEntity<Object> exportarExcelSuscritos(@PathVariable("id") Long id) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(usuarioImpl.exportarExcelSuscritos(id));
