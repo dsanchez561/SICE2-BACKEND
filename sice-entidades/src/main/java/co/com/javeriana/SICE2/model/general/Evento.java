@@ -43,6 +43,9 @@ public class Evento {
     @Basic
     private String requisitos;
     
+    @Basic
+    private int capacidadMaxima;
+    
     @JsonIgnore
     @ManyToOne(targetEntity = UsuarioJaveriana.class)
     private UsuarioJaveriana creador;
@@ -70,6 +73,20 @@ public class Evento {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the capacidadMaxima
+	 */
+	public int getCapacidad_maxima() {
+		return capacidadMaxima;
+	}
+
+	/**
+	 * @param capacidadMaxima the capacidadMaxima to set
+	 */
+	public void setCapacidad_maxima(int capacidad_maxima) {
+		this.capacidadMaxima = capacidad_maxima;
 	}
 
 	/**

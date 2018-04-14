@@ -35,6 +35,10 @@
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:one-to-many>
+            <jpa:one-to-many orp="false" collection-type="java.util.List" connected-entity-id="_1523715285353" connected-attribute-id="_152372319645351" v="true" xvt="" name="solicitudes" id="_152372319645452">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:one-to-many>
             <jpa:many-to-many own="true" collection-type="java.util.List" connected-entity-id="_1515849183897" connected-attribute-id="_151584931294916" v="true" xvt="" name="preferencias" id="_151584931294815">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -233,8 +237,18 @@
     <jpa:entity compositePrimaryKeyClass="EventoPK" abs="false" class="Evento" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515851284132">
         <jpa:ath>WORLD OFFICE</jpa:ath>
         <jpa:attributes>
-            <jpa:basic attribute-type="String" v="true" name="descripcion" id="_152276190706080"/>
-            <jpa:basic attribute-type="String" v="true" name="requisitos" id="_152276191280681"/>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="descripcion" id="_152276190706080">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="requisitos" id="_152276191280681">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="capacidadMaxima" id="_152371514057741">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1523304236337" v="true" xvt="" name="atrPersonalizados" id="_152330425529441">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -257,6 +271,9 @@
         </jpa:nq>
         <jpa:nq e="false" name="Evento.findByRequisitos">
             <jpa:query>Select e from Evento e where e.requisitos=:requisitos</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Evento.findByCapacidadMaxima">
+            <jpa:query>Select e from Evento e where e.capacidadMaxima=:capacidadMaxima</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:entity compositePrimaryKeyClass="LugarPK" abs="false" class="Lugar" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515851785317">
@@ -341,8 +358,14 @@
     <jpa:entity compositePrimaryKeyClass="DominioPK" abs="false" class="Dominio" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1518805732193">
         <jpa:ath>WORLD OFFICE</jpa:ath>
         <jpa:attributes>
-            <jpa:basic attribute-type="String" v="true" name="nombre" id="_151933771748839"/>
-            <jpa:basic attribute-type="String" v="true" name="url" id="_152008255898139"/>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="nombre" id="_151933771748839">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="url" id="_152008255898139">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
             <jpa:one-to-many orp="false" own="true" collection-type="java.util.List" connected-entity-id="_1515851785317" v="true" xvt="" name="lugares" id="_151924199482036">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
@@ -400,16 +423,24 @@
         <jpa:nq e="false" name="Servicios.findByUrl">
             <jpa:query>Select s from Servicios s where s.url=:url</jpa:query>
         </jpa:nq>
+        <jpa:nq e="false" name="Servicios.findByPredeterminado">
+            <jpa:query>Select s from Servicios s where s.predeterminado=:predeterminado</jpa:query>
+        </jpa:nq>
     </jpa:entity>
-    <jpa:entity compositePrimaryKeyClass="AtrPersonalizadoPK" abs="false" class="AtrPersonalizado" v="true" xre="false" m="false" rootElement="_151120847919126" id="_1523304236337">
+    <jpa:entity compositePrimaryKeyClass="AtrPersonalizadoPK" abs="false" class="AtrPersonalizado" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1523304236337">
         <jpa:ath>WORLD OFFICE</jpa:ath>
         <jpa:attributes>
             <jpa:basic attribute-type="String" v="true" xvt="" name="nombre" id="_152330426377442">
                 <jpa:xwm nil="false" req="false"/>
                 <jpa:xm nil="false" req="false"/>
             </jpa:basic>
-            <jpa:basic attribute-type="String" v="true" name="dato" id="_152330427131843"/>
-            <jpa:id attribute-type="Long" v="true" name="id" id="_152330423652339">
+            <jpa:basic attribute-type="String" v="true" xvt="" name="dato" id="_152330427131843">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_152330423652339">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
                 <jpa:generated-value strategy="AUTO"/>
             </jpa:id>
         </jpa:attributes>
@@ -421,6 +452,51 @@
         </jpa:nq>
         <jpa:nq e="false" name="AtrPersonalizado.findByDato">
             <jpa:query>Select a from AtrPersonalizado a where a.dato=:dato</jpa:query>
+        </jpa:nq>
+    </jpa:entity>
+    <jpa:entity compositePrimaryKeyClass="SolicitudPK" abs="false" class="Solicitud" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1523715285353">
+        <jpa:ath>WORLD OFFICE</jpa:ath>
+        <jpa:attributes>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="descripcion" id="_152371529625045">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="fecha" id="_152371530164246">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="nombre" id="_152371532046747">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:basic attribute-type="String" v="true" xvt="" name="activa" id="_152371542805250">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:basic>
+            <jpa:many-to-one optional="true" primaryKey="false" connected-entity-id="_1511208504197" connected-attribute-id="_152372319645452" v="true" xvt="" name="creador" id="_152372319645351">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+            </jpa:many-to-one>
+            <jpa:id attribute-type="Long" v="true" xvt="" name="id" id="_152371528541443">
+                <jpa:xwm nil="false" req="false"/>
+                <jpa:xm nil="false" req="false"/>
+                <jpa:generated-value strategy="AUTO"/>
+            </jpa:id>
+        </jpa:attributes>
+        <jpa:nq e="false" name="Solicitud.findAll">
+            <jpa:query>Select e from Solicitud e</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Solicitud.findByDescripcion">
+            <jpa:query>Select s from Solicitud s where s.descripcion=:descripcion</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Solicitud.findByFecha">
+            <jpa:query>Select s from Solicitud s where s.fecha=:fecha</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Solicitud.findByNombre">
+            <jpa:query>Select s from Solicitud s where s.nombre=:nombre</jpa:query>
+        </jpa:nq>
+        <jpa:nq e="false" name="Solicitud.findByActiva">
+            <jpa:query>Select s from Solicitud s where s.activa=:activa</jpa:query>
         </jpa:nq>
     </jpa:entity>
     <jpa:embeddable abs="false" class="DiasSemanaEnum" v="true" jbn="false" xre="false" m="false" rootElement="_151120847919126" id="_1515850567979">
@@ -501,26 +577,27 @@
     </jpa:c>
     <jpa:wsl>
         <jpa:ws n="Main" id="_151120847919127">
-            <i ref="_1519242053063" x="1172" y="937"/>
-            <i ref="_1515851785317" x="1180" y="359"/>
-            <i ref="_1519242133183" x="770" y="574"/>
-            <i ref="_1515849183897" x="64" y="150"/>
-            <i ref="_1515849912184" x="334" y="717"/>
-            <i ref="_1515852303525" x="1524" y="243"/>
-            <i ref="_1515849754703" x="93" y="616"/>
-            <i ref="_1515850112360" x="526" y="691"/>
-            <i ref="_1515851924867" x="1308" y="661"/>
-            <i ref="_1515850234439" x="1004" y="937"/>
-            <i ref="_1511208504197" x="332" y="-10"/>
-            <i ref="_1515851010001" x="1141" y="242"/>
-            <i ref="_1518805732193" x="1025" y="626"/>
-            <i ref="_1515849847159" x="832" y="911"/>
-            <i ref="_1523304236337" x="1308" y="-10"/>
-            <i ref="_1515851284132" x="913" y="-10"/>
-            <i ref="_1515850393651" x="687" y="271"/>
-            <i ref="_1515849133643" x="913" y="289"/>
-            <i ref="_1515849802407" x="19" y="383"/>
-            <i ref="_1515850567979" x="1524" y="536"/>
+            <i ref="_1519242053063" x="1170" y="935"/>
+            <i ref="_1515851785317" x="1178" y="357"/>
+            <i ref="_1519242133183" x="797" y="640"/>
+            <i ref="_1515849183897" x="62" y="148"/>
+            <i ref="_1515849912184" x="332" y="715"/>
+            <i ref="_1515852303525" x="1522" y="241"/>
+            <i ref="_1515849754703" x="91" y="614"/>
+            <i ref="_1515850112360" x="524" y="689"/>
+            <i ref="_1515851924867" x="1306" y="659"/>
+            <i ref="_1515850234439" x="1002" y="935"/>
+            <i ref="_1511208504197" x="330" y="-12"/>
+            <i ref="_1515851010001" x="1139" y="240"/>
+            <i ref="_1518805732193" x="1023" y="624"/>
+            <i ref="_1515849847159" x="830" y="909"/>
+            <i ref="_1523715285353" x="62" y="-105"/>
+            <i ref="_1523304236337" x="1306" y="-12"/>
+            <i ref="_1515851284132" x="911" y="-12"/>
+            <i ref="_1515850393651" x="685" y="269"/>
+            <i ref="_1515849133643" x="911" y="287"/>
+            <i ref="_1515849802407" x="17" y="381"/>
+            <i ref="_1515850567979" x="1522" y="534"/>
         </jpa:ws>
     </jpa:wsl>
 </jpa:entity-mappings>

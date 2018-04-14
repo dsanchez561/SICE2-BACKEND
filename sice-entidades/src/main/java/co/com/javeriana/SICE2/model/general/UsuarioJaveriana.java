@@ -70,6 +70,10 @@ public class UsuarioJaveriana implements UserDetails{
     @JsonIgnore
     @OneToMany(mappedBy = "creador",fetch = FetchType.EAGER)
     private List<Evento> eventosCreados;
+    
+    @JsonIgnore
+    @OneToMany(targetEntity = Solicitud.class)
+    private List<Solicitud> solicitudes;
 
     @JsonIgnore
     @ManyToMany(targetEntity = Etiqueta.class)

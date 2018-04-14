@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.com.javeriana.SICE2.excepciones.SeguridadException;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.Evento;
+import co.com.javeriana.SICE2.model.general.Solicitud;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.repositories.UsuarioJaverianaRepository;
@@ -26,7 +27,7 @@ import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
 
 @CrossOrigin(allowCredentials="true")
 @RestController
-public class RestUsuario {	
+public class RestSolicitud {	
 	@Log
 	private Logger log;
 	
@@ -40,15 +41,18 @@ public class RestUsuario {
 	private EventoRepository eventoRepository;
 	
 	/**
-	 * Metodo que permite listar los eventos a los que esta suscrito el usuario actual
+	 * Metodo que permite crear una solicitud para un servicio de la Javeriana
 	 * 
 	 * @return devuelve la estado del servidor
 	 * @throws IOException
 	 */
-	@RequestMapping(value="/listarEventosPorUsuario",method=RequestMethod.POST, consumes="application/json")
+	@RequestMapping(value="/crearSolicitud",method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<List<Evento>> asociarTipoProyecto() {
 		try {
+			Solicitud solicitud = new Solicitud();
 			UsuarioJaveriana usuarioActual = usuarioRepository.findById(seguridad.getCurrentUser().getId()).get();
+			solicitud.setCreador(usuarioActual);
+			solicitud.setActiva(true);
 			return ResponseEntity.status(HttpStatus.OK).body(usuarioActual.getEventosSuscritos());
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -56,24 +60,7 @@ public class RestUsuario {
 		}
 	}
 	
-	/**
-	 * Metodo que permite determinar si un usuario está inscrito a un evento o no
-	 * 
-	 * @return devuelve un booleano que determina si está inscrito
-	 * @throws IOException
-	 */
-	@Transactional
-	@RequestMapping(value="/inscrito/{id}",method=RequestMethod.GET)
-	public ResponseEntity<Boolean> inscrito(@PathVariable("id") Long idEvento) {
-		try {
-			Evento evento = eventoRepository.findById(idEvento).get();
-			UsuarioJaveriana usuario = usuarioRepository.findUsuarioById(seguridad.getCurrentUser().getId());
-			return ResponseEntity.status(HttpStatus.OK).body(evento.getInscritos().contains(usuario));
-		}catch (Exception e) {
-			log.error(e.getMessage(), e);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
-	}
+	
 	
 	
 }
