@@ -58,15 +58,19 @@ public class RestEvento {
 		try {
 			Evento evento = eventoRepository.findById(idEvento).get();
 			UsuarioJaveriana usuario = usuarioRepository.findById(seguridad.getCurrentUser().getId()).get();
-			if (!evento.getInscritos().contains(usuario)){
-				correo.emailEventos("Se ha suscrito correctamente a "+evento.getTitulo(),seguridad.getCurrentUser().getEmail(),evento);
-				evento.getInscritos().add(usuario);
-				usuario.getEventosSuscritos().add(evento);
-				return ResponseEntity.status(HttpStatus.OK).body(true);
-			}else{
-				evento.getInscritos().remove(usuario);
-				usuario.getEventosSuscritos().remove(evento);
-				return ResponseEntity.status(HttpStatus.OK).body(false);
+			if (evento.getInscritos().size()<evento.getCapacidad_maxima() || evento.getCapacidad_maxima()==-1) {
+				if (!evento.getInscritos().contains(usuario)){
+					correo.emailEventos("Se ha suscrito correctamente a "+evento.getTitulo(),seguridad.getCurrentUser().getEmail(),evento);
+					evento.getInscritos().add(usuario);
+					usuario.getEventosSuscritos().add(evento);
+					return ResponseEntity.status(HttpStatus.OK).body(true);
+				}else{
+					evento.getInscritos().remove(usuario);
+					usuario.getEventosSuscritos().remove(evento);
+					return ResponseEntity.status(HttpStatus.OK).body(false);
+				}
+			}else {
+				return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(false);
 			}
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -75,7 +79,7 @@ public class RestEvento {
 	}
 	
 	/**
-	 * Metodo que permite asociar tipos de proyectos que le interesan al usuario
+	 * Metodo que permite listar los incritos dado un id de un evento
 	 * 
 	 * @return devuelve el estado del servidor
 	 * @throws IOException

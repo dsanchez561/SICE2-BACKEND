@@ -71,7 +71,7 @@ public class DominioImpl {
 	}
 
 	/**
-	 * Método que guarda en la base de datos una imagen a un inventario
+	 * Método que guarda en la base de datos una imagen a un dominio
 	 * @param file de la imagen
 	 * @param id del inventario
 	 * @throws IOException

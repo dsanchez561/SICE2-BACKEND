@@ -44,7 +44,7 @@ public class Evento {
     private String requisitos;
     
     @Basic
-    private int capacidadMaxima;
+    private Long capacidadMaxima;
     
     @JsonIgnore
     @ManyToOne(targetEntity = UsuarioJaveriana.class)
@@ -78,14 +78,14 @@ public class Evento {
 	/**
 	 * @return the capacidadMaxima
 	 */
-	public int getCapacidad_maxima() {
+	public Long getCapacidad_maxima() {
 		return capacidadMaxima;
 	}
 
 	/**
 	 * @param capacidadMaxima the capacidadMaxima to set
 	 */
-	public void setCapacidad_maxima(int capacidad_maxima) {
+	public void setCapacidad_maxima(Long capacidad_maxima) {
 		this.capacidadMaxima = capacidad_maxima;
 	}
 

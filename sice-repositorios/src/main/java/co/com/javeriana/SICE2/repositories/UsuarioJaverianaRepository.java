@@ -3,6 +3,8 @@
  */
 package co.com.javeriana.SICE2.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +21,5 @@ public interface UsuarioJaverianaRepository extends JpaRepository<UsuarioJaveria
 	public UsuarioJaveriana findByUsernameAndPassword(String username,String password);
 	public UsuarioJaveriana findUsuarioById(Long idUsuario);
 	public UsuarioJaveriana findUsuarioByUsername(String username);
+	public List<UsuarioJaveriana> findUsuarioByAdministrador(Boolean administrador);
 }
