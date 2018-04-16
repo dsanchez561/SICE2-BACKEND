@@ -20,11 +20,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import co.com.javeriana.SICE2.model.general.AtrPersonalizado;
-import co.com.javeriana.SICE2.model.general.DatoPersonalizado;
+import co.com.javeriana.SICE2.model.general.RespuestaAtrPersonalizado;
 import co.com.javeriana.SICE2.model.general.Evento;
 import co.com.javeriana.SICE2.model.general.Solicitud;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
-import co.com.javeriana.SICE2.repositories.DatoPersonalizadoRepository;
+import co.com.javeriana.SICE2.repositories.RespuestaAtrPersonalizadoRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
 
 /**
@@ -39,7 +39,7 @@ public class ProcesadorSMTP {
 	private ConfiguracionSeguridad seguridad;
 	
 	@Autowired
-	private DatoPersonalizadoRepository datoPersonalizadoRepository;
+	private RespuestaAtrPersonalizadoRepository datoPersonalizadoRepository;
 
 	public void emailEventos(String asunto, String destinatario, Evento evento) {
 		final String username = "SICE2Javeriana@gmail.com";
@@ -76,7 +76,7 @@ public class ProcesadorSMTP {
 			if (evento.getAtrPersonalizados().size()>0) {
 				text2= "<p>Información adicional</p>";
 				for (AtrPersonalizado atrPersonalizado: evento.getAtrPersonalizados()) {
-					DatoPersonalizado datoPersonalizado = datoPersonalizadoRepository.findByAtrPersonalizadoAndUsuarioJaveriana(atrPersonalizado, usuario);
+					RespuestaAtrPersonalizado datoPersonalizado = datoPersonalizadoRepository.findByAtrPersonalizadoAndUsuarioJaveriana(atrPersonalizado, usuario);
 					text2 = text2 +"<p> - "+atrPersonalizado.getNombre()+"  : " + datoPersonalizado.getDato() + "</p>";
 				}
 			}

@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import co.com.javeriana.SICE2.excepciones.SeguridadException;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.AtrPersonalizado;
-import co.com.javeriana.SICE2.model.general.DatoPersonalizado;
+import co.com.javeriana.SICE2.model.general.RespuestaAtrPersonalizado;
 import co.com.javeriana.SICE2.model.general.Evento;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 import co.com.javeriana.SICE2.pojo.InscripcionPojo;
 import co.com.javeriana.SICE2.repositories.AtrPersonalizadoRepository;
-import co.com.javeriana.SICE2.repositories.DatoPersonalizadoRepository;
+import co.com.javeriana.SICE2.repositories.RespuestaAtrPersonalizadoRepository;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.repositories.UsuarioJaverianaRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
@@ -51,7 +51,7 @@ public class RestEvento {
 	private AtrPersonalizadoRepository atrPersonalizadoRepository;
 	
 	@Autowired
-	private DatoPersonalizadoRepository datoPersonalizadoRepository;
+	private RespuestaAtrPersonalizadoRepository datoPersonalizadoRepository;
 	
 	@Autowired
 	private ProcesadorSMTP correo;
@@ -78,7 +78,7 @@ public class RestEvento {
 					return ResponseEntity.status(HttpStatus.OK).body(true);
 				}else{
 					for (AtrPersonalizado atrPersonalizado : evento.getAtrPersonalizados()) {
-						DatoPersonalizado datoPersonalizado =datoPersonalizadoRepository.findByAtrPersonalizadoAndUsuarioJaveriana(atrPersonalizado, usuario);
+						RespuestaAtrPersonalizado datoPersonalizado =datoPersonalizadoRepository.findByAtrPersonalizadoAndUsuarioJaveriana(atrPersonalizado, usuario);
 						datoPersonalizadoRepository.delete(datoPersonalizado);
 					}
 					evento.getInscritos().remove(usuario);
@@ -163,7 +163,7 @@ public class RestEvento {
 	public ResponseEntity<Boolean> guardarDatosPersonalizados(@RequestBody List<InscripcionPojo> inscripcionesPojos) {
 		try {
 			for (InscripcionPojo inscripcion:inscripcionesPojos) {
-				DatoPersonalizado datosPersonalizados = new DatoPersonalizado();
+				RespuestaAtrPersonalizado datosPersonalizados = new RespuestaAtrPersonalizado();
 				AtrPersonalizado atrPersonalizado = atrPersonalizadoRepository.findById(inscripcion.getId()).get();
 				UsuarioJaveriana usuario = seguridad.getCurrentUser();
 				datosPersonalizados.setAtrPersonalizado(atrPersonalizado);

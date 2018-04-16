@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import co.com.javeriana.SICE2.excepciones.SeguridadException;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.AtrPersonalizado;
-import co.com.javeriana.SICE2.model.general.DatoPersonalizado;
+import co.com.javeriana.SICE2.model.general.RespuestaAtrPersonalizado;
 import co.com.javeriana.SICE2.model.general.Evento;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 import co.com.javeriana.SICE2.pojo.InscripcionPojo;
 import co.com.javeriana.SICE2.repositories.AtrPersonalizadoRepository;
-import co.com.javeriana.SICE2.repositories.DatoPersonalizadoRepository;
+import co.com.javeriana.SICE2.repositories.RespuestaAtrPersonalizadoRepository;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.repositories.UsuarioJaverianaRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
@@ -51,7 +51,7 @@ public class RestDatoPersonalizado {
 	private AtrPersonalizadoRepository atrPersonalizadoRepository;
 	
 	@Autowired
-	private DatoPersonalizadoRepository datoPersonalizadoRepository;
+	private RespuestaAtrPersonalizadoRepository datoPersonalizadoRepository;
 	
 	@Autowired
 	private ProcesadorSMTP correo;
@@ -67,7 +67,7 @@ public class RestDatoPersonalizado {
 	 */
 	@RequestMapping(value="/listarDatosPersonalizadosPorUsuario",method=RequestMethod.POST)
 	//TODO:: toca crear un pojo para recibir id de usuario y id de evento
-	public ResponseEntity<List<DatoPersonalizado>> guardarDatosPersonalizados(@RequestBody List<InscripcionPojo> inscripcionesPojos) {
+	public ResponseEntity<List<RespuestaAtrPersonalizado>> guardarDatosPersonalizados(@RequestBody List<InscripcionPojo> inscripcionesPojos) {
 		if (seguridad.getCurrentUser().getAdministrador()) {
 			try {
 				return ResponseEntity.status(HttpStatus.OK).body(datoPersonalizadoRepository.findAll());

@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
  * @author Javeriana
  */
 @Entity
-public class DatoPersonalizado {
+public class RespuestaAtrPersonalizado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
