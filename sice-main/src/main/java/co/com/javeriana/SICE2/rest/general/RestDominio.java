@@ -3,6 +3,8 @@ package co.com.javeriana.SICE2.rest.general;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import co.com.javeriana.SICE2.excepciones.SeguridadException;
 import co.com.javeriana.SICE2.implement.DominioImpl;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.Dominio;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
+import jxl.write.WriteException;
 
 @RestController
 public class RestDominio {
@@ -110,11 +114,25 @@ public class RestDominio {
 	@RequestMapping(value="/obtenerURL/{id}/{pagina}", method=RequestMethod.GET)
 	public ResponseEntity<String> obtenerURL(@PathVariable("id") Long id, @PathVariable("pagina") String pagina){
 		try {
+			
 			return ResponseEntity.status(HttpStatus.OK).body(dominioImpl.obtenerURL(id, pagina));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
+	}
+	
+	/**
+	 * Método que expone el servicio de obetener las imágenes
+	 * @param id de universidad
+	 * @return nada
+	 * @throws IOException 
+	 * @throws WriteException 
+	 */
+	@RequestMapping(value="/exportarExcelInscritos/{id}", method=RequestMethod.GET)
+	public ModelAndView exportarExcelInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException{
+		dominioImpl.exportarExcelInscritos(id, response);
+		return null;
 	}
 
 }
