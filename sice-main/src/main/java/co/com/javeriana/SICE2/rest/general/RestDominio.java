@@ -123,8 +123,8 @@ public class RestDominio {
 	}
 	
 	/**
-	 * Método que expone el servicio de obetener las imágenes
-	 * @param id de universidad
+	 * Método que expone el servicio de exportar excel de inscritos
+	 * @param id del evento
 	 * @return nada
 	 * @throws IOException 
 	 * @throws WriteException 
@@ -132,6 +132,19 @@ public class RestDominio {
 	@RequestMapping(value="/exportarExcelInscritos/{id}", method=RequestMethod.GET)
 	public ModelAndView exportarExcelInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException{
 		dominioImpl.exportarExcelInscritos(id, response);
+		return null;
+	}
+	
+	/**
+	 * Método que expone el servicio de exportar pdf de inscritos
+	 * @param id del evento
+	 * @return nada
+	 * @throws IOException 
+	 * @throws WriteException 
+	 */
+	@RequestMapping(value="/exportarPdfInscritos/{id}", method=RequestMethod.GET)
+	public ModelAndView exportarPdfInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException{
+		dominioImpl.exportarPdfInscritos(id, response);
 		return null;
 	}
 

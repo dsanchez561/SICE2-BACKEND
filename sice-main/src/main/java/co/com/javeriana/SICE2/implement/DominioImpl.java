@@ -6,6 +6,7 @@ package co.com.javeriana.SICE2.implement;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -17,6 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 
 import co.com.javeriana.SICE2.comandos.mensaje.Mensaje;
 import co.com.javeriana.SICE2.enumeracion.TipoDominioEnum;
@@ -269,5 +275,26 @@ public class DominioImpl {
 	        sheet.setColumnView(i, cv);
 	    }
 	}
+	public void exportarPdfInscritos(Long id, HttpServletResponse response) throws IOException {
+		Evento e = eventoRepository.findById(id).get();
+		
+		FileOutputStream fos = new FileOutputStream("C:\\Users\\asus\\Inscritos "+e.getTitulo()+".pdf");
+		PdfWriter pw = new PdfWriter(fos);
+		PdfDocument pdf = new PdfDocument(pw);
+		Document document = new Document(pdf);
+		
+		document.add(new Paragraph("Creado por: "+e.getCreador().getNombre()+" "+e.getCreador().getApellidos()));
+		document.add(new Paragraph("Fecha inicio: "+e.getInicio().toString()));
+		document.add(new Paragraph("Fecha en que termina: "+e.getFin().toString()));
+		document.add(new Paragraph(""));
+		document.add(new Paragraph(""));
+		document.add(new Paragraph("                                       "+e.getTitulo()));
+		document.add(new Paragraph(""));
+		document.add(new Paragraph(""));
 
+		for(UsuarioJaveriana uj : e.getInscritos()) {
+			document.add(new Paragraph("       "+uj.getNombre()+" "+uj.getApellidos()+", "+uj.getUsername()+", "+uj.getEmail()));
+		}
+		document.close();
+	}
 }
