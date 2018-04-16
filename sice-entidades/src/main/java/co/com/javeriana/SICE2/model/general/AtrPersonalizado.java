@@ -22,7 +22,7 @@ public class AtrPersonalizado {
     private String nombre;
 
     @Basic
-    private String dato;
+    private String descripcion;
 
     public Long getId() {
         return this.id;
@@ -40,12 +40,12 @@ public class AtrPersonalizado {
         this.nombre = nombre;
     }
 
-    public String getDato() {
-        return this.dato;
+    public String getDescripcion() {
+        return this.descripcion;
     }
 
-    public void setDato(String dato) {
-        this.dato = dato;
+    public void setDescripcion(String dato) {
+        this.descripcion = dato;
     }
 
 }

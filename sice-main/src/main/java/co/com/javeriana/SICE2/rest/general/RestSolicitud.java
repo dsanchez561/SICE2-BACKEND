@@ -8,16 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.javeriana.SICE2.excepciones.SeguridadException;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.Solicitud;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
+import co.com.javeriana.SICE2.pojo.CierreSolicitudPojo;
 import co.com.javeriana.SICE2.pojo.SolicitudPojo;
 import co.com.javeriana.SICE2.repositories.SolicitudRepository;
 import co.com.javeriana.SICE2.repositories.UsuarioJaverianaRepository;
@@ -79,7 +80,7 @@ public class RestSolicitud {
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/listarSolicitudes/{num}",method=RequestMethod.GET)
-	public ResponseEntity<List<Solicitud>> asociarTipoProyecto(@RequestParam int num) {
+	public ResponseEntity<List<Solicitud>> asociarTipoProyecto(@PathVariable("num") Long num) {
 		if (seguridad.isAdministrador()) {
 			try {
 				if (num == 0) {
@@ -99,5 +100,29 @@ public class RestSolicitud {
 			throw new SeguridadException(SINPERMISOS);
 		}
 		return null;
+	}
+	
+	/**
+	 * Metodo que permite cerrar una solicitud y notificar al usuario el estado de la misma
+	 * 
+	 * @return devuelve la estado del servidor
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/cerrarSolicitud",method=RequestMethod.POST,consumes="application/json")
+	public ResponseEntity<Boolean> cerrarSolicitud(@RequestBody CierreSolicitudPojo cierreSolicitudPojo ) {
+		if (seguridad.isAdministrador()) {
+			try {
+				Solicitud solicitud = solicitudRepository.findById(cierreSolicitudPojo.getId()).get();
+				correo.emailCierreSolicitud("Su solicitud se ha cerrado", cierreSolicitudPojo.getRespues(), solicitud);
+				solicitud.setActiva(false);
+				solicitudRepository.save(solicitud);
+				return ResponseEntity.status(HttpStatus.OK).body(true);
+			}catch (Exception e) {
+				log.error(e.getMessage(), e);
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+			}
+		}else {
+			throw new SeguridadException(SINPERMISOS);
+		}
 	}
 }

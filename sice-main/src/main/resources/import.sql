@@ -1,7 +1,7 @@
 ----------------------------------INSERTS USUARIO----------------------------------
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Estudiante','Sánchez Andrade','NUEVO','Daniel Santiago','123456','daniel',false,'d-sancheza@javeriana.edu.co');
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Administrador','Ortiz Pabón','NUEVO','Efrain','123456','efrain',true,'d-sancheza@javeriana.edu.co');
-INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador)VALUES ('Estudiante','Acuña Garzón','NUEVO','David Alberto','123456','david',false);
+INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Estudiante','Acuña Garzón','NUEVO','David Alberto','123456','david',false,'david.acuna@javeriana.edu.co');
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Estudiante','Guerrero Danderino','NUEVO','Brayan','123456','brayan',false,'b.guerrero@javeriana.edu.co');
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador)VALUES ('Estudiante','Gaitan Bautista','NUEVO','Pablo','123456','pGaitan',false);
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador)VALUES ('Estudiante','Velasco Zambrano','NUEVO','David','123456','dVelazco',false);
