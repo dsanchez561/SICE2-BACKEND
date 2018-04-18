@@ -9,7 +9,6 @@ package co.com.javeriana.SICE2.constantes;
  *
  */
 public final class CodigosError {
-	 
 	public static final String ERROR_001 = "001";
 	public static final String ERROR_002 = "002";
 	public static final String ERROR_003 = "003";
