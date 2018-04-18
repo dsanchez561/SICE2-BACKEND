@@ -146,8 +146,8 @@ public class DominioImpl {
 		
 		String fileName = "Inscritos " + e.getTitulo();
 		File f = new File ("C:\\Users\\asus\\"+fileName+".xls");
-//		WritableWorkbook myExcel = Workbook.createWorkbook(response.getOutputStream());
-		WritableWorkbook myExcel = Workbook.createWorkbook(f);
+		WritableWorkbook myExcel = Workbook.createWorkbook(response.getOutputStream());
+//		WritableWorkbook myExcel = Workbook.createWorkbook(f);
 		WritableSheet excelOutputsheet = myExcel.createSheet(e.getTitulo(), 0);
 		
 		final ClassPathResource resource = new ClassPathResource("imagenes/PUJBogota.png");
