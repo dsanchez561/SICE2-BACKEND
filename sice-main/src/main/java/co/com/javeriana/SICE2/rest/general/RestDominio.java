@@ -1,9 +1,16 @@
 package co.com.javeriana.SICE2.rest.general;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.GET;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +23,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.itextpdf.text.DocumentException;
+
 import co.com.javeriana.SICE2.excepciones.SeguridadException;
 import co.com.javeriana.SICE2.implement.DominioImpl;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.Dominio;
+import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
 import jxl.write.WriteException;
 
@@ -33,6 +43,9 @@ public class RestDominio {
 	
 	@Autowired
 	private ConfiguracionSeguridad seguridad;
+	
+	@Autowired
+	private EventoRepository eventoRepository;
 	
 	private static String SINPERMISOS = "No tiene permisos para acceder a esta funcionalidad";
 	
@@ -129,9 +142,16 @@ public class RestDominio {
 	 * @throws IOException 
 	 * @throws WriteException 
 	 */
-	@RequestMapping(value="/exportarExcelInscritos/{id}", method=RequestMethod.GET)
-	public ModelAndView exportarExcelInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException{
+	@RequestMapping(value="/exportarExcelInscritos/{id}", method=RequestMethod.GET, produces="application/vnd.ms-excel")
+	public Response exportarExcelInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException{
 		dominioImpl.exportarExcelInscritos(id, response);
+		String fileName = "Inscritos "+eventoRepository.findById(id).get().getTitulo();
+		File file = new File("d:\\"+fileName+".xls");
+		if(file.exists()) {
+			ResponseBuilder response1 = Response.ok((Object)file);
+		    response1.header("Content-Disposition", "attachment; filename="+fileName+".xls");
+		    return response1.build();
+		}
 		return null;
 	}
 	
@@ -141,9 +161,11 @@ public class RestDominio {
 	 * @return nada
 	 * @throws IOException 
 	 * @throws WriteException 
+	 * @throws URISyntaxException 
+	 * @throws DocumentException 
 	 */
 	@RequestMapping(value="/exportarPdfInscritos/{id}", method=RequestMethod.GET)
-	public ModelAndView exportarPdfInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException{
+	public ModelAndView exportarPdfInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException, DocumentException, URISyntaxException{
 		dominioImpl.exportarPdfInscritos(id, response);
 		return null;
 	}

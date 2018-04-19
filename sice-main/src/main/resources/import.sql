@@ -29,10 +29,10 @@ INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VAL
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',true,'Universidad La Sabana', 'https://www.unisabana.edu.co/empresaysociedad/vision-otri/seis/emprendedores-con-sello-sabana/',true, 'UniSabana.png');
 
 ----------------------------------INSERTS UNIVERSIDAD INTERNACIONAL----------------------------------
-INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',false,'University of Utah', 'http://eccles.utah.edu/faculty/department-entrepreneurship-strategy/',true, 'UniversityUtah.png');
-INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',false,'University of Bristol', 'http://www.bristol.ac.uk/innovation/entrepreneurship/',true, 'UniversityBristol.png');
-INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',false,'University of Cambridge', 'https://www.jbs.cam.ac.uk/entrepreneurship/',true, 'UniversityCambridge.png');
-INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',false,'University of Miami', 'https://www.bus.miami.edu/academic-programs/undergraduate-business-education/business-curriculum/majors/entrepreneurship/index.html',true, 'UniversityMiami.png');
+INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',false,'University of Utah', 'http://eccles.utah.edu/faculty/department-entrepreneurship-strategy/',true, 'UniversityOfUtah.png');
+INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',false,'University of Bristol', 'http://www.bristol.ac.uk/innovation/entrepreneurship/',true, 'UniversityOfBristol.png');
+INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',false,'University of Cambridge', 'https://www.jbs.cam.ac.uk/entrepreneurship/',true, 'UniversityOfCambridge.png');
+INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',false,'University of Miami', 'https://www.bus.miami.edu/academic-programs/undergraduate-business-education/business-curriculum/majors/entrepreneurship/index.html',true, 'UniversityOfMiami.png');
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',false,'University of Pekin', 'http://ostd.pku.edu.cn/Innovation_Entrepreneurship_Education_and_Research/index.htm',true, 'UniversityPekin.png');
 
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',false,'University of Stanford', 'https://www.gsb.stanford.edu/faculty-research/centers-initiatives/ces',true, 'UniversityStanford.png');
@@ -69,8 +69,8 @@ INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VAL
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('AUSJAL',false,'Universidad Iberoamericana León', 'https://www.leon.uia.mx/noticias/articulo.cfm?Liga=Ideas-de-negocio-Ibero-Emprende-2016',true, 'UniversidadIberoamericana.jpg');
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('AUSJAL',false,'Universidad Iberoamericana Ciudad de México', 'http://ibero.mx/prensa/ibero-apoya-empresarios-con-su-programa-de-emprendimiento-social',true, 'UniversidadIberoamericanaMexico.jpg');
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('AUSJAL',false,'Universidad Iberoamericana Puebla', 'https://www.iberopuebla.mx/oferta-academica/cursos-y-diplomados/diplomados/diplomado-habilidades-para-el-emprendimiento',true, 'UniversidadIberoamericanaPuebla.jpg');
-INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('AUSJAL',false,'ITESO Universidad Jesuita de Guadalajara', 'https://universidadempresa.iteso.mx/emprendimiento',true, 'ITESO.jpg');
-INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('AUSJAL',false,'Universidad Centroamericana, UCA Nicaragua', 'http://www.uca.edu.ni/2/index.php/programa-emprende',true, 'UCA.jpg');
+INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('AUSJAL',false,'ITESO Universidad Jesuita de Guadalajara', 'https://universidadempresa.iteso.mx/emprendimiento',true, 'ITESO.png');
+INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('AUSJAL',false,'Universidad Centroamericana, UCA Nicaragua', 'http://www.uca.edu.ni/2/index.php/programa-emprende',true, 'UCA.png');
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('AUSJAL',false,'Universidad del Pacífico (Perú)', 'http://emprendeup.pe/',true, 'UniversidadPacifico.png');
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('AUSJAL',false,'Universidad Antonio Ruiz de Montoya', 'https://www.uarm.edu.pe/Agenda/I-coloquio-estudiantes-administracion-emprendimiento-innovacion-tecnologica#.Wsrh7IhubIU',true, 'UniversidadAntonio.jpg');
 

@@ -8,6 +8,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -19,10 +22,18 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import co.com.javeriana.SICE2.comandos.mensaje.Mensaje;
 import co.com.javeriana.SICE2.enumeracion.TipoDominioEnum;
@@ -145,9 +156,9 @@ public class DominioImpl {
 		Evento e = eventoRepository.findById(id).get();
 		
 		String fileName = "Inscritos " + e.getTitulo();
-		File f = new File ("C:\\Users\\asus\\"+fileName+".xls");
-		WritableWorkbook myExcel = Workbook.createWorkbook(response.getOutputStream());
-//		WritableWorkbook myExcel = Workbook.createWorkbook(f);
+		File f = new File ("d:\\"+fileName+".xls");
+//		WritableWorkbook myExcel = Workbook.createWorkbook(response.getOutputStream());
+		WritableWorkbook myExcel = Workbook.createWorkbook(f);
 		WritableSheet excelOutputsheet = myExcel.createSheet(e.getTitulo(), 0);
 		
 		final ClassPathResource resource = new ClassPathResource("imagenes/PUJBogota.png");
@@ -275,26 +286,64 @@ public class DominioImpl {
 	        sheet.setColumnView(i, cv);
 	    }
 	}
-	public void exportarPdfInscritos(Long id, HttpServletResponse response) throws IOException {
+	public void exportarPdfInscritos(Long id, HttpServletResponse response) throws IOException, DocumentException, URISyntaxException {
 		Evento e = eventoRepository.findById(id).get();
 		
 		FileOutputStream fos = new FileOutputStream("C:\\Users\\asus\\Inscritos "+e.getTitulo()+".pdf");
-		PdfWriter pw = new PdfWriter(fos);
-		PdfDocument pdf = new PdfDocument(pw);
-		Document document = new Document(pdf);
+		 
+		Path path = Paths.get(ClassLoader.getSystemResource("imagenes/PUJBogota.png").toURI());
 		
-		document.add(new Paragraph("Creado por: "+e.getCreador().getNombre()+" "+e.getCreador().getApellidos()));
-		document.add(new Paragraph("Fecha inicio: "+e.getInicio().toString()));
-		document.add(new Paragraph("Fecha en que termina: "+e.getFin().toString()));
-		document.add(new Paragraph(""));
-		document.add(new Paragraph(""));
-		document.add(new Paragraph("                                       "+e.getTitulo()));
-		document.add(new Paragraph(""));
-		document.add(new Paragraph(""));
+		Document document = new Document();
+		PdfWriter.getInstance(document, fos);
+		document.open();
+		
+		Image img = Image.getInstance(path.toAbsolutePath().toString());
+		img.setAbsolutePosition(15, 735);
+		img.scaleToFit(90, 290);
+		document.add(img);
+		
+		Paragraph paragraph = new Paragraph();
 
-		for(UsuarioJaveriana uj : e.getInscritos()) {
-			document.add(new Paragraph("       "+uj.getNombre()+" "+uj.getApellidos()+", "+uj.getUsername()+", "+uj.getEmail()));
+		Font font = new Font(FontFamily.HELVETICA, 25, Font.UNDERLINE);
+		paragraph = new Paragraph(e.getTitulo(), font);
+		paragraph.setAlignment(Element.ALIGN_CENTER);
+		document.add(paragraph);
+		document.add(Chunk.NEWLINE);
+		
+		font = new Font(FontFamily.HELVETICA, 12);
+		paragraph = new Paragraph("Creado por: "+e.getCreador().getNombre()+" "+e.getCreador().getApellidos(), font);
+		document.add(paragraph);
+		paragraph = new Paragraph("Fecha de inicio: "+e.getInicio(), font);
+		document.add(paragraph);
+		paragraph = new Paragraph("Fecha en que termina: "+e.getFin(), font);
+		document.add(paragraph);
+		
+		document.add(Chunk.NEWLINE);
+		
+		PdfPTable table = new PdfPTable(new float[] { 1, 3, 3, 3, 6 });
+		table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+		
+		table.addCell(UsuarioJaveriana.class.getDeclaredFields()[0].getName());
+		table.addCell(UsuarioJaveriana.class.getDeclaredFields()[1].getName());
+		table.addCell(UsuarioJaveriana.class.getDeclaredFields()[2].getName());
+		table.addCell(UsuarioJaveriana.class.getDeclaredFields()[3].getName());
+		table.addCell(UsuarioJaveriana.class.getDeclaredFields()[4].getName());
+		  
+		PdfPCell[] cells = table.getRow(0).getCells(); 
+		for (int j=0;j<cells.length;j++){
+		   cells[j].setBackgroundColor(BaseColor.GRAY);
 		}
+		
+		for(UsuarioJaveriana uj:e.getInscritos()) {
+			table.addCell(uj.getId()+"");
+			table.addCell(uj.getNombre());
+			table.addCell(uj.getApellidos());
+			table.addCell(uj.getUsername());
+			table.addCell(uj.getEmail());
+		}
+		
+		document.add(table);
+		 
 		document.close();
 	}
 }
