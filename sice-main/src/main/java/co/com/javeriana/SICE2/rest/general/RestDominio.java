@@ -1,6 +1,7 @@
 package co.com.javeriana.SICE2.rest.general;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -146,7 +147,7 @@ public class RestDominio {
 	public Response exportarExcelInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException{
 		dominioImpl.exportarExcelInscritos(id, response);
 		String fileName = "Inscritos "+eventoRepository.findById(id).get().getTitulo();
-		File file = new File("d:\\"+fileName+".xls");
+		File file = new File("archivos/"+fileName+".xls");
 		if(file.exists()) {
 			ResponseBuilder response1 = Response.ok((Object)file);
 		    response1.header("Content-Disposition", "attachment; filename="+fileName+".xls");
@@ -164,10 +165,16 @@ public class RestDominio {
 	 * @throws URISyntaxException 
 	 * @throws DocumentException 
 	 */
-	@RequestMapping(value="/exportarPdfInscritos/{id}", method=RequestMethod.GET)
-	public ModelAndView exportarPdfInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException, DocumentException, URISyntaxException{
+	@RequestMapping(value="/exportarPdfInscritos/{id}", method=RequestMethod.GET, produces="application/pdf")
+	public javax.ws.rs.core.Response exportarPdfInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException, DocumentException, URISyntaxException{
 		dominioImpl.exportarPdfInscritos(id, response);
-		return null;
+		String fileName = "Inscritos "+eventoRepository.findById(id).get().getTitulo();
+		File file = new File("archivos/"+fileName+".pdf");
+	    FileInputStream fileInputStream = new FileInputStream(file);
+	    javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.ok((Object) fileInputStream);
+	    responseBuilder.type("application/pdf");
+	    responseBuilder.header("Content-Disposition", "filename="+fileName+".pdf");
+	    return responseBuilder.build();
 	}
 
 }

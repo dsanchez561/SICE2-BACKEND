@@ -156,7 +156,7 @@ public class DominioImpl {
 		Evento e = eventoRepository.findById(id).get();
 		
 		String fileName = "Inscritos " + e.getTitulo();
-		File f = new File ("d:\\"+fileName+".xls");
+		File f = new File ("archivos/"+fileName+".xls");
 //		WritableWorkbook myExcel = Workbook.createWorkbook(response.getOutputStream());
 		WritableWorkbook myExcel = Workbook.createWorkbook(f);
 		WritableSheet excelOutputsheet = myExcel.createSheet(e.getTitulo(), 0);
@@ -289,7 +289,7 @@ public class DominioImpl {
 	public void exportarPdfInscritos(Long id, HttpServletResponse response) throws IOException, DocumentException, URISyntaxException {
 		Evento e = eventoRepository.findById(id).get();
 		
-		FileOutputStream fos = new FileOutputStream("C:\\Users\\asus\\Inscritos "+e.getTitulo()+".pdf");
+		FileOutputStream fos = new FileOutputStream("archivos/Inscritos "+e.getTitulo()+".pdf");
 		 
 		Path path = Paths.get(ClassLoader.getSystemResource("imagenes/PUJBogota.png").toURI());
 		
