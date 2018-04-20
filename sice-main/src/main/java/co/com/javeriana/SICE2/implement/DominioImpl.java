@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -83,7 +84,7 @@ public class DominioImpl {
 	
 	public List<Dominio> listarDominiosNacionales(String tipo) {
 		try {
-			return dominioRepository.findByActivoAndTipoAndNacional(true, TipoDominioEnum.valueOf(tipo),true);
+			return dominioRepository.findByActivoAndTipoAndNacional(true, TipoDominioEnum.valueOf(tipo),true, new Sort(Sort.Direction.ASC, "nombre"));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return null;
@@ -92,7 +93,7 @@ public class DominioImpl {
 	
 	public List<Dominio> listarDominiosInternacionales(String tipo) {
 		try {
-			return dominioRepository.findByActivoAndTipoAndNacional(true, TipoDominioEnum.valueOf(tipo),false);
+			return dominioRepository.findByActivoAndTipo(true, TipoDominioEnum.valueOf(tipo), new Sort(Sort.Direction.ASC, "nombre"));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return null;

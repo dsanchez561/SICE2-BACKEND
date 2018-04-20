@@ -7,9 +7,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.GET;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.itextpdf.text.DocumentException;
 
@@ -68,13 +64,29 @@ public class RestDominio {
 	
 
 	/**
-	 * Metodo que permite listar todos los dominios nacionales dado el tipo (Universidad, Entidad Publica, Empresa...etc)
+	 * Metodo que permite listar todos los dominios internacionales dado el tipo (Universidad, Entidad Publica, Empresa...etc)
 	 * 
 	 * @return devuelve la lista de dominios
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/listarDominiosInternacionales", method = RequestMethod.POST)
 	public ResponseEntity<List<Dominio>> listarDominiosInternacionales(@RequestBody String tipo) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(dominioImpl.listarDominiosInternacionales(tipo));
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	/**
+	 * Metodo que permite listar todos los dominios ausjal dado el tipo (Universidad, Entidad Publica, Empresa...etc)
+	 * 
+	 * @return devuelve la lista de dominios
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/listarDominiosAusjal", method = RequestMethod.POST)
+	public ResponseEntity<List<Dominio>> listarDominiosAusjal(@RequestBody String tipo) {
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(dominioImpl.listarDominiosInternacionales(tipo));
 		} catch (Exception e) {
