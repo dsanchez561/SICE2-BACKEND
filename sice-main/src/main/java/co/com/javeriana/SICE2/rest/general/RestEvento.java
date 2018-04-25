@@ -141,7 +141,15 @@ public class RestEvento {
 	public ResponseEntity<Evento> listarTodosEventos(@RequestBody Evento evento) {
 		if (seguridad.isAdministrador()){
 			try {
-				evento.setAtrPersonalizados(new ArrayList<>());
+				if (evento.getAtrPersonalizados()!=null) {
+					List<AtrPersonalizado> atrPersonalizados = evento.getAtrPersonalizados();
+					for (AtrPersonalizado atr : atrPersonalizados) {
+						atr.setId(null);
+						atrPersonalizadoRepository.save(atr);
+					}
+				}else {
+					evento.setAtrPersonalizados(new ArrayList<>());
+				}
 				evento.setCreador(seguridad.getCurrentUser());
 				return ResponseEntity.status(HttpStatus.OK).body(eventoRepository.save(evento));
 			}catch (Exception e) {

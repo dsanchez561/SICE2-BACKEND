@@ -93,7 +93,7 @@ public class DominioImpl {
 	
 	public List<Dominio> listarDominiosInternacionales(String tipo) {
 		try {
-			return dominioRepository.findByActivoAndTipo(true, TipoDominioEnum.valueOf(tipo), new Sort(Sort.Direction.ASC, "nombre"));
+			return dominioRepository.findByActivoAndTipoAndNacional(true, TipoDominioEnum.valueOf(tipo),false, new Sort(Sort.Direction.ASC, "nombre"));
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return null;

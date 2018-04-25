@@ -23,5 +23,4 @@ public interface DominioRepository extends JpaRepository<Dominio, Long> {
 	
 	public List<Dominio> findByActivoAndTipoAndNacional(Boolean activo,TipoDominioEnum tipo,Boolean nacional, Sort sort);
 
-	public List<Dominio> findByActivoAndTipo(boolean b, TipoDominioEnum valueOf, Sort sort);
 }
