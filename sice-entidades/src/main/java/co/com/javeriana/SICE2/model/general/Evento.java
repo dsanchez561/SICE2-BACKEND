@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -38,6 +39,7 @@ public class Evento {
     private String titulo;
     
     @Basic
+    @Size(min = 0, max = 1300)
     private String descripcion;
     
     @Basic

@@ -26,6 +26,7 @@ import co.com.javeriana.SICE2.excepciones.SeguridadException;
 import co.com.javeriana.SICE2.implement.DominioImpl;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.Dominio;
+import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
 import jxl.write.WriteException;
@@ -188,5 +189,21 @@ public class RestDominio {
 	    responseBuilder.header("Content-Disposition", "filename="+fileName+".pdf");
 	    return responseBuilder.build();
 	}
-
+	
+	/**
+	 * Método que expone el servicio de crear un dominio
+	 * @param id de universidad
+	 * @return nada
+	 */
+	@RequestMapping(value="/crearDominio", method=RequestMethod.GET)
+	public ResponseEntity<Boolean> obtenerURL(@RequestBody Dominio dominio){
+		try {
+			UsuarioJaveriana usuarioJaveriana = seguridad.getCurrentUser();
+			dominio.setIdUsuarioCreador(usuarioJaveriana.getId());
+			return ResponseEntity.status(HttpStatus.OK).body(true);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 }

@@ -20,8 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import co.com.javeriana.SICE2.model.general.AtrPersonalizado;
-import co.com.javeriana.SICE2.model.general.RespuestaAtrPersonalizado;
 import co.com.javeriana.SICE2.model.general.Evento;
+import co.com.javeriana.SICE2.model.general.RespuestaAtrPersonalizado;
 import co.com.javeriana.SICE2.model.general.Solicitud;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 import co.com.javeriana.SICE2.repositories.RespuestaAtrPersonalizadoRepository;
@@ -169,9 +169,9 @@ public class ProcesadorSMTP {
 			String htmlText = "<H3>Hola "+solicitud.getCreador().getNombre()+"</H3>"
 					+ "<p>Este mensaje es con el objetivo de notificarle que la solicitud presentada el "
 					+ solicitud.getFecha().getDay()+"/"+ solicitud.getFecha().getMonth()+"/"+ solicitud.getFecha().getYear()
-					+ " con el titúlo \"" +solicitud.getNombre() +"\" fue cerrada</p>"
+					+ " con el titúlo \"" + motivo +"\" fue cerrada</p>"
 					+ "<p>Motivo de cierre : " + "</p>"
-					+ "<p> "+asunto+" </p>"
+					+ "<p> "+solicitud.getDescripcion()+" </p>"
 					+ "<div><p><b>No responder a este mensaje, para mayor información contactar al administrador de SICE2</b> </p>"
 					+ "<img src=\"https://uvirtual.javeriana.edu.co/branding/_1_1/login-2.0/imgs/logo.png\" width=\"320\" height=\"130\"></div>";
 			messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
