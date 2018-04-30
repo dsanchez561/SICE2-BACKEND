@@ -44,7 +44,7 @@ public class StartUpInit {
 	 */
 	private void cargarImagenes() {
 		log.info("Inicia la carga de las imagenes del sistema en la Base de Datos");
-		dominioImpl.downloadImage();
+		//dominioImpl.downloadImage();
 		log.info("Finaliza la carga de las imagenes del sistema en la Base de Datos");
 	}
 	

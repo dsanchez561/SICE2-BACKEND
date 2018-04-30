@@ -2,18 +2,27 @@ package co.com.javeriana.SICE2.rest.general;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
+import java.text.NumberFormat;
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +39,8 @@ import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.Dominio;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
+import co.com.javeriana.SICE2.seguridad.Seguridad;
+import co.com.javeriana.SICE2.seguridad.SeguridadInfo;
 import jxl.write.WriteException;
 
 @RestController
@@ -39,6 +50,9 @@ public class RestDominio {
 	
 	@Autowired
 	private DominioImpl dominioImpl;
+	
+	@Autowired
+	private Seguridad user;
 	
 	@Autowired
 	private ConfiguracionSeguridad seguridad;
@@ -160,34 +174,27 @@ public class RestDominio {
 	 * @throws WriteException 
 	 */
 	@RequestMapping(value="/exportarExcelInscritos/{id}", method=RequestMethod.GET)
-	public void exportarExcelInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException{
-		dominioImpl.exportarExcelInscritos(id);
-		String fileName = "Inscritos "+eventoRepository.findById(id).get().getTitulo();
-		File file = new File("/var/lib/tomcat8/webapps/"+fileName+".xls");
-		FileInputStream inputStream = new FileInputStream(file);
-		if(file.exists()) {
-//			ResponseBuilder response1 = Response.ok((Object)file);
-//			response.setContentType("application/ms-excel");
-//		    response1.header("Content-Disposition", 
-//		    		"attachment; filename="+fileName+".xls");
-//		    return response1.build();
-			response.setContentType("MIME type: application/octet-stream");
-			response.setContentLength((int) file.length());
-			response.setHeader("Content-Disposition", 
-		    		"attachment; filename="+fileName+".xls");
-			OutputStream outStream = response.getOutputStream();
-			 
-	        byte[] buffer = new byte[BUFFER_SIZE];
-	        int bytesRead = -1;
-	 
-	        // write bytes read from the input stream into the output stream
-	        while ((bytesRead = inputStream.read(buffer)) != -1) {
-	            outStream.write(buffer, 0, bytesRead);
-	        }
-	 
-	        inputStream.close();
-	        outStream.close();
-		}
+	public ResponseEntity<Object> exportarExcelInscritos(@PathVariable("id") Long id) throws WriteException, IOException {
+		try {
+			System.out.println("EEEEEEEEE                EEEE");
+			dominioImpl.exportarExcelInscritos(id);
+			String fileName = "Inscritos "+eventoRepository.findById(id).get().getTitulo()+" "+user.getCurrentUser().getUsername();
+//			File fileToDownload = new File("/var/lib/tomcat8/webapps/"+fileName+".xls");
+			File fileToDownload = new File("archivos/"+fileName+".xls");
+			InputStreamResource resource = new InputStreamResource(new FileInputStream(fileToDownload));
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", fileToDownload.getName()));
+			headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+			headers.add("Pragma", "no-cache");
+			headers.add("Expires", "0");
+			
+			ResponseEntity<Object> responseEntity = ResponseEntity.ok().headers(headers).contentLength(fileToDownload.length()).contentType(org.springframework.http.MediaType.parseMediaType("application/txt")).body(resource);
+			System.out.println("EEEEEEEEE                EEEE");
+			return responseEntity;
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>("Error Ocurred", HttpStatus.INTERNAL_SERVER_ERROR);
+		}		 
 	}
 	
 	/**

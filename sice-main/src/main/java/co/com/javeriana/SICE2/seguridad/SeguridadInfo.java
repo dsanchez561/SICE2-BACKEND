@@ -6,6 +6,11 @@ import java.util.Map;
 import javax.persistence.Entity;
 
 import org.reflections.Reflections;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 
 /**
  * Clase Singleton que contiene información de las entidades del sistema que han
@@ -63,4 +68,6 @@ public class SeguridadInfo {
 	public Class<?> getEntidad(String nombreEntidad) {
 		return entidadesSistema.get(nombreEntidad);
 	}
+	
+	
 }

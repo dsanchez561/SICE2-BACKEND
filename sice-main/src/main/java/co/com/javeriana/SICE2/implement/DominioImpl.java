@@ -46,6 +46,7 @@ import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 import co.com.javeriana.SICE2.repositories.DominioRepository;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.repositories.ServicioRepository;
+import co.com.javeriana.SICE2.seguridad.Seguridad;
 import co.com.javeriana.SICE2.utils.Util;
 import jxl.Cell;
 import jxl.CellView;
@@ -81,6 +82,9 @@ public class DominioImpl {
 	
 	@Autowired
 	private EventoRepository eventoRepository;
+	
+	@Autowired
+	private Seguridad user;
 	
 	public List<Dominio> listarDominiosNacionales(String tipo) {
 		try {
@@ -156,8 +160,10 @@ public class DominioImpl {
 	public WritableWorkbook exportarExcelInscritos(Long id) throws IOException, WriteException {
 		Evento e = eventoRepository.findById(id).get();
 		
-		String fileName = "Inscritos " + e.getTitulo();
-		File f = new File ("/var/lib/tomcat8/webapps/"+fileName+".xls");
+//		String fileName = "Inscritos " + e.getTitulo();
+		String fileName = "Inscritos "+eventoRepository.findById(id).get().getTitulo()+" "+user.getCurrentUser().getUsername();
+//		File f = new File ("/var/lib/tomcat8/webapps/"+fileName+".xls");
+		File f = new File ("archivos/"+fileName+".xls");
 //		WritableWorkbook myExcel = Workbook.createWorkbook(response.getOutputStream());
 		WritableWorkbook myExcel = Workbook.createWorkbook(f);
 		WritableSheet excelOutputsheet = myExcel.createSheet(e.getTitulo(), 0);
