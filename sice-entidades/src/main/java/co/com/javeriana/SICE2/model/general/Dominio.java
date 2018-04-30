@@ -47,7 +47,6 @@ public class Dominio {
     @Enumerated(value = EnumType.STRING)
     private TipoDominioEnum tipo;
 
-    @JsonIgnore
     @Basic
     private byte[] imagen;
     

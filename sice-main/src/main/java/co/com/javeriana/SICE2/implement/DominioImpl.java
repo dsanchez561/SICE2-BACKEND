@@ -153,11 +153,11 @@ public class DominioImpl {
 		return pagina.getUrl();
 	}
 	
-	public WritableWorkbook exportarExcelInscritos(Long id, HttpServletResponse response) throws IOException, WriteException {
+	public WritableWorkbook exportarExcelInscritos(Long id) throws IOException, WriteException {
 		Evento e = eventoRepository.findById(id).get();
 		
 		String fileName = "Inscritos " + e.getTitulo();
-		File f = new File ("archivos/"+fileName+".xls");
+		File f = new File ("/var/lib/tomcat8/webapps/"+fileName+".xls");
 //		WritableWorkbook myExcel = Workbook.createWorkbook(response.getOutputStream());
 		WritableWorkbook myExcel = Workbook.createWorkbook(f);
 		WritableSheet excelOutputsheet = myExcel.createSheet(e.getTitulo(), 0);

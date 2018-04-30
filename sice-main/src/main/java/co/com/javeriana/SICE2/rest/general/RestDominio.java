@@ -3,10 +3,12 @@ package co.com.javeriana.SICE2.rest.general;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
@@ -45,6 +47,8 @@ public class RestDominio {
 	private EventoRepository eventoRepository;
 	
 	private static String SINPERMISOS = "No tiene permisos para acceder a esta funcionalidad";
+	
+	private static final int BUFFER_SIZE = 4096;
 	
 	/**
 	 * Metodo que permite listar todos los dominios nacionales dado el tipo (Universidad, Entidad Publica, Empresa...etc)
@@ -155,17 +159,35 @@ public class RestDominio {
 	 * @throws IOException 
 	 * @throws WriteException 
 	 */
-	@RequestMapping(value="/exportarExcelInscritos/{id}", method=RequestMethod.GET, produces="application/vnd.ms-excel")
-	public Response exportarExcelInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException{
-		dominioImpl.exportarExcelInscritos(id, response);
+	@RequestMapping(value="/exportarExcelInscritos/{id}", method=RequestMethod.GET)
+	public void exportarExcelInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException{
+		dominioImpl.exportarExcelInscritos(id);
 		String fileName = "Inscritos "+eventoRepository.findById(id).get().getTitulo();
-		File file = new File("archivos/"+fileName+".xls");
+		File file = new File("/var/lib/tomcat8/webapps/"+fileName+".xls");
+		FileInputStream inputStream = new FileInputStream(file);
 		if(file.exists()) {
-			ResponseBuilder response1 = Response.ok((Object)file);
-		    response1.header("Content-Disposition", "attachment; filename="+fileName+".xls");
-		    return response1.build();
+//			ResponseBuilder response1 = Response.ok((Object)file);
+//			response.setContentType("application/ms-excel");
+//		    response1.header("Content-Disposition", 
+//		    		"attachment; filename="+fileName+".xls");
+//		    return response1.build();
+			response.setContentType("MIME type: application/octet-stream");
+			response.setContentLength((int) file.length());
+			response.setHeader("Content-Disposition", 
+		    		"attachment; filename="+fileName+".xls");
+			OutputStream outStream = response.getOutputStream();
+			 
+	        byte[] buffer = new byte[BUFFER_SIZE];
+	        int bytesRead = -1;
+	 
+	        // write bytes read from the input stream into the output stream
+	        while ((bytesRead = inputStream.read(buffer)) != -1) {
+	            outStream.write(buffer, 0, bytesRead);
+	        }
+	 
+	        inputStream.close();
+	        outStream.close();
 		}
-		return null;
 	}
 	
 	/**
