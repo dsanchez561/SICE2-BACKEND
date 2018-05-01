@@ -27,6 +27,7 @@ import co.com.javeriana.SICE2.implement.DominioImpl;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.Dominio;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
+import co.com.javeriana.SICE2.repositories.DominioRepository;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
 import jxl.write.WriteException;
@@ -38,6 +39,9 @@ public class RestDominio {
 	
 	@Autowired
 	private DominioImpl dominioImpl;
+	
+	@Autowired
+	private DominioRepository dominioRepository;
 	
 	@Autowired
 	private ConfiguracionSeguridad seguridad;
@@ -195,11 +199,12 @@ public class RestDominio {
 	 * @param id de universidad
 	 * @return nada
 	 */
-	@RequestMapping(value="/crearDominio", method=RequestMethod.GET)
+	@RequestMapping(value="/crearDominio", method=RequestMethod.POST)
 	public ResponseEntity<Boolean> obtenerURL(@RequestBody Dominio dominio){
 		try {
 			UsuarioJaveriana usuarioJaveriana = seguridad.getCurrentUser();
 			dominio.setIdUsuarioCreador(usuarioJaveriana.getId());
+			dominioRepository.save(dominio);
 			return ResponseEntity.status(HttpStatus.OK).body(true);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

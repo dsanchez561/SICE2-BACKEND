@@ -113,7 +113,7 @@ public class RestSolicitud {
 		if (seguridad.isAdministrador()) {
 			try {
 				Solicitud solicitud = solicitudRepository.findById(cierreSolicitudPojo.getId()).get();
-				correo.emailCierreSolicitud("Su solicitud se ha cerrado", cierreSolicitudPojo.getRespues(), solicitud);
+				correo.emailCierreSolicitud("Su solicitud se ha cerrado", cierreSolicitudPojo.getRespuesta(), solicitud);
 				solicitud.setActiva(false);
 				solicitudRepository.save(solicitud);
 				return ResponseEntity.status(HttpStatus.OK).body(true);
