@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.itextpdf.text.DocumentException;
 
@@ -123,10 +124,11 @@ public class RestDominio {
 	 * @return nada
 	 */
 	@RequestMapping(value = "/imagen/upload/{id}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> uploadImage(@PathVariable("id") String id) {
+	public ResponseEntity<Object> uploadImage(@RequestBody MultipartFile file, @PathVariable("id") String id) {
 		try {
 			if (seguridad.isAdministrador()){
-				return ResponseEntity.status(HttpStatus.OK).body(dominioImpl.uploadImage(Long.valueOf(id)));
+				dominioImpl.uploadImage(file, Long.valueOf(id));
+				return ResponseEntity.status(HttpStatus.OK).body(null);
 			}else{
 				throw new SeguridadException(SINPERMISOS);
 			}
