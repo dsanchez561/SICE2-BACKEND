@@ -2,22 +2,11 @@ package co.com.javeriana.SICE2.rest.general;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URISyntaxException;
-import java.text.NumberFormat;
 import java.util.List;
 
-import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +27,10 @@ import co.com.javeriana.SICE2.excepciones.SeguridadException;
 import co.com.javeriana.SICE2.implement.DominioImpl;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.Dominio;
+import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
+import co.com.javeriana.SICE2.repositories.DominioRepository;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
-import co.com.javeriana.SICE2.seguridad.Seguridad;
-import co.com.javeriana.SICE2.seguridad.SeguridadInfo;
 import jxl.write.WriteException;
 
 @RestController
@@ -53,7 +42,7 @@ public class RestDominio {
 	private DominioImpl dominioImpl;
 	
 	@Autowired
-	private Seguridad user;
+	private DominioRepository dominioRepository;
 	
 	@Autowired
 	private ConfiguracionSeguridad seguridad;
@@ -180,9 +169,10 @@ public class RestDominio {
 		try {
 			System.out.println("EEEEEEEEE                EEEE");
 			dominioImpl.exportarExcelInscritos(id);
-			String fileName = "Inscritos "+eventoRepository.findById(id).get().getTitulo()+" "+user.getCurrentUser().getUsername();
-//			File fileToDownload = new File("/var/lib/tomcat8/webapps/"+fileName+".xls");
+			UsuarioJaveriana usuarioJaveriana = seguridad.getCurrentUser();
+			String fileName = usuarioJaveriana.getUsername()+"-Inscritos "+eventoRepository.findById(id).get().getTitulo();
 			File fileToDownload = new File("/var/lib/tomcat8/webapps/"+fileName+".xls");
+//			File fileToDownload = new File("archivos/"+fileName+".xls");
 			InputStreamResource resource = new InputStreamResource(new FileInputStream(fileToDownload));
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", fileToDownload.getName()));
@@ -211,13 +201,32 @@ public class RestDominio {
 	@RequestMapping(value="/exportarPdfInscritos/{id}", method=RequestMethod.GET, produces="application/pdf")
 	public javax.ws.rs.core.Response exportarPdfInscritos(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, WriteException, DocumentException, URISyntaxException{
 		dominioImpl.exportarPdfInscritos(id, response);
-		String fileName = "Inscritos "+eventoRepository.findById(id).get().getTitulo();
-		File file = new File("archivos/"+fileName+".pdf");
+		UsuarioJaveriana usuarioJaveriana = seguridad.getCurrentUser();
+		String fileName = usuarioJaveriana.getUsername()+"-Inscritos "+eventoRepository.findById(id).get().getTitulo();
+		File file = new File("/var/lib/tomcat8/webapps/"+fileName+".pdf");
+//		File file = new File("archivos/"+fileName+".pdf");
 	    FileInputStream fileInputStream = new FileInputStream(file);
 	    javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response.ok((Object) fileInputStream);
 	    responseBuilder.type("application/pdf");
 	    responseBuilder.header("Content-Disposition", "filename="+fileName+".pdf");
 	    return responseBuilder.build();
 	}
-
+	
+	/**
+	 * Método que expone el servicio de crear un dominio
+	 * @param id de universidad
+	 * @return nada
+	 */
+	@RequestMapping(value="/crearDominio", method=RequestMethod.POST)
+	public ResponseEntity<Boolean> obtenerURL(@RequestBody Dominio dominio){
+		try {
+			UsuarioJaveriana usuarioJaveriana = seguridad.getCurrentUser();
+			dominio.setIdUsuarioCreador(usuarioJaveriana.getId());
+			dominioRepository.save(dominio);
+			return ResponseEntity.status(HttpStatus.OK).body(true);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 }

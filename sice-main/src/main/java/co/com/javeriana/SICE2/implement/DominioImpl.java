@@ -30,6 +30,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.log.SysoCounter;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -46,7 +47,7 @@ import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 import co.com.javeriana.SICE2.repositories.DominioRepository;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.repositories.ServicioRepository;
-import co.com.javeriana.SICE2.seguridad.Seguridad;
+import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
 import co.com.javeriana.SICE2.utils.Util;
 import jxl.Cell;
 import jxl.CellView;
@@ -84,7 +85,7 @@ public class DominioImpl {
 	private EventoRepository eventoRepository;
 	
 	@Autowired
-	private Seguridad user;
+	private ConfiguracionSeguridad seguridad;
 	
 	public List<Dominio> listarDominiosNacionales(String tipo) {
 		try {
@@ -127,6 +128,9 @@ public class DominioImpl {
 		dominioRepository.save(dominio);
 	}
 
+	/**
+	 * Método que descarga todas las imágenes a cada dominio
+	 */
 	public void downloadImage() {
 		try {
 			for(Dominio dominio:dominioRepository.findAll()) {
@@ -159,11 +163,18 @@ public class DominioImpl {
 		return pagina.getUrl();
 	}
 	
+	/**
+	 * Método que crea el archivo de excel
+	 * @param id se refiere al id del dominio
+	 * @return el archivo
+	 * @throws IOException
+	 * @throws WriteException
+	 */
 	public WritableWorkbook exportarExcelInscritos(Long id) throws IOException, WriteException {
 		Evento e = eventoRepository.findById(id).get();
-		
+		UsuarioJaveriana usuarioJaveriana = seguridad.getCurrentUser();
 //		String fileName = "Inscritos " + e.getTitulo();
-		String fileName = "Inscritos "+eventoRepository.findById(id).get().getTitulo()+" "+user.getCurrentUser().getUsername();
+		String fileName = usuarioJaveriana.getUsername()+"-Inscritos "+eventoRepository.findById(id).get().getTitulo();
 		File f = new File ("/var/lib/tomcat8/webapps/"+fileName+".xls");
 //		File f = new File ("archivos/"+fileName+".xls");
 //		WritableWorkbook myExcel = Workbook.createWorkbook(response.getOutputStream());
@@ -262,6 +273,10 @@ public class DominioImpl {
 		return null;
 	}
 	
+	/**
+	 * Método que ajusta el ancho de las columnas en el documento de excel
+	 * @param sheet
+	 */
 	private void sheetAutoFitColumns(WritableSheet sheet) {
 	    for (int i = 0; i < sheet.getColumns(); i++) {
 	        Cell[] cells = sheet.getColumn(i);
@@ -295,21 +310,37 @@ public class DominioImpl {
 	        sheet.setColumnView(i, cv);
 	    }
 	}
+	
+	/**
+	 * Método que genera el archivo de inscritos a un evento en pdf
+	 * @param id se refiere al id del evento
+	 * @param response 
+	 * @throws IOException
+	 * @throws DocumentException
+	 * @throws URISyntaxException
+	 */
 	public void exportarPdfInscritos(Long id, HttpServletResponse response) throws IOException, DocumentException, URISyntaxException {
 		Evento e = eventoRepository.findById(id).get();
+		UsuarioJaveriana usuarioJaveriana = seguridad.getCurrentUser();
+		String fileName = usuarioJaveriana.getUsername()+"-Inscritos "+e.getTitulo();
 		
-		FileOutputStream fos = new FileOutputStream("archivos/Inscritos "+e.getTitulo()+".pdf");
-		 
-		Path path = Paths.get(ClassLoader.getSystemResource("imagenes/PUJBogota.png").toURI());
+		FileOutputStream fos = new FileOutputStream("/var/lib/tomcat8/webapps/"+fileName+".pdf");
+		
+		final ClassPathResource resource = new ClassPathResource("imagenes/PUJBogota.png");
 		
 		Document document = new Document();
 		PdfWriter.getInstance(document, fos);
 		document.open();
 		
-		Image img = Image.getInstance(path.toAbsolutePath().toString());
-		img.setAbsolutePosition(15, 735);
-		img.scaleToFit(90, 290);
-		document.add(img);
+		System.out.println("OOOOOOOOOOOOOOOOOOOOOOO        "+resource.toString());
+//		BufferedImage imageOnDisk = ImageIO.read(resource.getFile());
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		ImageIO.write(imageOnDisk, "png", baos);
+//		baos.flush();
+//		Image img = Image.getInstance(baos.toString());
+//		img.setAbsolutePosition(15, 735);
+//		img.scaleToFit(90, 290);
+//		document.add(img);
 		
 		Paragraph paragraph = new Paragraph();
 

@@ -27,16 +27,16 @@ public class CierreSolicitudPojo {
 	}
 
 	/**
-	 * @return the respues
+	 * @return the respuesta
 	 */
-	public String getRespues() {
+	public String getRespuesta() {
 		return respuesta;
 	}
 
 	/**
-	 * @param respues the respues to set
+	 * @param respuesta the respuesta to set
 	 */
-	public void setRespues(String respues) {
-		this.respuesta = respues;
+	public void setRespuesta(String respuesta) {
+		this.respuesta = respuesta;
 	}
 }

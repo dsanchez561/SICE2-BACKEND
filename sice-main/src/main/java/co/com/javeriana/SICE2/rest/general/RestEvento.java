@@ -24,6 +24,7 @@ import co.com.javeriana.SICE2.model.general.RespuestaAtrPersonalizado;
 import co.com.javeriana.SICE2.model.general.Evento;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 import co.com.javeriana.SICE2.pojo.InscripcionPojo;
+import co.com.javeriana.SICE2.pojo.NotificacionEventoPojo;
 import co.com.javeriana.SICE2.repositories.AtrPersonalizadoRepository;
 import co.com.javeriana.SICE2.repositories.RespuestaAtrPersonalizadoRepository;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
@@ -185,5 +186,25 @@ public class RestEvento {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 
+	}
+	
+	
+	/**
+	 * Metodo que permite notificar a multiples usuarios por medio de un correo de novedades sobre un evento al cual se inscribieron
+	 * 
+	 * @return devuelve el estado del servidor
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/notificarUsuarios",method=RequestMethod.POST)
+	public ResponseEntity<Boolean> notificarUsuarios(@RequestBody NotificacionEventoPojo notificacionEventoPojo) {
+		try {
+			for (UsuarioJaveriana usuario : notificacionEventoPojo.getUsuario()) {
+				correo.emailNotificarEvento(notificacionEventoPojo.getAsunto(), notificacionEventoPojo.getDescripcion(), usuario);
+			}
+			return ResponseEntity.status(HttpStatus.OK).body(true);
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
 	}
 }
