@@ -164,8 +164,8 @@ public class DominioImpl {
 		
 //		String fileName = "Inscritos " + e.getTitulo();
 		String fileName = "Inscritos "+eventoRepository.findById(id).get().getTitulo()+" "+user.getCurrentUser().getUsername();
-//		File f = new File ("/var/lib/tomcat8/webapps/"+fileName+".xls");
-		File f = new File ("archivos/"+fileName+".xls");
+		File f = new File ("/var/lib/tomcat8/webapps/"+fileName+".xls");
+//		File f = new File ("archivos/"+fileName+".xls");
 //		WritableWorkbook myExcel = Workbook.createWorkbook(response.getOutputStream());
 		WritableWorkbook myExcel = Workbook.createWorkbook(f);
 		WritableSheet excelOutputsheet = myExcel.createSheet(e.getTitulo(), 0);

@@ -182,7 +182,7 @@ public class RestDominio {
 			dominioImpl.exportarExcelInscritos(id);
 			String fileName = "Inscritos "+eventoRepository.findById(id).get().getTitulo()+" "+user.getCurrentUser().getUsername();
 //			File fileToDownload = new File("/var/lib/tomcat8/webapps/"+fileName+".xls");
-			File fileToDownload = new File("archivos/"+fileName+".xls");
+			File fileToDownload = new File("/var/lib/tomcat8/webapps/"+fileName+".xls");
 			InputStreamResource resource = new InputStreamResource(new FileInputStream(fileToDownload));
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", fileToDownload.getName()));
