@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import co.com.javeriana.SICE2.model.general.AtrPersonalizado;
 import co.com.javeriana.SICE2.model.general.Evento;
+import co.com.javeriana.SICE2.model.general.Idea;
 import co.com.javeriana.SICE2.model.general.RespuestaAtrPersonalizado;
 import co.com.javeriana.SICE2.model.general.Solicitud;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
@@ -43,6 +44,8 @@ public class ProcesadorSMTP {
 	
 	private final String username = "SICE2Javeriana@gmail.com";
 	private final String password = "SICE2DavidDaniel";
+	private final String firmaCorreo = "<div><p><b>No responder a este mensaje, para mayor información contactar al administrador de SICE2</b> </p>"
+			+ "<img src=\"https://uvirtual.javeriana.edu.co/branding/_1_1/login-2.0/imgs/logo.png\" width=\"320\" height=\"130\"></div>";
 
 	public void emailEventos(String asunto, String destinatario, Evento evento) {
 		Properties props = new Properties();
@@ -80,9 +83,7 @@ public class ProcesadorSMTP {
 					text2 = text2 +"<p> - "+atrPersonalizado.getNombre()+"  : " + datoPersonalizado.getDato() + "</p>";
 				}
 			}
-			String text3 = "<div><p><b>No responder a este mensaje, para mayor información contactar al administrador de SICE2</b> </p>"
-					+ "<img src=\"https://uvirtual.javeriana.edu.co/branding/_1_1/login-2.0/imgs/logo.png\" width=\"320\" height=\"130\"></div>";
-			String htmlText = text1+text2+text3;
+			String htmlText = text1+text2+firmaCorreo;
 			messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
 			multipart.addBodyPart(messageBodyPart);
 
@@ -125,8 +126,7 @@ public class ProcesadorSMTP {
 					+ "<p>El servicio que solicita es el siguiente" + "</p>"
 					+ "<p> - Nombre           : " + solicitud.getNombre() + "</p>"
 					+ "<p> - Descripción      : " + solicitud.getDescripcion() + "</p>"
-					+ "<div><p><b>No responder a este mensaje, para mayor información contactar al administrador de SICE2</b> </p>"
-					+ "<img src=\"https://uvirtual.javeriana.edu.co/branding/_1_1/login-2.0/imgs/logo.png\" width=\"320\" height=\"130\"></div>";
+					+ firmaCorreo;
 			messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
 			multipart.addBodyPart(messageBodyPart);
 
@@ -167,8 +167,7 @@ public class ProcesadorSMTP {
 					+ " con el titúlo \"" + solicitud.getNombre() +"\" fue cerrada</p>"
 					+ "<p>Motivo de cierre : " + "</p>"
 					+ "<p> "+motivo+" </p>"
-					+ "<div><p><b>No responder a este mensaje, para mayor información contactar al administrador de SICE2</b> </p>"
-					+ "<img src=\"https://uvirtual.javeriana.edu.co/branding/_1_1/login-2.0/imgs/logo.png\" width=\"320\" height=\"130\"></div>";
+					+ firmaCorreo;
 			messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
 			multipart.addBodyPart(messageBodyPart);
 
@@ -205,8 +204,50 @@ public class ProcesadorSMTP {
 			BodyPart messageBodyPart = new MimeBodyPart();
 			String htmlText = "<H3>Hola "+usuario.getNombre()+"</H3>"
 					+ "<p> "+motivo+" </p>"
-					+ "<div><p><b>No responder a este mensaje, para mayor información contactar al administrador de SICE2</b> </p>"
-					+ "<img src=\"https://uvirtual.javeriana.edu.co/branding/_1_1/login-2.0/imgs/logo.png\" width=\"320\" height=\"130\"></div>";
+					+ firmaCorreo;
+			messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
+			multipart.addBodyPart(messageBodyPart);
+
+			message.setContent(multipart);
+
+			Transport.send(message);
+			System.out.println("Correo Enviado correctamente");
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void emailNotificarIdea(String asunto, UsuarioJaveriana usuarioInteresado, UsuarioJaveriana usuarioActual,Idea idea,String coincidencia) {
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("fromSomeone@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(usuarioInteresado.getEmail()));
+			message.setSubject(asunto);
+			
+			MimeMultipart multipart = new MimeMultipart("related");
+			BodyPart messageBodyPart = new MimeBodyPart();
+			String htmlText = "<H3>Hola "+usuarioInteresado.getNombre()+"</H3>"
+					+ "<p> Este correo es con el objetivo de notificarle una nueva idea propuesta por : </p>"
+					+ "<p> - Nombre completo       : " + usuarioActual.getNombre() + " " + usuarioActual.getApellidos()+ "</p>"
+					+ "<p> - Email                 : " + usuarioActual.getEmail() + "</p>"
+					+ "<p>La idea presentada es la siguiente" + "</p>"
+					+ "<p> - Titúlo                : " + idea.getTitulo() + "</p>"
+					+ "<p> - Descripción           : " + idea.getDescripcion() + "</p>"
+					+ "<p> - Etiqueta coincidencia : " + coincidencia + "</p>"
+					+ firmaCorreo;
 			messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
 			multipart.addBodyPart(messageBodyPart);
 

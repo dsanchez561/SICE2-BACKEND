@@ -3,13 +3,11 @@
  */
 package co.com.javeriana.SICE2.model.general;
 
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 /**
  * @author Javeriana
@@ -22,44 +20,33 @@ public class Etiqueta {
     private Long id;
 
     @Basic
-    private String categoria;
+    private String nombre;
 
-    @ManyToMany(targetEntity = UsuarioJaveriana.class, mappedBy = "preferencias")
-    private List<UsuarioJaveriana> usuarioJaverianas;
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    @ManyToMany(targetEntity = Evento.class, mappedBy = "etiquetas")
-    private List<Evento> eventos;
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Long getId() {
-        return this.id;
-    }
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCategoria() {
-        return this.categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public List<UsuarioJaveriana> getUsuarioJaverianas() {
-        return this.usuarioJaverianas;
-    }
-
-    public void setUsuarioJaverianas(List<UsuarioJaveriana> usuarioJaverianas) {
-        this.usuarioJaverianas = usuarioJaverianas;
-    }
-
-    public List<Evento> getEventos() {
-        return this.eventos;
-    }
-
-    public void setEventos(List<Evento> eventos) {
-        this.eventos = eventos;
-    }
-
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 }

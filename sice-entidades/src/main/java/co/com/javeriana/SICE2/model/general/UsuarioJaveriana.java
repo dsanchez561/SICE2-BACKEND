@@ -72,12 +72,16 @@ public class UsuarioJaveriana implements UserDetails{
     private List<Evento> eventosCreados;
     
     @JsonIgnore
+    @OneToMany(mappedBy = "usuarioJaveriana")
+    private List<Idea> ideas;
+    
+    @JsonIgnore
     @OneToMany(targetEntity = Solicitud.class)
     private List<Solicitud> solicitudes;
 
     @JsonIgnore
-    @ManyToMany(targetEntity = Etiqueta.class)
-    private List<String> preferencias;
+    @ManyToMany
+    private List<Etiqueta> preferencias;
 
 	/**
 	 * @return the id
@@ -236,15 +240,43 @@ public class UsuarioJaveriana implements UserDetails{
 	/**
 	 * @return the preferencias
 	 */
-	public List<String> getPreferencias() {
+	public List<Etiqueta> getPreferencias() {
 		return preferencias;
 	}
 
 	/**
 	 * @param preferencias the preferencias to set
 	 */
-	public void setPreferencias(List<String> preferencias) {
+	public void setPreferencias(List<Etiqueta> preferencias) {
 		this.preferencias = preferencias;
+	}
+
+	/**
+	 * @return the ideas
+	 */
+	public List<Idea> getIdeas() {
+		return ideas;
+	}
+
+	/**
+	 * @param ideas the ideas to set
+	 */
+	public void setIdeas(List<Idea> ideas) {
+		this.ideas = ideas;
+	}
+
+	/**
+	 * @return the solicitudes
+	 */
+	public List<Solicitud> getSolicitudes() {
+		return solicitudes;
+	}
+
+	/**
+	 * @param solicitudes the solicitudes to set
+	 */
+	public void setSolicitudes(List<Solicitud> solicitudes) {
+		this.solicitudes = solicitudes;
 	}
 
 	@JsonIgnore
@@ -276,4 +308,5 @@ public class UsuarioJaveriana implements UserDetails{
 	public boolean isEnabled() {
 		return false;
 	}
+	
 }

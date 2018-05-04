@@ -19,11 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.com.javeriana.SICE2.excepciones.SeguridadException;
 import co.com.javeriana.SICE2.log.Log;
+import co.com.javeriana.SICE2.model.general.Etiqueta;
 import co.com.javeriana.SICE2.model.general.Evento;
+import co.com.javeriana.SICE2.model.general.Idea;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
+import co.com.javeriana.SICE2.pojo.IdeaPojo;
+import co.com.javeriana.SICE2.repositories.EtiquetaRepository;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
+import co.com.javeriana.SICE2.repositories.IdeaRepository;
 import co.com.javeriana.SICE2.repositories.UsuarioJaverianaRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
+import co.com.javeriana.SICE2.utils.ProcesadorSMTP;
 
 
 @CrossOrigin(allowCredentials="true")
@@ -40,6 +46,15 @@ public class RestUsuario {
 	
 	@Autowired
 	private EventoRepository eventoRepository;
+	
+	@Autowired
+	private IdeaRepository ideaRepository;
+	
+	@Autowired
+	private EtiquetaRepository etiquetaRepository;
+	
+	@Autowired
+	private ProcesadorSMTP correo;
 	
 	/**
 	 * Metodo que permite listar los eventos a los que esta suscrito el usuario actual
@@ -101,20 +116,68 @@ public class RestUsuario {
 	 * @return booleano que identifica si fue satisfactoreo el proceso
 	 * @throws IOException
 	 */
+	@Transactional
 	@RequestMapping(value="/asignarEtiquetas",method=RequestMethod.POST)
 	public ResponseEntity<Boolean> asignarEtiquetas(@RequestBody List<String> etiquetas) {
 		try {
 			if (seguridad.isAdministrador()) {
 				UsuarioJaveriana usuarioJaveriana = usuarioRepository.findUsuarioById(seguridad.getCurrentUser().getId());
-				List<String> preferencias = usuarioJaveriana.getPreferencias();
+				List<Etiqueta> preferencias = usuarioJaveriana.getPreferencias();
 				if (preferencias == null) {
 					usuarioJaveriana.setPreferencias(new ArrayList<>());
 				}
-				usuarioJaveriana.getPreferencias().addAll(etiquetas);
+				for (String etiqueta : etiquetas) {
+					Etiqueta etiquetaActual = etiquetaRepository.findEtiquetaByNombre(etiqueta);
+					usuarioJaveriana.getPreferencias().add(etiquetaActual);
+				}
 				usuarioRepository.save(usuarioJaveriana);
 				return ResponseEntity.status(HttpStatus.OK).body(true);
 			}else {
 				throw new SeguridadException("No tiene permisos para acceder a esta funcionalidad");
+			}
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	/**
+	 * Metodo que permite guardar una idea con su respectiva etiqueta
+	 * 
+	 * @return booleano que identifica si fue satisfactoreo el proceso
+	 * @throws IOException
+	 */
+	@Transactional
+	@RequestMapping(value="/guardarIdea",method=RequestMethod.POST)
+	public ResponseEntity<Boolean> guardarIdea(@RequestBody IdeaPojo ideaPojo) {
+		try {
+			UsuarioJaveriana usuarioJaveriana = usuarioRepository.findUsuarioById(seguridad.getCurrentUser().getId());
+			List<UsuarioJaveriana> usuariosCorreoEnviado = new ArrayList<>();
+			if (usuarioJaveriana.getIdeas().size()<5) {
+				List<UsuarioJaveriana> usuarios = usuarioRepository.findUsuarioByAdministrador(true);
+				Idea idea = new Idea();
+				idea.setEtiquetas(new ArrayList<>());
+				idea.setUsuarioJaveriana(usuarioJaveriana);
+				idea.setTitulo(ideaPojo.getNombre());
+				idea.setDescripcion(ideaPojo.getDescripcion());
+				for (String etiquetaRecibida : ideaPojo.getEtiquetas()) {
+					Etiqueta etiquetaActual = etiquetaRepository.findEtiquetaByNombre(etiquetaRecibida);
+					idea.getEtiquetas().add(etiquetaActual);
+					for (UsuarioJaveriana usuario : usuarios) {
+						List<Etiqueta> etiquetas = usuario.getPreferencias();
+						if (etiquetas!=null) {
+							if(etiquetas.contains(etiquetaActual) && !usuariosCorreoEnviado.contains(usuario)) {
+								correo.emailNotificarIdea("¡Nueva Idea!", usuario, usuarioJaveriana, idea, etiquetaActual.getNombre());
+								usuariosCorreoEnviado.add(usuario);
+							}
+						}
+					}
+					
+				}
+				ideaRepository.save(idea);
+				return ResponseEntity.status(HttpStatus.OK).body(true);
+			}else {
+				return ResponseEntity.status(HttpStatus.OK).body(false);
 			}
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);

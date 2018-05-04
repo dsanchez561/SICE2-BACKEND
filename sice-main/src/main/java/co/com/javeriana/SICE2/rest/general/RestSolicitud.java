@@ -55,18 +55,22 @@ public class RestSolicitud {
 	@RequestMapping(value="/crearSolicitud",method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<Boolean> asociarTipoProyecto(@RequestBody SolicitudPojo solicitudPojo) {
 		try {
-			Solicitud solicitud = new Solicitud();
 			UsuarioJaveriana usuarioActual = usuarioRepository.findById(seguridad.getCurrentUser().getId()).get();
-			solicitud.setCreador(usuarioActual);
-			solicitud.setActiva(true);
-			solicitud.setFecha(new java.util.Date());
-			solicitud.setDescripcion(solicitudPojo.getDescripcion());
-			solicitud.setNombre(solicitudPojo.getNombre());
-			solicitudRepository.save(solicitud);
-			for (UsuarioJaveriana admin : usuarioRepository.findUsuarioByAdministrador(true)){
-				correo.emailServicios("Nueva solicitud de servicio", admin, solicitud);
+			if (solicitudRepository.findByActivaAndCreador(true, usuarioActual).size()<5) {
+				Solicitud solicitud = new Solicitud();
+				solicitud.setCreador(usuarioActual);
+				solicitud.setActiva(true);
+				solicitud.setFecha(new java.util.Date());
+				solicitud.setDescripcion(solicitudPojo.getDescripcion());
+				solicitud.setNombre(solicitudPojo.getNombre());
+				solicitudRepository.save(solicitud);
+				for (UsuarioJaveriana admin : usuarioRepository.findUsuarioByAdministrador(true)){
+					correo.emailServicios("Nueva solicitud de servicio", admin, solicitud);
+				}
+				return ResponseEntity.status(HttpStatus.OK).body(true);
+			}else {
+				return ResponseEntity.status(HttpStatus.OK).body(false);
 			}
-			return ResponseEntity.status(HttpStatus.OK).body(true);
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

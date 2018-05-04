@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import co.com.javeriana.SICE2.model.general.Solicitud;
+import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 
 
 /**
@@ -19,4 +20,5 @@ import co.com.javeriana.SICE2.model.general.Solicitud;
 @Repository(value="Solicitud")
 public interface SolicitudRepository extends JpaRepository<Solicitud, Long> {
 	List<Solicitud> findByActiva(Boolean activa);
+	List<Solicitud> findByActivaAndCreador(Boolean activa,UsuarioJaveriana creador);
 }
