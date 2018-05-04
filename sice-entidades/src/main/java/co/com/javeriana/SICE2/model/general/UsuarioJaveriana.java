@@ -77,7 +77,7 @@ public class UsuarioJaveriana implements UserDetails{
 
     @JsonIgnore
     @ManyToMany(targetEntity = Etiqueta.class)
-    private List<Etiqueta> preferencias;
+    private List<String> preferencias;
 
 	/**
 	 * @return the id
@@ -236,14 +236,14 @@ public class UsuarioJaveriana implements UserDetails{
 	/**
 	 * @return the preferencias
 	 */
-	public List<Etiqueta> getPreferencias() {
+	public List<String> getPreferencias() {
 		return preferencias;
 	}
 
 	/**
 	 * @param preferencias the preferencias to set
 	 */
-	public void setPreferencias(List<Etiqueta> preferencias) {
+	public void setPreferencias(List<String> preferencias) {
 		this.preferencias = preferencias;
 	}
 

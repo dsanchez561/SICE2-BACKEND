@@ -1,6 +1,7 @@
 package co.com.javeriana.SICE2.rest.general;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,10 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.com.javeriana.SICE2.excepciones.SeguridadException;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.Evento;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
@@ -86,6 +89,33 @@ public class RestUsuario {
 		try {
 			UsuarioJaveriana usuario = usuarioRepository.findUsuarioById(seguridad.getCurrentUser().getId());
 			return ResponseEntity.status(HttpStatus.OK).body(usuario.getEventosSuscritos());
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	/**
+	 * Metodo que permite añadir las preferencias a un administrador
+	 * 
+	 * @return booleano que identifica si fue satisfactoreo el proceso
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/asignarEtiquetas",method=RequestMethod.POST)
+	public ResponseEntity<Boolean> asignarEtiquetas(@RequestBody List<String> etiquetas) {
+		try {
+			if (seguridad.isAdministrador()) {
+				UsuarioJaveriana usuarioJaveriana = usuarioRepository.findUsuarioById(seguridad.getCurrentUser().getId());
+				List<String> preferencias = usuarioJaveriana.getPreferencias();
+				if (preferencias == null) {
+					usuarioJaveriana.setPreferencias(new ArrayList<>());
+				}
+				usuarioJaveriana.getPreferencias().addAll(etiquetas);
+				usuarioRepository.save(usuarioJaveriana);
+				return ResponseEntity.status(HttpStatus.OK).body(true);
+			}else {
+				throw new SeguridadException("No tiene permisos para acceder a esta funcionalidad");
+			}
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
