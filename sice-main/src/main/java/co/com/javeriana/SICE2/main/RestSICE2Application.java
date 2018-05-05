@@ -8,6 +8,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 @SpringBootApplication(exclude = RepositoryRestMvcAutoConfiguration.class)
 @EntityScan("co.com.javeriana.SICE2.model")
@@ -17,6 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan("co.com.javeriana.SICE2.rest")
 @ComponentScan("co.com.javeriana.SICE2.log")
 @ComponentScan("co.com.javeriana.SICE2.comandos.general")
+@EnableScheduling
 public class RestSICE2Application extends SpringBootServletInitializer{
 
 	/*
@@ -36,5 +39,4 @@ public class RestSICE2Application extends SpringBootServletInitializer{
 	public static void main(String[] args) {
 		SpringApplication.run(RestSICE2Application.class, args);
 	}
-	
 }

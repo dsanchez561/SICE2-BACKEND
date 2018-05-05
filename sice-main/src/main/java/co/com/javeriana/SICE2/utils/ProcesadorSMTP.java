@@ -18,6 +18,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import co.com.javeriana.SICE2.model.general.AtrPersonalizado;
@@ -262,6 +263,56 @@ public class ProcesadorSMTP {
 
 			Transport.send(message);
 			System.out.println("Correo Enviado correctamente");
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	@Scheduled(fixedRate=86400000)
+	public void sendMail() {
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("fromSomeone@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("d-sancheza@javeriana.edu.co"));
+			message.setSubject("Correo Periodico");
+			
+			MimeMultipart multipart = new MimeMultipart("related");
+			BodyPart messageBodyPart = new MimeBodyPart();
+			String etiquetas = "";
+			/**
+			 * TODO:: Descomentariar lo grande y borrar lo de abajo
+			 */
+			String htmlText = "";
+			/*String htmlText = "<H3>Hola "+usuarioInteresado.getNombre()+"</H3>"
+					+ "<p> Este correo es con el objetivo de notificarle una nueva idea propuesta por : </p>"
+					+ "<p> - Nombre completo       : " + usuarioActual.getNombre() + " " + usuarioActual.getApellidos()+ "</p>"
+					+ "<p> - Email                 : " + usuarioActual.getEmail() + "</p>"
+					+ "<p>La idea presentada es la siguiente" + "</p>"
+					+ "<p> - Título                : " + idea.getTitulo() + "</p>"
+					+ "<p> - Descripción           : " + idea.getDescripcion() + "</p>"
+					+ "<p>Etiquetas con coincidencia  </p>" 
+					+ etiquetas
+					+ firmaCorreo;*/
+			messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
+			multipart.addBodyPart(messageBodyPart);
+
+			message.setContent(multipart);
+
+			Transport.send(message);
+			System.out.println("Correo periodico enviado correctamente");
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
