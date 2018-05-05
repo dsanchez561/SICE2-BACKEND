@@ -51,9 +51,6 @@ public class RestUsuario {
 	private IdeaRepository ideaRepository;
 	
 	@Autowired
-	private EtiquetaRepository etiquetaRepository;
-	
-	@Autowired
 	private ProcesadorSMTP correo;
 	
 	/**
@@ -118,7 +115,7 @@ public class RestUsuario {
 	 */
 	@Transactional
 	@RequestMapping(value="/asignarEtiquetas",method=RequestMethod.POST)
-	public ResponseEntity<Boolean> asignarEtiquetas(@RequestBody List<String> etiquetas) {
+	public ResponseEntity<Boolean> asignarEtiquetas(@RequestBody List<Etiqueta> etiquetas) {
 		try {
 			if (seguridad.isAdministrador()) {
 				UsuarioJaveriana usuarioJaveriana = usuarioRepository.findUsuarioById(seguridad.getCurrentUser().getId());
@@ -126,9 +123,8 @@ public class RestUsuario {
 				if (preferencias == null) {
 					usuarioJaveriana.setPreferencias(new ArrayList<>());
 				}
-				for (String etiqueta : etiquetas) {
-					Etiqueta etiquetaActual = etiquetaRepository.findEtiquetaByNombre(etiqueta);
-					usuarioJaveriana.getPreferencias().add(etiquetaActual);
+				for (Etiqueta etiqueta : etiquetas) {
+					usuarioJaveriana.getPreferencias().add(etiqueta);
 				}
 				usuarioRepository.save(usuarioJaveriana);
 				return ResponseEntity.status(HttpStatus.OK).body(true);
@@ -152,7 +148,6 @@ public class RestUsuario {
 	public ResponseEntity<Boolean> guardarIdea(@RequestBody IdeaPojo ideaPojo) {
 		try {
 			UsuarioJaveriana usuarioJaveriana = usuarioRepository.findUsuarioById(seguridad.getCurrentUser().getId());
-			List<UsuarioJaveriana> usuariosCorreoEnviado = new ArrayList<>();
 			if (usuarioJaveriana.getIdeas().size()<5) {
 				List<UsuarioJaveriana> usuarios = usuarioRepository.findUsuarioByAdministrador(true);
 				Idea idea = new Idea();
@@ -160,17 +155,23 @@ public class RestUsuario {
 				idea.setUsuarioJaveriana(usuarioJaveriana);
 				idea.setTitulo(ideaPojo.getNombre());
 				idea.setDescripcion(ideaPojo.getDescripcion());
-				for (String etiquetaRecibida : ideaPojo.getEtiquetas()) {
-					Etiqueta etiquetaActual = etiquetaRepository.findEtiquetaByNombre(etiquetaRecibida);
-					idea.getEtiquetas().add(etiquetaActual);
-					for (UsuarioJaveriana usuario : usuarios) {
-						List<Etiqueta> etiquetas = usuario.getPreferencias();
+				for (UsuarioJaveriana usuario : usuarios) {
+					Boolean coincidencia = false;
+					List<Etiqueta> etiquetasCoincidencia = new ArrayList<>();
+					List<Etiqueta> etiquetas = usuario.getPreferencias();
+					for (Etiqueta etiquetaRecibida : ideaPojo.getEtiquetas()) {
+						idea.getEtiquetas().add(etiquetaRecibida);
 						if (etiquetas!=null) {
-							if(etiquetas.contains(etiquetaActual) && !usuariosCorreoEnviado.contains(usuario)) {
-								correo.emailNotificarIdea("¡Nueva Idea!", usuario, usuarioJaveriana, idea, etiquetaActual.getNombre());
-								usuariosCorreoEnviado.add(usuario);
+							for (Etiqueta etiqueta : etiquetas){
+								if(etiqueta.getNombre().equals(etiquetaRecibida.getNombre()) ) {
+									coincidencia = true;
+									etiquetasCoincidencia.add(etiqueta);
+								}
 							}
 						}
+					}
+					if (coincidencia) {
+						correo.emailNotificarIdea("¡Nueva Idea!", usuario, usuarioJaveriana, idea, etiquetasCoincidencia);
 					}
 					
 				}

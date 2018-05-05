@@ -1,3 +1,19 @@
+----------------------------------INSERTS ETIQUETAS----------------------------------
+INSERT INTO public.etiqueta(nombre) VALUES ('Artes');
+INSERT INTO public.etiqueta(nombre) VALUES ('Ciencias');
+INSERT INTO public.etiqueta(nombre) VALUES ('Ingeniería');
+INSERT INTO public.etiqueta(nombre) VALUES ('Música');
+INSERT INTO public.etiqueta(nombre) VALUES ('Lenguajes');
+INSERT INTO public.etiqueta(nombre) VALUES ('Sociedad');
+INSERT INTO public.etiqueta(nombre) VALUES ('Ciencias');
+INSERT INTO public.etiqueta(nombre) VALUES ('Filosofía');
+INSERT INTO public.etiqueta(nombre) VALUES ('Matemáticas');
+INSERT INTO public.etiqueta(nombre) VALUES ('Física');
+INSERT INTO public.etiqueta(nombre) VALUES ('Redes Sociales');
+INSERT INTO public.etiqueta(nombre) VALUES ('Deportes');
+INSERT INTO public.etiqueta(nombre) VALUES ('Aprendizaje');
+INSERT INTO public.etiqueta(nombre) VALUES ('Financiero');
+
 ----------------------------------INSERTS USUARIO----------------------------------
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Estudiante','Sánchez Andrade','NUEVO','Daniel Santiago','123456','daniel',false,'d-sancheza@javeriana.edu.co');
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Administrador','Ortiz Pabón','NUEVO','Efrain','123456','efrain',true,'d-sancheza@javeriana.edu.co');
@@ -8,6 +24,9 @@ INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, pass
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Estudiante','Mendoza Rincón','NUEVO','Maria Jose','123456','mMendoza',false,'d-sancheza@javeriana.edu.co');
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Estudiante','Moreno','NUEVO','Camilo Andres','123456','cMoreno',false,'d-sancheza@javeriana.edu.co');
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Estudiante','Suarez','NUEVO','Hernan Joaquin','123456','jSuarez',false,'d-sancheza@javeriana.edu.co');
+
+----------------------------------INSERTS USUARIO ASOCIAR ETIQUETA----------------------------------
+INSERT INTO public.usuario_javeriana_preferencias(usuario_javeriana_id, preferencias_id) VALUES (2, 3);
 
 ----------------------------------INSERTS UNIVERSIDAD NACIONALES----------------------------------
 INSERT INTO public.dominio(tipo,nacional,nombre, url, activo, nombre_archivo)VALUES ('UNIVERSIDAD',true,'Universidad Los Andes', 'https://administracion.uniandes.edu.co/index.php/es/relaciones-corporativas/centro-de-emprendimiento',true, 'UniversidadAndes.png');

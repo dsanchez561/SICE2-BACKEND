@@ -16,6 +16,4 @@ import co.com.javeriana.SICE2.model.general.Etiqueta;
 
 @Repository(value="Etiqueta")
 public interface EtiquetaRepository extends JpaRepository<Etiqueta, Long> {
-	public Etiqueta findEtiquetaByNombre(String nombre);
-
 }

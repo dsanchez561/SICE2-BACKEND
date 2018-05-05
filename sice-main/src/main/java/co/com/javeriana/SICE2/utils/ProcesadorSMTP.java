@@ -3,6 +3,7 @@
  */
 package co.com.javeriana.SICE2.utils;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.BodyPart;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import co.com.javeriana.SICE2.model.general.AtrPersonalizado;
+import co.com.javeriana.SICE2.model.general.Etiqueta;
 import co.com.javeriana.SICE2.model.general.Evento;
 import co.com.javeriana.SICE2.model.general.Idea;
 import co.com.javeriana.SICE2.model.general.RespuestaAtrPersonalizado;
@@ -217,7 +219,7 @@ public class ProcesadorSMTP {
 		}
 	}
 	
-	public void emailNotificarIdea(String asunto, UsuarioJaveriana usuarioInteresado, UsuarioJaveriana usuarioActual,Idea idea,String coincidencia) {
+	public void emailNotificarIdea(String asunto, UsuarioJaveriana usuarioInteresado, UsuarioJaveriana usuarioActual,Idea idea,List<Etiqueta> etiquetasCoincidencia) {
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
@@ -239,14 +241,19 @@ public class ProcesadorSMTP {
 			
 			MimeMultipart multipart = new MimeMultipart("related");
 			BodyPart messageBodyPart = new MimeBodyPart();
+			String etiquetas = "";
+			for (Etiqueta etiqueta : etiquetasCoincidencia) {
+				etiquetas = etiquetas+"<p> - "+ etiqueta.getNombre()  +"</p>";
+			}
 			String htmlText = "<H3>Hola "+usuarioInteresado.getNombre()+"</H3>"
 					+ "<p> Este correo es con el objetivo de notificarle una nueva idea propuesta por : </p>"
 					+ "<p> - Nombre completo       : " + usuarioActual.getNombre() + " " + usuarioActual.getApellidos()+ "</p>"
 					+ "<p> - Email                 : " + usuarioActual.getEmail() + "</p>"
 					+ "<p>La idea presentada es la siguiente" + "</p>"
-					+ "<p> - Titúlo                : " + idea.getTitulo() + "</p>"
+					+ "<p> - Título                : " + idea.getTitulo() + "</p>"
 					+ "<p> - Descripción           : " + idea.getDescripcion() + "</p>"
-					+ "<p> - Etiqueta coincidencia : " + coincidencia + "</p>"
+					+ "<p>Etiquetas con coincidencia  </p>" 
+					+ etiquetas
 					+ firmaCorreo;
 			messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
 			multipart.addBodyPart(messageBodyPart);

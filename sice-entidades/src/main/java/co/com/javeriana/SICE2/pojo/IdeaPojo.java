@@ -5,6 +5,8 @@ package co.com.javeriana.SICE2.pojo;
 
 import java.util.List;
 
+import co.com.javeriana.SICE2.model.general.Etiqueta;
+
 /**
  * @author Javeriana
  */
@@ -14,7 +16,7 @@ public class IdeaPojo {
 
     private String nombre;
     
-    private List<String> etiquetas;
+    private List<Etiqueta> etiquetas;
 
 	/**
 	 * @return the descripcion
@@ -47,14 +49,14 @@ public class IdeaPojo {
 	/**
 	 * @return the etiquetas
 	 */
-	public List<String> getEtiquetas() {
+	public List<Etiqueta> getEtiquetas() {
 		return etiquetas;
 	}
 
 	/**
 	 * @param etiquetas the etiquetas to set
 	 */
-	public void setEtiquetas(List<String> etiquetas) {
+	public void setEtiquetas(List<Etiqueta> etiquetas) {
 		this.etiquetas = etiquetas;
 	}
 	
