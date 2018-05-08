@@ -3,6 +3,7 @@
  */
 package co.com.javeriana.SICE2.utils;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -21,14 +22,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import co.com.javeriana.SICE2.enumeracion.EstadoEnum;
 import co.com.javeriana.SICE2.model.general.AtrPersonalizado;
+import co.com.javeriana.SICE2.model.general.CorreosInstitucionales;
 import co.com.javeriana.SICE2.model.general.Etiqueta;
 import co.com.javeriana.SICE2.model.general.Evento;
 import co.com.javeriana.SICE2.model.general.Idea;
 import co.com.javeriana.SICE2.model.general.RespuestaAtrPersonalizado;
 import co.com.javeriana.SICE2.model.general.Solicitud;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
+import co.com.javeriana.SICE2.repositories.CorreosInstitucionalesRepository;
 import co.com.javeriana.SICE2.repositories.RespuestaAtrPersonalizadoRepository;
+import co.com.javeriana.SICE2.repositories.UsuarioJaverianaRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
 
 /**
@@ -44,6 +49,12 @@ public class ProcesadorSMTP {
 	
 	@Autowired
 	private RespuestaAtrPersonalizadoRepository datoPersonalizadoRepository;
+	
+	@Autowired
+	private CorreosInstitucionalesRepository correosInstitucionalesRepository;
+	
+	@Autowired
+	private UsuarioJaverianaRepository usuarioJaverianaRepository;
 	
 	private final String username = "SICE2Javeriana@gmail.com";
 	private final String password = "SICE2DavidDaniel";
@@ -276,45 +287,53 @@ public class ProcesadorSMTP {
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-
+		
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);
 			}
 		});
-
-		try {
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("fromSomeone@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("d-sancheza@javeriana.edu.co"));
-			message.setSubject("Correo Periodico");
-			
-			MimeMultipart multipart = new MimeMultipart("related");
-			BodyPart messageBodyPart = new MimeBodyPart();
-			String etiquetas = "";
-			/**
-			 * TODO:: Descomentariar lo grande y borrar lo de abajo
-			 */
-			String htmlText = "";
-			/*String htmlText = "<H3>Hola "+usuarioInteresado.getNombre()+"</H3>"
-					+ "<p> Este correo es con el objetivo de notificarle una nueva idea propuesta por : </p>"
-					+ "<p> - Nombre completo       : " + usuarioActual.getNombre() + " " + usuarioActual.getApellidos()+ "</p>"
-					+ "<p> - Email                 : " + usuarioActual.getEmail() + "</p>"
-					+ "<p>La idea presentada es la siguiente" + "</p>"
-					+ "<p> - Título                : " + idea.getTitulo() + "</p>"
-					+ "<p> - Descripción           : " + idea.getDescripcion() + "</p>"
-					+ "<p>Etiquetas con coincidencia  </p>" 
-					+ etiquetas
-					+ firmaCorreo;*/
-			messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
-			multipart.addBodyPart(messageBodyPart);
-
-			message.setContent(multipart);
-
-			Transport.send(message);
-			System.out.println("Correo periodico enviado correctamente");
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
+		List<CorreosInstitucionales> correosInstitucionales = correosInstitucionalesRepository.findAll();
+		for (CorreosInstitucionales correo : correosInstitucionales) {
+			try {
+				UsuarioJaveriana usuarioJaveriana = usuarioJaverianaRepository.findUsuarioByUsername(correo.getCorreo());
+				Calendar calendar = Calendar.getInstance();
+				int month = calendar.get(Calendar.MONTH); 
+				if (usuarioJaveriana == null) {
+					usuarioJaveriana = new UsuarioJaveriana();
+					usuarioJaveriana.setAdministrador(true);
+					usuarioJaveriana.setNombre(correo.getNombre());
+					usuarioJaveriana.setApellidos("");
+					usuarioJaveriana.setEmail(correo.getCorreo());
+					usuarioJaveriana.setUsername(correo.getCorreo());
+					usuarioJaveriana.setEstadoEnum(EstadoEnum.INTERMEDIO);
+					usuarioJaveriana.setPassword(correo.getNombre()+correo.getId()+month);
+				}else{
+					usuarioJaveriana.setPassword(correo.getNombre()+correo.getId()+month);
+				}
+				Message message = new MimeMessage(session);
+				message.setFrom(new InternetAddress("fromSomeone@gmail.com"));
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(correo.getCorreo()));
+				message.setSubject("Correo Periodico");
+				MimeMultipart multipart = new MimeMultipart("related");
+				BodyPart messageBodyPart = new MimeBodyPart();
+				String htmlText = "<H3>Hola "+correo.getNombre()+"</H3>"
+						+ "<p> Este correo es con el objetivo de informarle el diligenciamiento del siguiente formato para la creación de los eventos del mes "
+						+ month +" por medio de la plataforma SICE2 http://sice2-frontend-dot-sice2javeriana2018.appspot.com</p>"
+						+ "<p> Para acceder al sistema utilizar las siguientes credenciales </p>"
+						+ "<p> - Usuario                 : " + correo.getCorreo() + "</p>"
+						+ "<p> - Contraseña              : " + usuarioJaveriana.getPassword() + "</p>"
+						+ firmaCorreo;
+				messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
+				multipart.addBodyPart(messageBodyPart);
+				usuarioJaverianaRepository.save(usuarioJaveriana);
+				message.setContent(multipart);
+	
+				Transport.send(message);
+				System.out.println("Correo periodico enviado correctamente");
+			} catch (MessagingException e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 }

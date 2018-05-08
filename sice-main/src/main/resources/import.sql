@@ -25,6 +25,12 @@ INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, pass
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Estudiante','Moreno','NUEVO','Camilo Andres','123456','cMoreno',false,'d-sancheza@javeriana.edu.co');
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Estudiante','Suarez','NUEVO','Hernan Joaquin','123456','jSuarez',false,'d-sancheza@javeriana.edu.co');
 
+
+----------------------------------INSERTS CORREOS INSTITUCIONALES---------------------------------
+INSERT INTO public.correos_institucionales( correo, nombre, creador_id) VALUES ('d-sancheza@javeriana.edu.co', 'Daniel Santiago', 2);
+INSERT INTO public.correos_institucionales( correo, nombre, creador_id) VALUES ('david.acuna@javeriana.edu.co', 'David Alberto', 2);
+INSERT INTO public.correos_institucionales( correo, nombre, creador_id) VALUES ('b.guerrero@javeriana.edu.co', 'Brayan', 2);
+
 ----------------------------------INSERTS USUARIO ASOCIAR ETIQUETA----------------------------------
 INSERT INTO public.usuario_javeriana_preferencias(usuario_javeriana_id, preferencias_id) VALUES (2, 3);
 
