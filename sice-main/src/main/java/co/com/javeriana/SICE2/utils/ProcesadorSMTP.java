@@ -296,7 +296,7 @@ public class ProcesadorSMTP {
 		List<CorreosInstitucionales> correosInstitucionales = correosInstitucionalesRepository.findAll();
 		for (CorreosInstitucionales correo : correosInstitucionales) {
 			try {
-				UsuarioJaveriana usuarioJaveriana = usuarioJaverianaRepository.findUsuarioByUsername(correo.getCorreo());
+				UsuarioJaveriana usuarioJaveriana = usuarioJaverianaRepository.findUsuarioByUsername("Invitado"+correo.getId());
 				Calendar calendar = Calendar.getInstance();
 				int month = calendar.get(Calendar.MONTH); 
 				if (usuarioJaveriana == null) {
@@ -305,7 +305,7 @@ public class ProcesadorSMTP {
 					usuarioJaveriana.setNombre(correo.getNombre());
 					usuarioJaveriana.setApellidos("");
 					usuarioJaveriana.setEmail(correo.getCorreo());
-					usuarioJaveriana.setUsername(correo.getCorreo());
+					usuarioJaveriana.setUsername("Invitado"+correo.getId());
 					usuarioJaveriana.setEstadoEnum(EstadoEnum.INTERMEDIO);
 					usuarioJaveriana.setPassword(correo.getNombre()+correo.getId()+month);
 				}else{
@@ -321,7 +321,7 @@ public class ProcesadorSMTP {
 						+ "<p> Este correo es con el objetivo de informarle el diligenciamiento del siguiente formato para la creación de los eventos del mes "
 						+ month +" por medio de la plataforma SICE2 http://sice2-frontend-dot-sice2javeriana2018.appspot.com</p>"
 						+ "<p> Para acceder al sistema utilizar las siguientes credenciales </p>"
-						+ "<p> - Usuario                 : " + correo.getCorreo() + "</p>"
+						+ "<p> - Usuario                 : " + usuarioJaveriana.getUsername() + "</p>"
 						+ "<p> - Contraseña              : " + usuarioJaveriana.getPassword() + "</p>"
 						+ firmaCorreo;
 				messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
