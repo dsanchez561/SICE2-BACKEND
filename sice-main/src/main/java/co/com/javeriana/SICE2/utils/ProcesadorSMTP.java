@@ -279,6 +279,51 @@ public class ProcesadorSMTP {
 		}
 	}
 	
+	public void emailNotificarCreacionEventoInvitado(String asunto, UsuarioJaveriana usuarioInvitado, Evento evento,UsuarioJaveriana usuarioAdministrador) {
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("fromSomeone@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(usuarioAdministrador.getEmail()));
+			message.setSubject(asunto);
+			
+			MimeMultipart multipart = new MimeMultipart("related");
+			BodyPart messageBodyPart = new MimeBodyPart();
+			String htmlText = "<H3>Hola "+usuarioAdministrador.getNombre()+"</H3>"
+					+ "<p> Este correo es con el objetivo de notificarle la creación de un nuevo evento hecho por el invitado : </p>"
+					+ "<p> - Nombre      : " + usuarioInvitado.getNombre() + "</p>"
+					+ "<p> - Email        : " + usuarioInvitado.getEmail() + "</p>"
+					+ "<p>El evento creado es el siguiente" + "</p>"
+					+ "<p> - Título                : " + evento.getTitulo() + "</p>"
+					+ "<p> - Descripción           : " + evento.getDescripcion() + "</p>"
+					+ "<p> - Lugar                 : " + evento.getLugar() + "</p>"
+					+ "<p> - Requisitos            : " + evento.getRequisitos() + "</p>"
+					+ "<p> - Capacidad Máxima      : " + evento.getCapacidadMaxima() + "</p>"
+					+ firmaCorreo;
+			messageBodyPart.setContent(htmlText, "text/html; charset=UTF-8");
+			multipart.addBodyPart(messageBodyPart);
+
+			message.setContent(multipart);
+
+			Transport.send(message);
+			System.out.println("Correo Enviado correctamente");
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	@Scheduled(fixedRate=86400000)
 	public void sendMail() {
 		Properties props = new Properties();

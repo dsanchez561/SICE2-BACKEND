@@ -43,6 +43,9 @@ public class Evento {
     private String descripcion;
     
     @Basic
+    private String lugar;
+    
+    @Basic
     private String requisitos;
     
     @Basic
@@ -216,4 +219,33 @@ public class Evento {
 	public void setAtrPersonalizados(List<AtrPersonalizado> atrPersonalizados) {
 		this.atrPersonalizados = atrPersonalizados;
 	}
+
+	/**
+	 * @return the lugar
+	 */
+	public String getLugar() {
+		return lugar;
+	}
+
+	/**
+	 * @param lugar the lugar to set
+	 */
+	public void setLugar(String lugar) {
+		this.lugar = lugar;
+	}
+
+	/**
+	 * @return the capacidadMaxima
+	 */
+	public Long getCapacidadMaxima() {
+		return capacidadMaxima;
+	}
+
+	/**
+	 * @param capacidadMaxima the capacidadMaxima to set
+	 */
+	public void setCapacidadMaxima(Long capacidadMaxima) {
+		this.capacidadMaxima = capacidadMaxima;
+	}
+	
 }

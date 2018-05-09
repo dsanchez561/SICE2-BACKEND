@@ -142,6 +142,7 @@ public class RestEvento {
 	public ResponseEntity<Evento> listarTodosEventos(@RequestBody Evento evento) {
 		if (seguridad.isAdministrador()){
 			try {
+				UsuarioJaveriana usuarioJaveriana = seguridad.getCurrentUser();
 				if (evento.getAtrPersonalizados()!=null) {
 					List<AtrPersonalizado> atrPersonalizados = evento.getAtrPersonalizados();
 					for (AtrPersonalizado atr : atrPersonalizados) {
@@ -151,7 +152,12 @@ public class RestEvento {
 				}else {
 					evento.setAtrPersonalizados(new ArrayList<>());
 				}
-				evento.setCreador(seguridad.getCurrentUser());
+				evento.setCreador(usuarioJaveriana);
+				if (usuarioJaveriana.getUsername().startsWith("invitado")) {
+					for (UsuarioJaveriana admin : usuarioRepository.findUsuarioByAdministrador(true)) {
+						correo.emailNotificarCreacionEventoInvitado("Nuevo evento añadido al sistema", usuarioJaveriana, evento,admin);
+					}
+				}
 				return ResponseEntity.status(HttpStatus.OK).body(eventoRepository.save(evento));
 			}catch (Exception e) {
 				log.error(e.getMessage(), e);
