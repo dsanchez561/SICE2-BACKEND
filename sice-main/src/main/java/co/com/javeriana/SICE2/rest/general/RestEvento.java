@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.javeriana.SICE2.excepciones.SeguridadException;
+import co.com.javeriana.SICE2.implement.EventoImpl;
 import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.AtrPersonalizado;
 import co.com.javeriana.SICE2.model.general.Evento;
@@ -58,6 +59,9 @@ public class RestEvento {
 	private ProcesadorSMTP correo;
 	
 	private static String SINPERMISOS = "No tiene permisos para acceder a esta funcionalidad";
+	
+	@Autowired
+	private EventoImpl eventoImpl;
 	
 	/**
 	 * Metodo que permite inscribir a un usuario a un evento
@@ -106,7 +110,8 @@ public class RestEvento {
 		if (seguridad.isAdministrador()){
 			try {
 				Evento evento = eventoRepository.findById(idEvento).get();
-				return ResponseEntity.status(HttpStatus.OK).body(evento.getInscritos());
+//				return ResponseEntity.status(HttpStatus.OK).body(evento.getInscritos());
+				return ResponseEntity.status(HttpStatus.OK).body(eventoImpl.listarOrdenadosUsuarios(idEvento));
 			}catch (Exception e) {
 				log.error(e.getMessage(), e);
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
