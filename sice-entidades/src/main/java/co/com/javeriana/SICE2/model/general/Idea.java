@@ -27,6 +27,9 @@ public class Idea {
     @Basic
     private String titulo;
     
+    @Basic
+    private String etapa;
+    
     @ManyToMany
     private List<Etiqueta> etiquetas;
     
@@ -56,6 +59,20 @@ public class Idea {
 	 */
 	public String getTitulo() {
 		return titulo;
+	}
+
+	/**
+	 * @return the etapa
+	 */
+	public String getEtapa() {
+		return etapa;
+	}
+
+	/**
+	 * @param etapa the etapa to set
+	 */
+	public void setEtapa(String etapa) {
+		this.etapa = etapa;
 	}
 
 	/**

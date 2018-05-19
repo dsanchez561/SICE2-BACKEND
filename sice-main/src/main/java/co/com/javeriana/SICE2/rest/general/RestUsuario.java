@@ -22,9 +22,9 @@ import co.com.javeriana.SICE2.log.Log;
 import co.com.javeriana.SICE2.model.general.Etiqueta;
 import co.com.javeriana.SICE2.model.general.Evento;
 import co.com.javeriana.SICE2.model.general.Idea;
+import co.com.javeriana.SICE2.model.general.Solicitud;
 import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 import co.com.javeriana.SICE2.pojo.IdeaPojo;
-import co.com.javeriana.SICE2.repositories.EtiquetaRepository;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.repositories.IdeaRepository;
 import co.com.javeriana.SICE2.repositories.UsuarioJaverianaRepository;
@@ -108,6 +108,42 @@ public class RestUsuario {
 	}
 	
 	/**
+	 * Metodo que permite listar todos los servicios creados por el usuario actual
+	 * 
+	 * @return lista de eventos
+	 * @throws IOException
+	 */
+	@Transactional
+	@RequestMapping(value="/listarSolicitudesPorUsuario",method=RequestMethod.GET)
+	public ResponseEntity<List<Solicitud>> listarSolicitudesPorUsuario() {
+		try {
+			UsuarioJaveriana usuario = usuarioRepository.findUsuarioById(seguridad.getCurrentUser().getId());
+			return ResponseEntity.status(HttpStatus.OK).body(usuario.getSolicitudes());
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	/**
+	 * Metodo que permite listar todos las ideas creadas por el usuario
+	 * 
+	 * @return lista de eventos
+	 * @throws IOException
+	 */
+	@Transactional
+	@RequestMapping(value="/listarIdeasPorUsuario",method=RequestMethod.GET)
+	public ResponseEntity<List<Idea>> listarIdeasPorUsuario() {
+		try {
+			UsuarioJaveriana usuario = usuarioRepository.findUsuarioById(seguridad.getCurrentUser().getId());
+			return ResponseEntity.status(HttpStatus.OK).body(usuario.getIdeas());
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	/**
 	 * Metodo que permite añadir las preferencias a un administrador
 	 * 
 	 * @return booleano que identifica si fue satisfactoreo el proceso
@@ -155,6 +191,7 @@ public class RestUsuario {
 				idea.setUsuarioJaveriana(usuarioJaveriana);
 				idea.setTitulo(ideaPojo.getNombre());
 				idea.setDescripcion(ideaPojo.getDescripcion());
+				idea.setEtapa(ideaPojo.getEtapa());
 				for (UsuarioJaveriana usuario : usuarios) {
 					Boolean coincidencia = false;
 					List<Etiqueta> etiquetasCoincidencia = new ArrayList<>();

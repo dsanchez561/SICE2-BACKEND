@@ -16,7 +16,23 @@ public class IdeaPojo {
 
     private String nombre;
     
+    private String etapa;
+    
     private List<Etiqueta> etiquetas;
+
+	/**
+	 * @return the etapa
+	 */
+	public String getEtapa() {
+		return etapa;
+	}
+
+	/**
+	 * @param etapa the etapa to set
+	 */
+	public void setEtapa(String etapa) {
+		this.etapa = etapa;
+	}
 
 	/**
 	 * @return the descripcion
