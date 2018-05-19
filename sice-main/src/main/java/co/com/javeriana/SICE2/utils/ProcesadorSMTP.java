@@ -364,7 +364,7 @@ public class ProcesadorSMTP {
 				BodyPart messageBodyPart = new MimeBodyPart();
 				String htmlText = "<H3>Hola "+correo.getNombre()+"</H3>"
 						+ "<p> Este correo es con el objetivo de informarle el diligenciamiento del siguiente formato para la creación de los eventos del mes "
-						+ month +" por medio de la plataforma SICE2 http://sice2-frontend-dot-sice2javeriana2018.appspot.com</p>"
+						+ month +" por medio de la plataforma SICE2 http://sice2javeriana2018.appspot.com</p>"
 						+ "<p> Para acceder al sistema utilizar las siguientes credenciales </p>"
 						+ "<p> - Usuario                 : " + usuarioJaveriana.getUsername() + "</p>"
 						+ "<p> - Contraseña              : " + usuarioJaveriana.getPassword() + "</p>"
