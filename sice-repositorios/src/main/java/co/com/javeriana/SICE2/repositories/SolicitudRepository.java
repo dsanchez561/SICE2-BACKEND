@@ -21,4 +21,5 @@ import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 public interface SolicitudRepository extends JpaRepository<Solicitud, Long> {
 	List<Solicitud> findByActiva(Boolean activa);
 	List<Solicitud> findByActivaAndCreador(Boolean activa,UsuarioJaveriana creador);
+	List<Solicitud> findByCreador(UsuarioJaveriana creador);
 }

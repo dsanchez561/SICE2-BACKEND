@@ -48,6 +48,18 @@ public class UsuarioJaveriana implements UserDetails{
     private String username;
     
     @Basic
+    private String programa;
+    
+    @Basic
+    private String facultad;
+    
+    @Basic
+    private String cedula;
+    
+    @Basic
+    private String emailSecundario;
+    
+    @Basic
     private String email;
 
     @Basic
@@ -235,6 +247,62 @@ public class UsuarioJaveriana implements UserDetails{
 	 */
 	public void setEventosCreados(List<Evento> eventosCreados) {
 		this.eventosCreados = eventosCreados;
+	}
+
+	/**
+	 * @return the programa
+	 */
+	public String getPrograma() {
+		return programa;
+	}
+
+	/**
+	 * @param programa the programa to set
+	 */
+	public void setPrograma(String programa) {
+		this.programa = programa;
+	}
+
+	/**
+	 * @return the facultad
+	 */
+	public String getFacultad() {
+		return facultad;
+	}
+
+	/**
+	 * @param facultad the facultad to set
+	 */
+	public void setFacultad(String facultad) {
+		this.facultad = facultad;
+	}
+
+	/**
+	 * @return the cedula
+	 */
+	public String getCedula() {
+		return cedula;
+	}
+
+	/**
+	 * @param cedula the cedula to set
+	 */
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+
+	/**
+	 * @return the emailSecundario
+	 */
+	public String getEmailSecundario() {
+		return emailSecundario;
+	}
+
+	/**
+	 * @param emailSecundario the emailSecundario to set
+	 */
+	public void setEmailSecundario(String emailSecundario) {
+		this.emailSecundario = emailSecundario;
 	}
 
 	/**

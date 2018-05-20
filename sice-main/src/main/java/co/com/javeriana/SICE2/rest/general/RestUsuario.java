@@ -27,6 +27,7 @@ import co.com.javeriana.SICE2.model.general.UsuarioJaveriana;
 import co.com.javeriana.SICE2.pojo.IdeaPojo;
 import co.com.javeriana.SICE2.repositories.EventoRepository;
 import co.com.javeriana.SICE2.repositories.IdeaRepository;
+import co.com.javeriana.SICE2.repositories.SolicitudRepository;
 import co.com.javeriana.SICE2.repositories.UsuarioJaverianaRepository;
 import co.com.javeriana.SICE2.seguridad.ConfiguracionSeguridad;
 import co.com.javeriana.SICE2.utils.ProcesadorSMTP;
@@ -52,6 +53,9 @@ public class RestUsuario {
 	
 	@Autowired
 	private ProcesadorSMTP correo;
+	
+	@Autowired
+	private SolicitudRepository solicitudRepository;
 	
 	/**
 	 * Metodo que permite listar los eventos a los que esta suscrito el usuario actual
@@ -118,7 +122,7 @@ public class RestUsuario {
 	public ResponseEntity<List<Solicitud>> listarSolicitudesPorUsuario() {
 		try {
 			UsuarioJaveriana usuario = usuarioRepository.findUsuarioById(seguridad.getCurrentUser().getId());
-			return ResponseEntity.status(HttpStatus.OK).body(usuario.getSolicitudes());
+			return ResponseEntity.status(HttpStatus.OK).body(solicitudRepository.findByCreador(usuario));
 		}catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
