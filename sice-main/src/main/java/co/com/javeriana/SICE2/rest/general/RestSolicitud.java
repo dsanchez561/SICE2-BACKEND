@@ -1,6 +1,7 @@
 package co.com.javeriana.SICE2.rest.general;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -56,6 +57,9 @@ public class RestSolicitud {
 	public ResponseEntity<Boolean> asociarTipoProyecto(@RequestBody SolicitudPojo solicitudPojo) {
 		try {
 			UsuarioJaveriana usuarioActual = usuarioRepository.findById(seguridad.getCurrentUser().getId()).get();
+			if (usuarioActual.getSolicitudes()==null) {
+				usuarioActual.setSolicitudes(new ArrayList<>());
+			}
 			if (solicitudRepository.findByActivaAndCreador(true, usuarioActual).size()<5) {
 				Solicitud solicitud = new Solicitud();
 				solicitud.setCreador(usuarioActual);
@@ -64,6 +68,7 @@ public class RestSolicitud {
 				solicitud.setDescripcion(solicitudPojo.getDescripcion());
 				solicitud.setNombre(solicitudPojo.getNombre());
 				solicitudRepository.save(solicitud);
+				usuarioActual.getSolicitudes().add(solicitud);
 				for (UsuarioJaveriana admin : usuarioRepository.findUsuarioByAdministrador(true)){
 					correo.emailServicios("Nueva solicitud de servicio", admin, solicitud);
 				}
