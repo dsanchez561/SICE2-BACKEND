@@ -140,7 +140,7 @@ public class RestEvento {
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/crearEvento",method=RequestMethod.POST)
-	public ResponseEntity<Evento> listarTodosEventos(@RequestBody Evento evento) {
+	public ResponseEntity<Evento> crearEvento(@RequestBody Evento evento) {
 		if (seguridad.isAdministrador()){
 			try {
 				UsuarioJaveriana usuarioJaveriana = seguridad.getCurrentUser();
@@ -154,7 +154,7 @@ public class RestEvento {
 					evento.setAtrPersonalizados(new ArrayList<>());
 				}
 				evento.setCreador(usuarioJaveriana);
-				if (usuarioJaveriana.getUsername().startsWith("invitado")) {
+				if (usuarioJaveriana.getUsername().startsWith("Invitado")) {
 					for (UsuarioJaveriana admin : usuarioRepository.findUsuarioByAdministrador(true)) {
 						correo.emailNotificarCreacionEventoInvitado("Nuevo evento añadido al sistema", usuarioJaveriana, evento,admin);
 					}
