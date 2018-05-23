@@ -107,7 +107,6 @@ public class RestEvento {
 			try {
 				Evento evento = eventoRepository.findById(idEvento).get();
 				return ResponseEntity.status(HttpStatus.OK).body(evento.getInscritos());
-//				return ResponseEntity.status(HttpStatus.OK).body(eventoImpl.listarOrdenadosUsuarios(idEvento));
 			}catch (Exception e) {
 				log.error(e.getMessage(), e);
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
