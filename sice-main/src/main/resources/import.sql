@@ -26,6 +26,10 @@ INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, pass
 INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Estudiante','Suarez','NUEVO','Hernan Joaquin','123456','jSuarez',false,'d-sancheza@javeriana.edu.co');
 
 
+INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Administrador','Carrillo Ramos','NUEVO','Ángela','123456','angela',true,'angela.carrillo@javeriana.edu.co');
+INSERT INTO public.usuario_javeriana(dtype, apellidos, estado_enum, nombre, password, username, administrador,email)VALUES ('Administrador','Francisco Martínez','NUEVO','Luis','123456','luis',true,'l-martinez@javeriana.edu.co');
+
+
 ----------------------------------INSERTS CORREOS INSTITUCIONALES---------------------------------
 INSERT INTO public.correos_institucionales( correo, nombre, creador_id) VALUES ('d-sancheza@javeriana.edu.co', 'Daniel Santiago', 2);
 INSERT INTO public.correos_institucionales( correo, nombre, creador_id) VALUES ('david.acuna@javeriana.edu.co', 'David Alberto', 2);
